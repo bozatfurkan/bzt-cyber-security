@@ -1,79 +1,188 @@
 <div align="center">
-  <h1> Advanced Nmap Network Scanning & Vulnerability Analysis Guide</h1>
-  
-  ![Nmap](https://img.shields.io/badge/Tool-Nmap-blue.svg)
-  ![OS](https://img.shields.io/badge/OS-Kali%20Linux-black.svg)
-  ![Security](https://img.shields.io/badge/Focus-Cybersecurity-red.svg)
+  <h1>🛡️ Advanced Nmap Network Scanning & Vulnerability Analysis Guide</h1>
+  <p><strong>Comprehensive Network Discovery, NSE Vulnerability Hunting & AI-Assisted Security Auditing Platform</strong></p>
+
+  [![Tool: Nmap](https://img.shields.io/badge/Tool-Nmap_v7.9x-blue.svg?style=for-the-badge&logo=nmap)](https://nmap.org/)
+  [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+  [![Security](https://img.shields.io/badge/Focus-Cybersecurity-red.svg?style=for-the-badge)](https://github.com/bozatfurkan/nmap-guide)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg?style=for-the-badge)](LICENSE)
+  [![Web App](https://img.shields.io/badge/Interactive_App-nmap--commands-cyan.svg?style=for-the-badge)](https://bozatfurkan.github.io/nmap-commands/)
 </div>
 
 ---
 
-##  Project Overview
-This project documents the comprehensive use of **Nmap (Network Mapper)** for network infrastructure mapping, service enumeration, and potential vulnerability identification. The guide covers a wide spectrum of techniques, ranging from basic host discovery to advanced IDS/IPS evasion strategies.
+## 📑 Table of Contents
+
+- [Project Overview](#-project-overview)
+- [AI Security Scanner CLI (`ai_scanner.py`)](#-ai-security-scanner-cli-ai_scannerpy)
+  - [Features](#features)
+  - [Installation & Quick Start](#installation--quick-start)
+  - [CLI Flags & Options](#cli-flags--options)
+- [1. Network Discovery & Scanning Strategies](#1-network-discovery--scanning-strategies)
+- [2. Deep Enumeration: OS & Service Detection](#2-deep-enumeration-os--service-detection)
+- [3. Nmap Scripting Engine (NSE) for Vulnerability Hunting](#3-nmap-scripting-engine-nse-for-vulnerability-hunting)
+- [4. Firewall & IDS/IPS Evasion Techniques](#4-firewall--idsips-evasion-techniques)
+- [5. Output & Reporting Formats](#5-output--reporting-formats)
+- [🔗 Related Projects](#-related-projects)
+- [📚 References & Appendix](#-references--appendix)
+- [⚖️ Legal & Ethical Disclaimer](#️-legal--ethical-disclaimer)
 
 ---
 
-##  1. Network Discovery & Scanning Strategies
+## 🎯 Project Overview
 
-A comparison of fundamental commands used to map the status of targets on a network:
+This repository provides an in-depth reference guide and automated auditing toolkit for **Nmap (Network Mapper)**. It covers the full lifecycle of network reconnaissance: from silent host discovery and stealth TCP scanning, to operating system fingerprinting, advanced IDS/IPS firewall evasion, and automated code/secret auditing powered by Google Gemini AI.
 
-| Command | Scan Type | Description | Stealth Level |
+---
+
+## 🤖 AI Security Scanner CLI (`ai_scanner.py`)
+
+A built-in command-line auditing tool that combines **fast static regex heuristics** with **Google Gemini LLM semantic analysis** to inspect files and repositories for leaked credentials, exposed API keys, and insecure code configurations.
+
+### Features
+- 🔍 **Static Pattern Matching**: Detects AWS keys, GitHub PATs, private encryption keys, hardcoded passwords, and generic tokens instantly.
+- 🧠 **Gemini LLM Semantic Audit**: Performs deep contextual analysis to identify security architecture flaws, command injection risks, and sensitive data leakage.
+- 📄 **Automated Markdown Reporting**: Exports detailed audit findings directly into `audit_report.md`.
+- ⚡ **Graceful Offline Mode**: Runs static regex checks even when no Gemini API key is configured.
+
+### Installation & Quick Start
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. (Optional) Set your Gemini API key for AI-powered semantic analysis
+export GEMINI_API_KEY="your-gemini-api-key"
+
+# 3. Run scan on current repository
+python ai_scanner.py --target .
+
+# 4. Export detailed report
+python ai_scanner.py --target . --output audit_report.md
+```
+
+### CLI Flags & Options
+
+| Option | Shorthand | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `nmap -sS [IP]` | **TCP SYN (Stealth)** | Half-open scan. Does not complete the 3-way handshake. | High |
-| `nmap -sT [IP]` | **TCP Connect** | Full connection. Easily logged by target systems. | Low |
-| `nmap -sU [IP]` | **UDP Scan** | Scans UDP-based services like DNS, SNMP, and DHCP. | Medium |
-| `nmap -sn [IP/24]` | **Ping Sweep** | Discovers active hosts on the network without port scanning. | High |
+| `--target` | `-t` | `.` | Target directory or file to scan |
+| `--file` | `-f` | None | Scan a single specific file |
+| `--model` | `-m` | `gemini-1.5-flash` | Gemini model for deep reasoning |
+| `--api-key` | `-k` | `None` | Pass Gemini API key explicitly |
+| `--output` | `-o` | `None` | Export findings as a Markdown report |
+| `--skip-ai` | | `False` | Perform static regex scan only |
 
 ---
 
-##  2. Deep Enumeration: OS & Service Detection
+## 1. Network Discovery & Scanning Strategies
 
-Understanding the underlying technologies behind open ports is a critical step:
-* **`nmap -sV --version-intensity 5 [IP]`** : Aggressively determines the exact version numbers of services running on open ports.
-* **`nmap -O --osscan-guess [IP]`** : Attempts to guess the target's operating system by analyzing the TCP/IP stack footprint.
-* **`nmap -A [IP]`** : **Aggressive Scan.** Combines OS detection, version scanning, script scanning, and traceroute into a single command.
+Fundamental scanning techniques used to map target hosts and assess attack surfaces:
 
----
-
-##  3. Nmap Scripting Engine (NSE) for Vulnerability Hunting
-
-Utilizing Nmap's embedded scripting engine to transform it into a vulnerability scanner:
-* **`nmap -sC [IP]`** : Runs a collection of default, safe scripts for basic enumeration.
-* **`nmap --script vuln [IP]`** : Scans the target directly for known vulnerabilities (CVEs).
-* **`nmap --script smb-enum-users,smb-enum-shares [IP]`** : Enumerates usernames and shared directories over the SMB protocol.
+| Command | Scan Type | Description | Stealth Rating |
+| :--- | :--- | :--- | :--- |
+| `nmap -sS [IP]` | **TCP SYN (Stealth)** | Half-open scan; does not complete 3-way handshake. Fast and stealthy. | High |
+| `nmap -sT [IP]` | **TCP Connect** | Completes full TCP 3-way handshake. Logged easily by target systems. | Low |
+| `nmap -sU [IP]` | **UDP Scan** | Probes UDP services (DNS :53, SNMP :161, DHCP :67/68). | Medium |
+| `nmap -sn [IP/24]` | **Ping Sweep** | Discovers alive hosts across the subnet without probing port states. | High |
+| `nmap -sN [IP]` | **TCP Null Scan** | Sets no flags in TCP header. Bypasses naive stateless firewalls. | Very High |
+| `nmap -sF [IP]` | **TCP FIN Scan** | Sets only FIN bit in TCP header. Sneaky closed-port probe. | Very High |
+| `nmap -sX [IP]` | **Xmas Scan** | Sets FIN, PSH, and URG flags (lit like a Christmas tree). | Very High |
 
 ---
 
-##  4. Firewall & IDS/IPS Evasion Techniques
+## 2. Deep Enumeration: OS & Service Detection
 
-Advanced methodologies used to bypass security appliances or obscure scan traffic:
-* **`nmap -f [IP]`** : **Packet Fragmentation.** Splits packets into smaller 8-byte fragments to bypass simple firewalls.
-* **`nmap -D RND:10 [IP]`** : **Decoy Scan.** Cloaks your real IP address by generating 10 random decoy IP addresses in the target's logs.
-* **`nmap --spoof-mac 0 [IP]`** : Spoofs the MAC address to a completely random one, ensuring stealth on local networks.
+Identifying running daemon versions and host operating systems:
 
----
-
-##  5. Output & Reporting
-
-Properly documenting scan results is essential for security analysis:
-* `nmap -oN scan_report.txt [IP]` : Saves results in a standard, human-readable text format.
-* `nmap -oX scan_report.xml [IP]` : Saves results in XML format (required for importing into tools like Metasploit).
-* `nmap -oG scan_report.gnmap [IP]` : Saves results in a "Greppable" format for easy terminal parsing.
+* **`nmap -sV --version-intensity 5 [IP]`**  
+  Aggressively probes banners and protocol headers to identify exact service software versions.
+* **`nmap -O --osscan-guess [IP]`**  
+  Analyzes TCP/IP stack implementation nuances (TTL, window sizes, TCP options) to guess host OS.
+* **`nmap -A [IP]`**  
+  **Aggressive Scan**: Orchestrates OS detection (`-O`), version scanning (`-sV`), default script scanning (`-sC`), and traceroute in a unified run.
+* **`nmap -p- --min-rate 1000 [IP]`**  
+  Scans all 65,535 TCP ports at a high packet transmission rate.
 
 ---
 
-##  References & Appendix
+## 3. Nmap Scripting Engine (NSE) for Vulnerability Hunting
 
-The following academic and technical resources were referenced during the research, execution, and reporting phases of this project:
+Harnessing NSE categories to locate security weaknesses and verify CVEs:
 
-1. **Official Nmap Documentation:** Gordon "Fyodor" Lyon, *Nmap Network Scanning*. ([nmap.org](https://nmap.org/book/man.html))
-2. **Nmap Scripting Engine (NSE):** Script methodologies and vulnerability references. ([nmap.org/nsedoc](https://nmap.org/nsedoc/))
-3. **SANS Institute:** Nmap Cheat Sheet and evasion methodologies.
-4. **Test Environment & Attachments:** 
-   * All attachments and scan outputs included in this project were generated through isolated tests conducted on a **Kali Linux** virtual machine within a local lab environment.
+```bash
+# Run default safe enumeration scripts
+nmap -sC [IP]
+
+# Scan targets for known CVE vulnerabilities
+nmap --script vuln [IP]
+
+# Enumerate Windows/Samba users and shares
+nmap --script smb-enum-users,smb-enum-shares -p 445 [IP]
+
+# Audit TLS/SSL cipher suites and certificate validity
+nmap --script ssl-enum-ciphers,ssl-cert -p 443 [IP]
+
+# Detect EternalBlue (MS17-010) vulnerability
+nmap -p 445 --script smb-vuln-ms17-010 [IP]
+```
 
 ---
 
-##  Disclaimer
-This project and its documentation are strictly for **educational and academic research purposes**. The tools and techniques demonstrated here were used solely on authorized target systems within an isolated laboratory environment. Unauthorized network scanning is illegal. The author assumes no liability for the misuse of this information.
+## 4. Firewall & IDS/IPS Evasion Techniques
 
+Techniques designed to bypass packet filters, stateless firewalls, and intrusion detection systems:
+
+* **`nmap -f [IP]`**  
+  **Packet Fragmentation:** Splitting TCP headers into 8-byte fragments to evade signature-based pattern matchers.
+* **`nmap --mtu 24 [IP]`**  
+  Custom maximum transmission unit (MTU) packet splitting (must be a multiple of 8).
+* **`nmap -D RND:10 [IP]`**  
+  **Decoy Scan:** Obscures scanner identity by interspersing scan packets with 10 random IP addresses in target logs.
+* **`nmap --source-port 53 [IP]`**  
+  Sends probes originating from port 53 (DNS) or 88 (Kerberos) to bypass misconfigured firewall rules.
+* **`nmap --spoof-mac 0 [IP]`**  
+  Spoofs the Ethernet hardware MAC address to an anonymous randomized address.
+* **`nmap --data-length 25 [IP]`**  
+  Appends 25 random bytes of arbitrary payload data to circumvent payload-length anomaly detection.
+
+---
+
+## 5. Output & Reporting Formats
+
+Structure and archive scan results for post-engagement forensics:
+
+* **`nmap -oN scan_report.txt [IP]`**: Human-readable standard text output.
+* **`nmap -oX scan_report.xml [IP]`**: XML format compatible with tools like Metasploit, Nessus, and custom parsers.
+* **`nmap -oG scan_report.gnmap [IP]`**: Greppable format ideal for pipeline processing (`grep`, `awk`, `cut`).
+* **`nmap -oA audit_result [IP]`**: Exports all three formats (`.nmap`, `.xml`, `.gnmap`) simultaneously.
+
+---
+
+## 🔗 Related Projects
+
+- **[Nmap Intelligence & Interactive Scan Builder](https://github.com/bozatfurkan/nmap-commands)**  
+  Zero-dependency interactive web application featuring fuzzy search, 1000+ commands, live parameter customizer, 5-language translation, terminal simulator, and scenario wizard.  
+  👉 **Live Demo:** [bozatfurkan.github.io/nmap-commands](https://bozatfurkan.github.io/nmap-commands/)
+
+---
+
+## 📚 References & Appendix
+
+1. **Gordon "Fyodor" Lyon**: *Nmap Network Scanning: The Official Nmap Project Guide to Network Discovery and Vulnerability Scanning* ([nmap.org/book](https://nmap.org/book/man.html))
+2. **Nmap Scripting Engine Documentation**: NSE library reference ([nmap.org/nsedoc](https://nmap.org/nsedoc/))
+3. **SANS Institute**: *Network Penetration Testing and Ethical Hacking Cheat Sheets*
+4. **MITRE CVE & CWE**: Security vulnerability dictionaries and classification schemes.
+
+---
+
+## ⚖️ Legal & Ethical Disclaimer
+
+This documentation and accompanying scripts are created strictly for **authorized educational research, security testing, and defensive infrastructure auditing**. 
+
+Executing port scans against systems or networks without explicit, documented permission from the owner is strictly prohibited and may violate computer crime statutes in your jurisdiction. The author assumes no liability for damages or legal consequences arising from the misuse of these materials.
+
+---
+
+<div align="center">
+  <sub>Maintained with 🛡️ by <a href="https://github.com/bozatfurkan">Furkan Bozat</a></sub>
+</div>

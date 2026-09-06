@@ -1,0 +1,22 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Reports and outputs
+*.log
+audit_report.md
+audit_report.json
+scan_report.*
+
+# OS
+.DS_Store
+Thumbs.db
