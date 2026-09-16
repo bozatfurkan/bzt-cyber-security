@@ -113,6 +113,18 @@ const BZTHats = {
     }
   },
 
+  selectHatFromDrawer(id) {
+    this.setHat(id);
+    if (window.BZTApp) {
+      window.BZTApp.closeDrawer();
+      window.BZTApp.switchTab("curriculum");
+      const indicator = document.getElementById("active-career-indicator");
+      if (indicator) {
+        indicator.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  },
+
   updateHatUI() {
     const hat = this.getHat();
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";

@@ -280,11 +280,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ${item.tags.map(t => `<span class="text-[10px] font-mono bg-gray-900 border border-gray-800 text-gray-300 px-2 py-0.5 rounded">${t}</span>`).join("")}
           </div>
 
-          <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between">
-            <button class="open-lesson-btn text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/40 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5" data-id="${item.id}">
-              <span>${startText}</span>
-              <span>→</span>
-            </button>
+          <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <button class="open-lesson-btn text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/40 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5" data-id="${item.id}">
+                <span>${startText}</span>
+                <span>→</span>
+              </button>
+              <button class="open-slide-btn text-xs font-bold bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-black border border-purple-500/40 px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1" data-id="${item.id}" title="${lang === 'tr' ? 'Ders Slaytını Aç' : 'Open Slide Deck'}">
+                <span>📊</span>
+                <span>${lang === 'tr' ? 'Slayt' : 'Slide'}</span>
+              </button>
+            </div>
 
             <button class="toggle-done-btn text-xs px-2 py-1 rounded transition-colors ${isDone ? 'text-emerald-400 font-bold' : 'text-gray-500 hover:text-gray-300'}" data-id="${item.id}">
               ${doneText}
@@ -307,6 +313,15 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", () => {
         const id = btn.getAttribute("data-id");
         openLessonModal(id);
+      });
+    });
+
+    document.querySelectorAll(".open-slide-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        if (window.BZTSlides) {
+          window.BZTSlides.open(id);
+        }
       });
     });
 
@@ -680,6 +695,25 @@ document.addEventListener("DOMContentLoaded", () => {
       BZTCertificate.download(name);
     });
   }
+
+  // 11. CHEATSHEET INTERACTIVE CLICK-TO-COPY
+  document.querySelectorAll("#tab-cheatsheet .select-all").forEach(elem => {
+    elem.style.cursor = "pointer";
+    elem.setAttribute("title", "Kopyalamak için tıklayın");
+    elem.addEventListener("click", () => {
+      const text = elem.innerText.trim();
+      navigator.clipboard.writeText(text);
+      const parent = elem.parentElement;
+      let badge = parent.querySelector(".copy-feedback-badge");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "copy-feedback-badge ml-2 text-[10px] text-emerald-400 font-mono font-bold animate-fade-in";
+        badge.innerText = "✓ Kopyalandı!";
+        parent.appendChild(badge);
+        setTimeout(() => badge.remove(), 1600);
+      }
+    });
+  });
 
   function escapeHtml(str) {
     return (str || "").replace(/&/g, "&amp;")

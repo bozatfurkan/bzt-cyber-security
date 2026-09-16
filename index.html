@@ -92,6 +92,11 @@
           <span class="text-yellow-400 font-bold user-xp-display">0 XP</span>
         </div>
 
+        <!-- Active Hacker Hat Badge in Nav -->
+        <div id="active-hat-nav-badge" onclick="BZTHats.openModal()" class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-gray-900 border border-gray-800 hover:border-cyan-500/50 rounded-xl font-mono text-xs cursor-pointer text-gray-300 transition-all" title="Hacker Şapkanızı Değiştirin">
+          <span>🛡️</span> <span>⚪ Beyaz Şapka</span>
+        </div>
+
         <!-- Language Switcher Toggle -->
         <div class="flex items-center bg-black/60 border border-gray-800 rounded-xl p-0.5 text-xs font-mono">
           <button id="lang-btn-tr" onclick="BZTI18n.setLanguage('tr')" class="px-2 py-1 rounded-lg font-bold bg-cyan-500 text-black transition-all">TR</button>
@@ -159,6 +164,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Active Career Track Notification Banner -->
+      <div id="active-career-indicator" class="hidden glass-panel p-4 rounded-xl border border-cyan-500/40 bg-cyan-950/30 flex items-center justify-between gap-4 animate-fade-in"></div>
 
       <!-- Filters & Search Bar -->
       <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
@@ -235,22 +243,26 @@
             root@bzt-security:~#
           </span>
           <input type="text" id="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="bg-transparent text-white font-mono text-xs md:text-sm flex-1 focus:outline-none" placeholder="Komut yazın (örn: help, nmap 192.168.1.1, sqlmap, msfconsole)...">
+          <button id="terminal-exec-btn" onclick="if(window.bztTerminalInstance){const inp=document.getElementById('terminal-input'); if(inp && inp.value.trim()){window.bztTerminalInstance.executeCommand(inp.value.trim()); inp.value='';}}" class="px-3.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs rounded-lg transition-all flex items-center gap-1 shadow-md hover:shadow-cyan-500/20 active:scale-95">
+            <span>Çalıştır</span>
+            <span>⚡</span>
+          </button>
         </div>
 
       </div>
 
       <!-- Quick Command Buttons -->
       <div class="glass-panel p-4 rounded-xl border border-gray-800 space-y-2">
-        <div class="text-xs font-mono font-bold text-gray-300">⚡ Hızlı Test Komutları:</div>
+        <div class="text-xs font-mono font-bold text-gray-300">⚡ Hızlı Test Komutları (Tıkla ve Canlı Çalıştır):</div>
         <div class="flex flex-wrap gap-2 text-xs font-mono">
-          <button onclick="document.getElementById('terminal-input').value='help'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">help</button>
-          <button onclick="document.getElementById('terminal-input').value='nmap -sV 192.168.1.100'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">nmap -sV 192.168.1.100</button>
-          <button onclick="document.getElementById('terminal-input').value='sqlmap -u http://target.local/id=1'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">sqlmap</button>
-          <button onclick="document.getElementById('terminal-input').value='gobuster dir -u http://hedef.local'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">gobuster</button>
-          <button onclick="document.getElementById('terminal-input').value='hashcat 5f4dcc3b5aa765d61d8327deb882cf99'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">hashcat</button>
-          <button onclick="document.getElementById('terminal-input').value='linpeas'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">linpeas</button>
-          <button onclick="document.getElementById('terminal-input').value='msfconsole'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">msfconsole</button>
-          <button onclick="document.getElementById('terminal-input').value='cat flag.txt'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">cat flag.txt</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('help')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">help</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('nmap -sV 192.168.1.100')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">nmap -sV 192.168.1.100</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('sqlmap -u http://target.local/id=1')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">sqlmap</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('gobuster dir -u http://hedef.local')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">gobuster</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('hashcat 5f4dcc3b5aa765d61d8327deb882cf99')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">hashcat</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('linpeas')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">linpeas</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('msfconsole')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">msfconsole</button>
+          <button onclick="window.bztTerminalInstance?.executeCommand('cat flag.txt')" class="px-2.5 py-1 bg-gray-900 hover:bg-cyan-950/60 border border-gray-700 hover:border-cyan-500 rounded text-cyan-300 transition-all">cat flag.txt</button>
         </div>
       </div>
 
@@ -577,6 +589,8 @@
           <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="url-decode">URL Decode</button>
           <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="hex-encode">Hex Encode</button>
           <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="hex-decode">Hex Decode</button>
+          <button id="encoder-copy-btn" onclick="const out=document.getElementById('encoder-output'); if(out && out.value){navigator.clipboard.writeText(out.value); const orig=this.innerText; this.innerText='✓ Kopyalandı!'; setTimeout(()=>this.innerText=orig, 1500);}" class="bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 px-3 py-1.5 rounded-lg transition-all ml-auto">📋 Çıktıyı Kopyala</button>
+          <button onclick="document.getElementById('encoder-input').value=''; document.getElementById('encoder-output').value='';" class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-gray-400 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors">🗑️ Temizle</button>
         </div>
       </div>
 
@@ -589,8 +603,18 @@
           Ele geçirilen bir şifrelenmiş hash'i (MD5, SHA-256, NTLM, bcrypt, Argon2) analiz ederek türünü ve Hashcat kırma modunu öğrenin.
         </p>
 
+        <!-- Sample Hash Chips -->
+        <div class="flex flex-wrap gap-2 text-xs font-mono items-center">
+          <span class="text-gray-400 text-[11px]">Örnek Hashler:</span>
+          <button onclick="document.getElementById('hash-input').value='5f4dcc3b5aa765d61d8327deb882cf99'; document.getElementById('hash-id-btn').click();" class="px-2 py-0.5 bg-gray-900 hover:bg-yellow-950/40 border border-gray-700 text-yellow-300 rounded text-[11px]">MD5</button>
+          <button onclick="document.getElementById('hash-input').value='cc53797705357a251ff02d8173442d31'; document.getElementById('hash-id-btn').click();" class="px-2 py-0.5 bg-gray-900 hover:bg-yellow-950/40 border border-gray-700 text-yellow-300 rounded text-[11px]">NTLM</button>
+          <button onclick="document.getElementById('hash-input').value='ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f'; document.getElementById('hash-id-btn').click();" class="px-2 py-0.5 bg-gray-900 hover:bg-yellow-950/40 border border-gray-700 text-yellow-300 rounded text-[11px]">SHA-256</button>
+          <button onclick="document.getElementById('hash-input').value='$2a$12$e8B/4zL9M.c3j9YmG0oEgeUv4XfM2kR'; document.getElementById('hash-id-btn').click();" class="px-2 py-0.5 bg-gray-900 hover:bg-yellow-950/40 border border-gray-700 text-yellow-300 rounded text-[11px]">bcrypt</button>
+          <button onclick="document.getElementById('hash-input').value='$argon2id$v=19$m=65536,t=3,p=4$c29tZXNhbHQ$RdescudvJCsgTV'; document.getElementById('hash-id-btn').click();" class="px-2 py-0.5 bg-gray-900 hover:bg-yellow-950/40 border border-gray-700 text-yellow-300 rounded text-[11px]">Argon2</button>
+        </div>
+
         <div class="flex gap-2">
-          <input type="text" id="hash-input" placeholder="Hash girin (örn: 5f4dcc3b5aa765d61d8327deb882cf99)..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-yellow-500">
+          <input type="text" id="hash-input" onkeydown="if(event.key==='Enter') document.getElementById('hash-id-btn').click();" placeholder="Hash girin (örn: 5f4dcc3b5aa765d61d8327deb882cf99)..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-yellow-500">
           <button id="hash-id-btn" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold font-mono text-xs px-5 py-2.5 rounded-xl transition-all">
             Türü Belirle 🔍
           </button>
@@ -952,30 +976,226 @@
         </button>
       </div>
 
-      <!-- Specializations & Persona Section -->
-      <div class="space-y-2 pt-2 border-t border-gray-800/80">
-        <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400 font-bold px-3" data-i18n="drawer_roles_header">Kariyer & Personalar</div>
-        
-        <button onclick="window.BZTApp?.closeDrawer(); BZTCareers.openDrawer()" class="w-full flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-cyan-950/50 to-blue-950/50 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all">
+      <!-- 10 Cybersecurity Professions & Specializations Section -->
+      <div class="space-y-2 pt-3 border-t border-gray-800/80">
+        <div class="flex items-center justify-between px-2">
+          <div class="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold flex items-center gap-1.5">
+            <span>🎯</span> <span data-i18n="drawer_professions_title">10 SİBER GÜVENLİK MESLEĞİ</span>
+          </div>
+          <button onclick="BZTCareers.clearFilter()" class="text-[10px] font-mono text-gray-500 hover:text-cyan-400 transition-colors">Tümü</button>
+        </div>
+
+        <!-- 1. HACKER & PENETRATION TESTER (WITH HACKER TYPES ACCORDION) -->
+        <div class="rounded-xl border border-cyan-500/40 bg-gray-950/80 overflow-hidden transition-all shadow-md">
+          <div class="w-full flex items-center justify-between p-2.5 hover:bg-cyan-950/40 transition-colors cursor-pointer" onclick="BZTCareers.toggleHackerAccordion()">
+            <div class="flex items-center gap-2.5 text-left flex-1" onclick="event.stopPropagation(); BZTCareers.selectCareerFromDrawer('ethical-hacker')">
+              <span class="text-xl">🥷</span>
+              <div>
+                <div class="text-xs font-bold text-white font-mono flex items-center gap-1">
+                  <span class="text-cyan-400">1.</span> Etik Hacker & Pentester
+                </div>
+                <div class="text-[10px] text-cyan-300/80 font-mono">Tüm Şapkalar & OffSec • $95k-$165k</div>
+              </div>
+            </div>
+            <button onclick="event.stopPropagation(); BZTCareers.toggleHackerAccordion()" id="hacker-accordion-arrow-btn" class="p-1 rounded-lg bg-gray-900 hover:bg-cyan-950 border border-gray-800 text-cyan-400 text-xs font-mono transition-transform duration-200" title="Hacker Türlerini Aç/Kapat">
+              <span id="hacker-accordion-arrow" class="inline-block transition-transform duration-200 text-sm">▾</span>
+            </button>
+          </div>
+
+          <!-- Submenu: 7 Hacker Types (Hats) -->
+          <div id="hacker-hats-submenu" class="hidden border-t border-gray-800/80 bg-black/80 p-2 space-y-1">
+            <div class="text-[10px] font-mono text-cyan-400 font-bold px-2 py-0.5">Hacker Türleri / Şapkaları:</div>
+            
+            <button onclick="BZTHats.selectHatFromDrawer('white-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-cyan-950/40 border border-transparent hover:border-cyan-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>🛡️</span>
+                <div>
+                  <div class="text-cyan-300 font-medium font-mono text-[11px]">⚪ Beyaz Şapka (White Hat)</div>
+                  <div class="text-[9px] text-gray-400">Yasal Savunma & Sızma Testi</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-cyan-400">Seç</span>
+            </button>
+
+            <button onclick="BZTHats.selectHatFromDrawer('black-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-red-950/40 border border-transparent hover:border-red-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>🥷</span>
+                <div>
+                  <div class="text-red-400 font-medium font-mono text-[11px]">⚫ Siyah Şapka (Black Hat)</div>
+                  <div class="text-[9px] text-gray-400">Tehdit & Saldırgan Taktik Analizi</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-red-400">Seç</span>
+            </button>
+
+            <button onclick="BZTHats.selectHatFromDrawer('grey-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-gray-900 border border-transparent hover:border-gray-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>⚖️</span>
+                <div>
+                  <div class="text-gray-300 font-medium font-mono text-[11px]">🔘 Gri Şapka (Grey Hat)</div>
+                  <div class="text-[9px] text-gray-400">Bağımsız Güvenlik Araştırmacısı</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-gray-400">Seç</span>
+            </button>
+
+            <button onclick="BZTHats.selectHatFromDrawer('red-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-amber-950/40 border border-transparent hover:border-amber-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>⚡</span>
+                <div>
+                  <div class="text-amber-400 font-medium font-mono text-[11px]">🔴 Kırmızı Şapka (Red Hat)</div>
+                  <div class="text-[9px] text-gray-400">Agresif Tehdit Karşıtı Vigilante</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-amber-400">Seç</span>
+            </button>
+
+            <button onclick="BZTHats.selectHatFromDrawer('blue-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-blue-950/40 border border-transparent hover:border-blue-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>🏛️</span>
+                <div>
+                  <div class="text-blue-400 font-medium font-mono text-[11px]">🔵 Mavi Şapka (Blue Hat)</div>
+                  <div class="text-[9px] text-gray-400">Yazılım & Ürün Güvenlik Denetçisi</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-blue-400">Seç</span>
+            </button>
+
+            <button onclick="BZTHats.selectHatFromDrawer('green-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-emerald-950/40 border border-transparent hover:border-emerald-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>🌱</span>
+                <div>
+                  <div class="text-emerald-400 font-medium font-mono text-[11px]">🟢 Yeşil Şapka (Green Hat)</div>
+                  <div class="text-[9px] text-gray-400">Öğrenme Azmiyle Dolu Hacker Çırağı</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-400">Seç</span>
+            </button>
+
+            <button onclick="BZTHats.selectHatFromDrawer('purple-team')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-purple-950/40 border border-transparent hover:border-purple-500/30 text-left text-xs transition-colors">
+              <div class="flex items-center gap-2">
+                <span>🔮</span>
+                <div>
+                  <div class="text-purple-400 font-medium font-mono text-[11px]">🟣 Mor Şapka (Purple Team)</div>
+                  <div class="text-[9px] text-gray-400">Saldırı & Savunma Ortaklığı</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-purple-400">Seç</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. VERİTABANI GÜVENLİĞİ & SQL UZMANI -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('database-sql-sec')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
           <div class="flex items-center gap-2.5">
-            <span class="text-xl">🎯</span>
+            <span class="text-xl">🗄️</span>
             <div>
-              <div class="text-xs font-bold text-cyan-300 font-mono" data-i18n="career_btn_open">Kariyer Yolları</div>
-              <div class="text-[10px] text-gray-400 font-mono" data-i18n="nav_careers_sub">10+ Uzmanlık Alanı</div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">2.</span> Veritabanı Güvenliği & SQL Uzmanı</div>
+              <div class="text-[10px] text-gray-400 font-mono">SQLi, NoSQL, Hardening • $85k-$150k</div>
             </div>
           </div>
-          <span class="text-cyan-400 text-sm">→</span>
+          <span class="text-gray-500 text-xs font-mono">→</span>
         </button>
 
-        <button onclick="window.BZTApp?.closeDrawer(); BZTHats.openModal()" class="w-full flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-purple-950/50 to-pink-950/50 border border-purple-500/30 hover:border-purple-400 text-left transition-all">
+        <!-- 3. BULUT GÜVENLİĞİ UZMANI -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('cloud-security-engineer')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
           <div class="flex items-center gap-2.5">
-            <span class="text-xl">🎩</span>
+            <span class="text-xl">☁️</span>
             <div>
-              <div class="text-xs font-bold text-purple-300 font-mono" data-i18n="hat_btn_open">Hacker Şapkaları</div>
-              <div class="text-[10px] text-gray-400 font-mono" data-i18n="nav_hats_sub">7 Hacker Şapkası</div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">3.</span> Bulut Güvenliği Uzmanı</div>
+              <div class="text-[10px] text-gray-400 font-mono">AWS, Azure, GCP, Cloud IAM • $110k-$190k</div>
             </div>
           </div>
-          <span class="text-purple-400 text-sm">→</span>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 4. SOC ANALİSTİ & TEHDİT AVCISI -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('soc-analyst-threat-hunter')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🛡️</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">4.</span> SOC Analisti & Tehdit Avcısı</div>
+              <div class="text-[10px] text-gray-400 font-mono">SIEM, Splunk, EDR, Triyaj • $70k-$130k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 5. ZARARLI YAZILIM ANALİSTİ -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('malware-reverse-engineer')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🔬</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">5.</span> Zararlı Yazılım Analisti & RE</div>
+              <div class="text-[10px] text-gray-400 font-mono">Ghidra, x64dbg, Dinamik Analiz • $100k-$175k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 6. DEVSECOPS & UYGULAMA GÜVENLİĞİ -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('appsec-devsecops')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🚀</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">6.</span> Uygulama Güv. & DevSecOps</div>
+              <div class="text-[10px] text-gray-400 font-mono">CI/CD, SAST/DAST, Docker • $105k-$180k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 7. ADLİ BİLİŞİM & OLAY MÜDAHALE (DFIR) -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('dfir-specialist')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🔍</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">7.</span> Adli Bilişim & Olay Müdahale (DFIR)</div>
+              <div class="text-[10px] text-gray-400 font-mono">Volatility, Autopsy, Disk/RAM • $90k-$160k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 8. KRİPTOGRAFİ & GÜVENLİK MİMARİSİ -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('crypto-security-architect')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🔐</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">8.</span> Kriptografi & Güvenlik Mimarisi</div>
+              <div class="text-[10px] text-gray-400 font-mono">Zero Trust, PKI, PQC • $130k-$210k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 9. SOSYAL MÜHENDİSLİK & OSINT İSTİHBARATÇISI -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('osint-soceng')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🕵️</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">9.</span> Sosyal Müh. & OSINT İstihbarat</div>
+              <div class="text-[10px] text-gray-400 font-mono">Maltego, Dorking, OPSEC • $75k-$140k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- 10. IOT & ENDÜSTRİYEL SİBER GÜVENLİK (OT/SCADA) -->
+        <button onclick="BZTCareers.selectCareerFromDrawer('iot-scada-expert')" class="drawer-career-item w-full flex items-center justify-between p-2.5 rounded-xl border border-gray-800 bg-gray-950/60 hover:bg-cyan-950/30 hover:border-cyan-500/40 text-left transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">⚡</span>
+            <div>
+              <div class="text-xs font-bold text-white font-mono"><span class="text-cyan-400">10.</span> IoT & Endüstriyel Siber Güv.</div>
+              <div class="text-[10px] text-gray-400 font-mono">SCADA, PLC, Firmware, Modbus • $105k-$180k</div>
+            </div>
+          </div>
+          <span class="text-gray-500 text-xs font-mono">→</span>
+        </button>
+
+        <!-- Full Career Roadmap Modal trigger -->
+        <button onclick="window.BZTApp?.closeDrawer(); BZTCareers.openDrawer()" class="w-full text-center py-2 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 hover:underline">
+          Tüm Detaylı Kariyer Haritasını Gör (Modal) →
         </button>
       </div>
 

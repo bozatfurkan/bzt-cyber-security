@@ -147,7 +147,7 @@ const BZT_CTF = {
                 ` : `
                   <div class="space-y-2">
                     <div class="flex gap-2">
-                      <input type="text" id="flag-input-${ch.id}" placeholder="${lang === 'tr' ? 'BZT{...} bayrağını girin' : 'Enter BZT{...} flag'}" class="flex-1 bg-cyber-900 border border-gray-800 rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-cyan-500">
+                      <input type="text" id="flag-input-${ch.id}" onkeydown="if(event.key==='Enter') BZT_CTF.submitFlag('${ch.id}')" placeholder="${lang === 'tr' ? 'BZT{...} bayrağını girin' : 'Enter BZT{...} flag'}" class="flex-1 bg-cyber-900 border border-gray-800 rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-cyan-500">
                       <button onclick="BZT_CTF.submitFlag('${ch.id}')" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs px-3 py-1.5 rounded-lg transition-colors">
                         ${lang === 'tr' ? 'Gönder' : 'Submit'}
                       </button>
