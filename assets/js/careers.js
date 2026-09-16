@@ -370,16 +370,15 @@ const BZTCareers = {
   },
 
   openDrawer() {
-    const drawer = document.getElementById("career-drawer");
-    if (drawer) {
-      drawer.classList.remove("translate-x-full");
-      this.renderDrawer();
+    if (window.BZTApp && typeof window.BZTApp.openDrawer === "function") {
+      window.BZTApp.openDrawer();
     }
   },
 
   closeDrawer() {
-    const drawer = document.getElementById("career-drawer");
-    if (drawer) drawer.classList.add("translate-x-full");
+    if (window.BZTApp && typeof window.BZTApp.closeDrawer === "function") {
+      window.BZTApp.closeDrawer();
+    }
   }
 };
 

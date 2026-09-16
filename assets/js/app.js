@@ -63,6 +63,7 @@ const BZTApp = {
     const secNav = document.getElementById("drawer-section-nav");
     const btnCareers = document.getElementById("drawer-tab-btn-careers");
     const btnNav = document.getElementById("drawer-tab-btn-nav");
+    if (!secCareers || !secNav) return;
 
     if (section === "careers") {
       if (secCareers) secCareers.classList.remove("hidden");

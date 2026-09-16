@@ -292,8 +292,8 @@ const BZTMegaMenu = {
 
           <div class="p-3.5 rounded-xl bg-[#030712] border border-gray-800 text-xs font-mono text-gray-400 flex items-center justify-between">
             <div>İpucu: Seçtiğiniz kariyer hedefine göre müfredat otomatik olarak sertifikasyonlara hizalanır.</div>
-            <button onclick="BZTMegaMenu.actionNavigate('open-drawer', 'careers')" class="text-orange-400 hover:text-white font-bold underline cursor-pointer">
-              Tüm Detayları Gör →
+            <button onclick="BZTMegaMenu.actionNavigate('switch-tab', 'curriculum')" class="text-orange-400 hover:text-white font-bold underline cursor-pointer">
+              Tüm Müfredatı Gör →
             </button>
           </div>
         </div>
