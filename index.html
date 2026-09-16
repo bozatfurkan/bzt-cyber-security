@@ -584,7 +584,7 @@
           <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="url-decode">URL Decode</button>
           <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="hex-encode">Hex Encode</button>
           <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="hex-decode">Hex Decode</button>
-          <button id="encoder-copy-btn" onclick="const out=document.getElementById('encoder-output'); if(out && out.value){navigator.clipboard.writeText(out.value); const orig=this.innerText; this.innerText='✓ Kopyalandı!'; setTimeout(()=>this.innerText=orig, 1500);}" class="bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 px-3 py-1.5 rounded-lg transition-all ml-auto">Çıktıyı Kopyala</button>
+          <button id="encoder-copy-btn" onclick="const out=document.getElementById('encoder-output'); if(out && out.value){navigator.clipboard.writeText(out.value); const orig=this.innerText; this.innerText='[OK] Kopyalandı!'; setTimeout(()=>this.innerText=orig, 1500);}" class="bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 px-3 py-1.5 rounded-lg transition-all ml-auto">Çıktıyı Kopyala</button>
           <button onclick="document.getElementById('encoder-input').value=''; document.getElementById('encoder-output').value='';" class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-gray-400 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors">Temizle</button>
         </div>
       </div>
@@ -776,8 +776,8 @@
           <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
           <span>BZT CYBER SECURITY ACADEMY - INTERACTIVE LESSON</span>
         </div>
-        <button id="close-modal-btn" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors text-lg">
-          ✕
+        <button id="close-modal-btn" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors text-xs font-mono font-bold">
+          [X]
         </button>
       </div>
 
@@ -832,7 +832,7 @@
         </h3>
         <p class="text-xs text-gray-400 mt-0.5" data-i18n="career_drawer_desc">Uzmanlaşmak istediğiniz mesleği seçin.</p>
       </div>
-      <button onclick="BZTCareers.closeDrawer()" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800 transition-colors text-lg">✕</button>
+      <button onclick="BZTCareers.closeDrawer()" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800 transition-colors text-xs font-mono font-bold">[X]</button>
     </div>
 
     <div id="career-tracks-list" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
@@ -860,7 +860,7 @@
           <p class="text-[11px] text-gray-400 font-mono" data-i18n="drawer_desc">Akademi, Araçlar ve Kariyer Merkezi</p>
         </div>
       </div>
-      <button id="close-drawer-btn" class="p-2 text-gray-400 hover:text-white rounded-xl hover:bg-gray-800 transition-colors text-lg" title="Kapat">✕</button>
+      <button id="close-drawer-btn" class="p-2 text-gray-400 hover:text-white rounded-xl hover:bg-gray-800 transition-colors text-xs font-mono font-bold" title="Kapat">[X]</button>
     </div>
 
     <!-- Drawer Content Scrollable -->
@@ -960,7 +960,7 @@
           <div class="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold flex items-center gap-1.5">
             <span data-i18n="drawer_professions_title">10 SİBER GÜVENLİK MESLEĞİ</span>
           </div>
-          <button onclick="BZTCareers.clearFilter()" class="text-[10px] font-mono text-gray-500 hover:text-cyan-400 transition-colors">Tümü</button>
+          <button onclick="BZTCareers.clearFilter(); BZTHats.clearFilter(); window.BZTApp?.switchTab('curriculum'); window.BZTApp?.closeDrawer();" class="text-[10px] font-mono text-gray-500 hover:text-cyan-400 transition-colors">Tümü</button>
         </div>
 
         <!-- 1. HACKER & PENETRATION TESTER (WITH HACKER TYPES ACCORDION) -->
@@ -1207,7 +1207,7 @@
       <div class="flex items-center gap-4">
         <span id="slides-indicator" class="text-xs font-mono text-gray-400 font-bold">1 / 5</span>
         <button onclick="BZTSlides.close()" class="px-3 py-1.5 rounded-lg bg-gray-900 hover:bg-red-950 border border-gray-800 hover:border-red-500 text-xs text-gray-300 hover:text-red-400 font-mono transition-colors">
-          ✕ Çıkış (ESC)
+          [X] Çıkış (ESC)
         </button>
       </div>
     </div>

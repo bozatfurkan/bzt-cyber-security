@@ -15,7 +15,8 @@ const BZT_HACKER_HATS = [
       tr: "Kurumların izniyle çalışan, sistem açıklarını kötü niyetli kişiler bulmadan önce tespit edip yamayan, gizlilik ve etik kurallara tam bağlı güvenlik uzmanlarıdır.",
       en: "Security professionals working with full legal authorization to identify vulnerabilities, responsibly disclose them, and reinforce digital perimeters."
     },
-    mindset: { tr: "İzin Al, Zafiyeti Belgele, Yamayı Doğrula, Sistemi Koru.", en: "Get Authorized, Document Impact, Verify Patches, Defend Infrastructure." }
+    mindset: { tr: "İzin Al, Zafiyeti Belgele, Yamayı Doğrula, Sistemi Koru.", en: "Get Authorized, Document Impact, Verify Patches, Defend Infrastructure." },
+    recommendedLessons: ["net-foundations", "active-recon-nmap", "burpsuite-masterclass", "blue-team-career", "linux-bash-mastery"]
   },
   {
     id: "black-hat",
@@ -28,7 +29,8 @@ const BZT_HACKER_HATS = [
       tr: "Siyah şapkalı saldırganlar kişisel çıkar, fidye veya casusluk için yetkisiz sızmalar yaparlar. Bir savunmacı olarak onların taktiklerini (TTP - Tactics, Techniques & Procedures) bilmek en etkili savunmayı kurmayı sağlar.",
       en: "Malicious actors exploit systems without authorization for financial gain, espionage, or destruction. We study their TTPs strictly to predict and counter their moves."
     },
-    mindset: { tr: "Saldırgan gibi düşün, savunmayı buna göre inşa et.", en: "Think like the adversary to architect impenetrable defense." }
+    mindset: { tr: "Saldırgan gibi düşün, savunmayı buna göre inşa et.", en: "Think like the adversary to architect impenetrable defense." },
+    recommendedLessons: ["metasploit-exploitation", "red-team-evasion", "sqli-exploitation", "active-directory-attacks", "linux-privesc"]
   },
   {
     id: "grey-hat",
@@ -41,7 +43,8 @@ const BZT_HACKER_HATS = [
       tr: "Açık bulduklarında sistemi çökertmez veya veri çalmazlar; genelde firmaya bildirip ödül (Bug Bounty) veya onur listesi (Hall of Fame) talep ederler. Yasal riskler barındırır.",
       en: "Operating in regulatory grey zones, these researchers discover vulnerabilities without prior contracts and seek responsible disclosure or bug bounty rewards."
     },
-    mindset: { tr: "Zarar verme, ama merakından da vazgeçme.", en: "Do no harm, but relentlessly pursue technical curiosity." }
+    mindset: { tr: "Zarar verme, ama merakından da vazgeçme.", en: "Do no harm, but relentlessly pursue technical curiosity." },
+    recommendedLessons: ["osint-recon-deep", "sqli-exploitation", "xss-csrf-dom", "rce-ssrf-deserialization", "burpsuite-masterclass"]
   },
   {
     id: "red-hat",
@@ -54,7 +57,8 @@ const BZT_HACKER_HATS = [
       tr: "Saldırganları sadece engellemekle kalmaz; saldırganın kendi altyapısını, botnet ağını veya C2 sunucusunu çökertmeyi hedeflerler.",
       en: "Unlike passive defenders, Red Hats actively pursue malicious threat actors, dismantling botnets, seizing C2 nodes, and destroying malware infrastructure."
     },
-    mindset: { tr: "En iyi savunma, saldırganın cephanesini yok etmektir.", en: "The ultimate defense is the destruction of the adversary's attack arsenal." }
+    mindset: { tr: "En iyi savunma, saldırganın cephanesini yok etmektir.", en: "The ultimate defense is the destruction of the adversary's attack arsenal." },
+    recommendedLessons: ["red-team-evasion", "linux-privesc", "python-for-hackers", "wireless-social-eng", "metasploit-exploitation"]
   },
   {
     id: "blue-hat",
@@ -67,7 +71,8 @@ const BZT_HACKER_HATS = [
       tr: "Microsoft veya büyük teknoloji devlerinin düzenlediği BlueHat konferanslarından adını alır. Ürün yayınlanmadan önce dış göz olarak sızma testi yapan uzmanlardır.",
       en: "Invited security specialists contracted by enterprises to probe new systems, operating systems, or software suites for critical flaws prior to commercial launch."
     },
-    mindset: { tr: "Hata yayına çıkmadan önce kapıyı kilitle.", en: "Seal vulnerabilities before the application reaches production." }
+    mindset: { tr: "Hata yayına çıkmadan önce kapıyı kilitle.", en: "Seal vulnerabilities before the application reaches production." },
+    recommendedLessons: ["burpsuite-masterclass", "sqli-exploitation", "xss-csrf-dom", "cryptography-hashing", "net-foundations"]
   },
   {
     id: "green-hat",
@@ -80,7 +85,8 @@ const BZT_HACKER_HATS = [
       tr: "Script kiddie'lerden farklı olarak hazır araçları körü körüne çalıştırmazlar; aracın arka planda nasıl çalıştığını, paketlerin mantığını ve exploitlerin iç yapısını öğrenmek isterler.",
       en: "Unlike script kiddies, green hats study how tools operate under the hood, dissecting packet flows, assembly instructions, and vulnerability roots to grow into true pros."
     },
-    mindset: { tr: "Her gün yeni bir protokol, araç ve açık öğren!", en: "Learn a new protocol, command, and vulnerability every single day!" }
+    mindset: { tr: "Her gün yeni bir protokol, araç ve açık öğren!", en: "Learn a new protocol, command, and vulnerability every single day!" },
+    recommendedLessons: ["net-foundations", "linux-bash-mastery", "python-for-hackers", "active-recon-nmap", "osint-recon-deep"]
   },
   {
     id: "purple-team",
@@ -93,15 +99,18 @@ const BZT_HACKER_HATS = [
       tr: "Saldıran ekibin bulduğu zafiyeti derhal savunma ekibinin SIEM kurallarına ve EDR imzalarına dönüştürdüğü, kurumun güvenlik direncini en hızlı artıran hibrit yöntemdir.",
       en: "Real-time collaborative simulation where offensive operators trigger realistic exploits alongside defensive analysts to calibrate detection rules within minutes."
     },
-    mindset: { tr: "Birlikte saldır, anında tespit et, kusursuz savun.", en: "Simulate attacks together, detect instantly, defend flawlessly." }
+    mindset: { tr: "Birlikte saldır, anında tespit et, kusursuz savun.", en: "Simulate attacks together, detect instantly, defend flawlessly." },
+    recommendedLessons: ["metasploit-exploitation", "active-directory-attacks", "red-team-evasion", "blue-team-career", "linux-privesc"]
   }
 ];
 
 const BZTHats = {
   activeHatId: localStorage.getItem("bzt_hacker_hat") || "white-hat",
+  activeHatFilter: null,
 
-  getHat() {
-    return BZT_HACKER_HATS.find(h => h.id === this.activeHatId) || BZT_HACKER_HATS[0];
+  getHat(id) {
+    const targetId = id || this.activeHatFilter || this.activeHatId;
+    return BZT_HACKER_HATS.find(h => h.id === targetId) || BZT_HACKER_HATS[0];
   },
 
   setHat(id) {
@@ -114,50 +123,78 @@ const BZTHats = {
   },
 
   selectHatFromDrawer(id) {
+    this.activeHatFilter = id;
     this.setHat(id);
+    if (window.BZTCareers) {
+      window.BZTCareers.activeCareerId = null;
+    }
+
+    const hat = this.getHat(id);
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
+    const getT = (obj) => typeof obj === "object" && obj !== null ? (obj[lang] || obj.tr || obj.en || "") : obj;
+
+    const indicator = document.getElementById("active-career-indicator");
+    if (indicator) {
+      indicator.classList.remove("hidden");
+      const firstLesson = (hat.recommendedLessons && hat.recommendedLessons.length > 0) ? hat.recommendedLessons[0] : null;
+      indicator.innerHTML = `
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono font-bold px-2.5 py-1.5 rounded-lg bg-purple-950/80 border border-purple-500 text-purple-300 shadow-sm">${hat.icon}</span>
+          <div>
+            <div class="text-purple-300 font-bold font-mono text-sm">
+              ${lang === 'tr' ? 'Aktif Hacker Şapkası & Eğitim Programı:' : 'Active Hacker Persona & Curriculum:'} <span class="text-white">${getT(hat.name)}</span>
+            </div>
+            <div class="text-xs text-gray-400 font-mono mt-0.5">
+              ${lang === 'tr' ? `Bu hacker profili için özel ${hat.recommendedLessons.length} eğitim modülü açıldı.` : `${hat.recommendedLessons.length} curated training modules opened for this persona.`}
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          ${firstLesson ? `
+            <button onclick="window.openLessonModal('${firstLesson}')" class="px-3.5 py-1.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-black text-xs font-mono font-bold transition-all shadow-md flex items-center gap-1">
+              <span>${lang === 'tr' ? 'İlk Eğitime Başla' : 'Start First Lesson'}</span>
+              <span>→</span>
+            </button>
+          ` : ''}
+          <button onclick="BZTHats.clearFilter()" class="px-3 py-1.5 rounded-lg bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-300 hover:text-white text-xs font-mono transition-all">
+            [X] ${lang === 'tr' ? 'Tümünü Göster' : 'Show All'}
+          </button>
+        </div>
+      `;
+    }
+
     if (window.BZTApp) {
       window.BZTApp.closeDrawer();
       window.BZTApp.switchTab("curriculum");
-      const indicator = document.getElementById("active-career-indicator");
-      if (indicator) {
-        indicator.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    if (typeof window.renderCurriculum === "function") {
+      window.renderCurriculum();
+    }
+
+    setTimeout(() => {
+      const target = document.getElementById("active-career-indicator") || document.getElementById("curriculum-grid");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+    }, 100);
+  },
+
+  clearFilter() {
+    this.activeHatFilter = null;
+    if (window.BZTCareers) window.BZTCareers.activeCareerId = null;
+    const indicator = document.getElementById("active-career-indicator");
+    if (indicator) indicator.classList.add("hidden");
+    if (typeof window.renderCurriculum === "function") {
+      window.renderCurriculum();
     }
   },
 
   updateHatUI() {
     const hat = this.getHat();
-    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
-    const getT = (obj) => typeof obj === "object" && obj !== null ? (obj[lang] || obj.tr || obj.en || "") : obj;
-
     const navBadge = document.getElementById("active-hat-nav-badge");
     if (navBadge) {
       navBadge.innerHTML = `<span>${hat.icon}</span> <span>${hat.badge}</span>`;
-    }
-
-    const modalList = document.getElementById("hat-selector-list");
-    if (modalList) {
-      modalList.innerHTML = BZT_HACKER_HATS.map(h => {
-        const isSelected = h.id === this.activeHatId;
-        return `
-          <div class="glass-panel p-4 rounded-xl border cursor-pointer transition-all ${isSelected ? h.themeClass + ' shadow-lg' : 'border-gray-800 hover:border-gray-700'}" onclick="BZTHats.setHat('${h.id}')">
-            <div class="flex items-center justify-between gap-3 mb-2">
-              <div class="flex items-center gap-2">
-                <span class="text-2xl">${h.icon}</span>
-                <div>
-                  <h4 class="font-bold text-white text-sm">${getT(h.name)}</h4>
-                  <div class="text-[11px] font-mono text-gray-400">${getT(h.tagline)}</div>
-                </div>
-              </div>
-              <span class="text-xs px-2 py-0.5 rounded font-mono font-bold ${isSelected ? 'bg-white text-black' : 'bg-gray-800 text-gray-400'}">
-                ${isSelected ? (lang === 'tr' ? 'Aktif' : 'Active') : (lang === 'tr' ? 'Seç' : 'Select')}
-              </span>
-            </div>
-            <p class="text-xs text-gray-300 leading-relaxed mb-2">${getT(h.description)}</p>
-            <div class="text-[11px] font-mono text-cyan-300"><b>Zihniyet:</b> "${getT(h.mindset)}"</div>
-          </div>
-        `;
-      }).join("");
     }
   },
 

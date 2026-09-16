@@ -202,16 +202,54 @@ const BZTCareers = {
     }
   },
 
+  getCareer(id) {
+    if (!id) return null;
+    const aliases = {
+      "ethical-hacker": "pentester",
+      "pentester": "pentester",
+      "database-sql-sec": "db-sec-expert",
+      "db-sec-expert": "db-sec-expert",
+      "cloud-security-engineer": "cloud-sec-expert",
+      "cloud-sec-expert": "cloud-sec-expert",
+      "soc-analyst-threat-hunter": "soc-analyst",
+      "soc-analyst": "soc-analyst",
+      "malware-reverse-engineer": "malware-analyst",
+      "malware-analyst": "malware-analyst",
+      "dfir-specialist": "dfir-expert",
+      "dfir-expert": "dfir-expert",
+      "crypto-security-architect": "crypto-architect",
+      "crypto-architect": "crypto-architect",
+      "appsec-devsecops": "appsec-devsecops",
+      "osint-soceng": "osint-soceng",
+      "iot-scada-expert": "iot-scada-expert"
+    };
+    const target = aliases[id] || id;
+    return BZT_CAREERS.find(c => c.id === target || c.id === id) || null;
+  },
+
+  getActiveCareer() {
+    return this.getCareer(this.activeCareerId);
+  },
+
   selectCareerFromDrawer(id) {
+    if (window.BZTHats) {
+      window.BZTHats.activeHatFilter = null;
+    }
+    this.closeDrawer();
     this.selectCareer(id);
     if (window.BZTApp) {
       window.BZTApp.closeDrawer();
       window.BZTApp.switchTab("curriculum");
-      const indicator = document.getElementById("active-career-indicator");
-      if (indicator) {
-        indicator.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
     }
+    if (typeof window.renderCurriculum === "function") {
+      window.renderCurriculum();
+    }
+    setTimeout(() => {
+      const target = document.getElementById("active-career-indicator") || document.getElementById("curriculum-grid");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
   },
 
   renderDrawer() {
@@ -225,17 +263,17 @@ const BZTCareers = {
       const isSelected = this.activeCareerId === c.id;
 
       return `
-        <div class="glass-panel p-4 rounded-xl border transition-all duration-200 cursor-pointer ${isSelected ? 'border-cyan-500 bg-cyan-950/30 shadow-lg shadow-cyan-950/40' : 'border-gray-800 hover:border-gray-700'}" onclick="BZTCareers.selectCareer('${c.id}')">
+        <div class="glass-panel p-4 rounded-xl border transition-all duration-200 cursor-pointer ${isSelected ? 'border-cyan-500 bg-cyan-950/30 shadow-lg shadow-cyan-950/40' : 'border-gray-800 hover:border-gray-700'}" onclick="BZTCareers.selectCareerFromDrawer('${c.id}')">
           <div class="flex items-start justify-between gap-3 mb-2">
             <div class="flex items-center gap-2">
-              <span class="text-2xl">${c.icon}</span>
+              <span class="text-xs font-mono font-bold text-cyan-400 px-2 py-1 bg-gray-900 border border-gray-800 rounded">${c.icon}</span>
               <div>
                 <h4 class="font-bold text-white text-sm hover:text-cyan-400 transition-colors">${getT(c.title)}</h4>
                 <div class="text-[11px] font-mono text-cyan-400">${getT(c.level)} • <span class="text-emerald-400">${c.salary}</span></div>
               </div>
             </div>
-            <button class="text-xs px-2.5 py-1 rounded font-mono font-bold transition-all ${isSelected ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}">
-              ${isSelected ? (lang === 'tr' ? 'Seçildi' : 'Active') : (lang === 'tr' ? 'Seç' : 'Select')}
+            <button onclick="event.stopPropagation(); BZTCareers.selectCareerFromDrawer('${c.id}')" class="text-xs px-2.5 py-1 rounded font-mono font-bold transition-all ${isSelected ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}">
+              ${isSelected ? (lang === 'tr' ? 'Seçildi' : 'Active') : (lang === 'tr' ? 'Eğitimi Aç' : 'Open Track')}
             </button>
           </div>
 
@@ -251,34 +289,50 @@ const BZTCareers = {
   },
 
   selectCareer(id) {
-    if (this.activeCareerId === id) {
+    const career = this.getCareer(id);
+    const resolvedId = career ? career.id : id;
+
+    if (this.activeCareerId === resolvedId) {
       this.activeCareerId = null; // Toggle off
     } else {
-      this.activeCareerId = id;
+      this.activeCareerId = resolvedId;
     }
 
-    const career = BZT_CAREERS.find(c => c.id === this.activeCareerId);
+    if (window.BZTHats) {
+      window.BZTHats.activeHatFilter = null;
+    }
+
+    const active = this.getActiveCareer();
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
     const indicator = document.getElementById("active-career-indicator");
 
     if (indicator) {
-      if (career) {
+      if (active) {
         indicator.classList.remove("hidden");
+        const firstLesson = (active.recommendedLessons && active.recommendedLessons.length > 0) ? active.recommendedLessons[0] : null;
         indicator.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="text-lg">${career.icon}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-mono font-bold px-2.5 py-1.5 rounded-lg bg-cyan-950/80 border border-cyan-500 text-cyan-300 shadow-sm">${active.icon}</span>
             <div>
-              <div class="text-cyan-300 font-bold font-mono">
-                ${lang === 'tr' ? 'Aktif Kariyer Yolu:' : 'Active Career Track:'} <span class="text-white">${career.title[lang] || career.title.tr}</span>
+              <div class="text-cyan-300 font-bold font-mono text-sm">
+                ${lang === 'tr' ? 'Aktif Kariyer Yolu & Eğitim Programı:' : 'Active Career Track & Curriculum:'} <span class="text-white">${active.title[lang] || active.title.tr}</span>
               </div>
-              <div class="text-[11px] text-gray-400 font-mono">
-                ${lang === 'tr' ? 'Bu uzmanlık için önerilen dersler filtrelendi.' : 'Curriculum filtered for this specialization.'}
+              <div class="text-xs text-gray-400 font-mono mt-0.5">
+                ${lang === 'tr' ? `Bu uzmanlık için özel ${active.recommendedLessons.length} adet eğitim modülü açıldı.` : `${active.recommendedLessons.length} modules curated for this specialization.`}
               </div>
             </div>
           </div>
-          <button onclick="BZTCareers.clearFilter()" class="px-3 py-1 rounded-lg bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-300 hover:text-white text-xs font-mono transition-all">
-            ✕ ${lang === 'tr' ? 'Filtreyi Temizle' : 'Clear Filter'}
-          </button>
+          <div class="flex items-center gap-2">
+            ${firstLesson ? `
+              <button onclick="window.openLessonModal('${firstLesson}')" class="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-mono font-bold transition-all shadow-md flex items-center gap-1">
+                <span>${lang === 'tr' ? 'İlk Eğitime Başla' : 'Start First Lesson'}</span>
+                <span>→</span>
+              </button>
+            ` : ''}
+            <button onclick="BZTCareers.clearFilter()" class="px-3 py-1.5 rounded-lg bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-300 hover:text-white text-xs font-mono transition-all">
+              [X] ${lang === 'tr' ? 'Tümünü Göster' : 'Show All'}
+            </button>
+          </div>
         `;
       } else {
         indicator.classList.add("hidden");
@@ -287,7 +341,7 @@ const BZTCareers = {
 
     const topBadge = document.getElementById("top-active-role-text");
     if (topBadge) {
-      topBadge.innerText = career ? (career.title[lang] || career.title.tr) : (lang === 'tr' ? 'Kariyerler' : 'Careers');
+      topBadge.innerText = active ? (active.title[lang] || active.title.tr) : (lang === 'tr' ? 'Kariyerler' : 'Careers');
     }
 
     // Highlight active career in drawer items
@@ -303,6 +357,7 @@ const BZTCareers = {
 
   clearFilter() {
     this.activeCareerId = null;
+    if (window.BZTHats) window.BZTHats.activeHatFilter = null;
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
     const indicator = document.getElementById("active-career-indicator");
     if (indicator) indicator.classList.add("hidden");

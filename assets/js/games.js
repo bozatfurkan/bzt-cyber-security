@@ -251,7 +251,7 @@ const BZTGames = {
         const total = 50 + bonus;
         this.score += total;
         if (window.BZTApp) window.BZTApp.addXp(total);
-        if (feedback) feedback.innerHTML = `<span class="text-emerald-400 font-bold">✓ HARİKA! (+${total} XP)</span>`;
+        if (feedback) feedback.innerHTML = `<span class="text-emerald-400 font-bold">[+] HARİKA! (+${total} XP)</span>`;
       } else {
         if (feedback) feedback.innerHTML = `<span class="text-red-400 font-bold">[-] Yanlış Komut! Doğrusu: ${ch.correct}</span>`;
       }

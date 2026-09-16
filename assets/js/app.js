@@ -208,10 +208,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
 
-    const activeCareer = window.BZTCareers && window.BZTCareers.activeCareerId ? BZT_CAREERS.find(c => c.id === window.BZTCareers.activeCareerId) : null;
+    const activeCareer = window.BZTCareers ? window.BZTCareers.getActiveCareer() : null;
+    const activeHat = window.BZTHats && window.BZTHats.activeHatFilter ? window.BZTHats.getHat(window.BZTHats.activeHatFilter) : null;
 
     const filtered = CURRICULUM_DATA.map(getLessonData).filter(item => {
-      if (activeCareer && !activeCareer.recommendedLessons.includes(item.id)) {
+      if (activeHat && activeHat.recommendedLessons && !activeHat.recommendedLessons.includes(item.id)) {
+        return false;
+      }
+      if (activeCareer && activeCareer.recommendedLessons && !activeCareer.recommendedLessons.includes(item.id)) {
         return false;
       }
       const matchesPhase = currentFilterPhase === "all" || item.phase.toString() === currentFilterPhase;
@@ -299,6 +303,13 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
+      card.addEventListener("click", (e) => {
+        if (e.target.closest(".open-slide-btn") || e.target.closest(".toggle-done-btn") || e.target.closest(".copy-code-btn")) {
+          return;
+        }
+        openLessonModal(item.id);
+      });
+
       curriculumGrid.appendChild(card);
     });
 
@@ -310,14 +321,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. ATTACH CARD LISTENERS
   function attachCardListeners() {
     document.querySelectorAll(".open-lesson-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
         const id = btn.getAttribute("data-id");
         openLessonModal(id);
       });
     });
 
     document.querySelectorAll(".open-slide-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
         const id = btn.getAttribute("data-id");
         if (window.BZTSlides) {
           window.BZTSlides.open(id);
@@ -326,7 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.querySelectorAll(".toggle-done-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
         const id = btn.getAttribute("data-id");
         const raw = CURRICULUM_DATA.find(x => x.id === id);
 
@@ -480,6 +494,13 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.classList.add("hidden");
       document.body.classList.remove("overflow-hidden");
     }
+  }
+
+  window.openLessonModal = openLessonModal;
+  window.closeLessonModal = closeLessonModal;
+  if (window.BZTApp) {
+    window.BZTApp.openLesson = openLessonModal;
+    window.BZTApp.closeLesson = closeLessonModal;
   }
 
   if (closeModalBtn) {
