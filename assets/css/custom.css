@@ -1,0 +1,143 @@
+/* ==========================================================================
+   BZT Cyber Security - Custom Cyber Theme & Effects
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-deep: #030712;
+  --bg-surface: #0b0f19;
+  --bg-card: rgba(17, 24, 39, 0.75);
+  --border-subtle: rgba(31, 41, 55, 0.8);
+  --border-neon: rgba(6, 182, 212, 0.4);
+  --neon-cyan: #06b6d4;
+  --neon-emerald: #10b981;
+  --neon-purple: #a855f7;
+  --neon-red: #ef4444;
+  --neon-amber: #f59e0b;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: #f3f4f6;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-mono {
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Background Cyber Grid */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+}
+
+.cyber-radial {
+  background: radial-gradient(circle at 50% 10%, rgba(6, 182, 212, 0.12) 0%, rgba(3, 7, 18, 0) 70%);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Neon Glows */
+.glow-cyan {
+  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.35);
+}
+.glow-cyan-sm {
+  box-shadow: 0 0 12px -2px rgba(6, 182, 212, 0.45);
+}
+.glow-emerald {
+  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.35);
+}
+.glow-purple {
+  box-shadow: 0 0 25px -4px rgba(168, 85, 247, 0.35);
+}
+
+/* Terminal Glassmorphism */
+.glass-panel {
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+/* Badge Pulse */
+@keyframes cyber-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+.pulse-badge {
+  animation: cyber-pulse 2s infinite ease-in-out;
+}
+
+/* Code block line highlight */
+.code-block {
+  background: #090d16;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Interactive Cursor in Terminal */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: #06b6d4;
+  vertical-align: middle;
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+/* Tab Active Styles */
+.nav-tab.active {
+  color: #06b6d4;
+  border-color: #06b6d4;
+  background: rgba(6, 182, 212, 0.1);
+}
+
+/* Custom Tooltips */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #111827;
+  color: #93c5fd;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  border: 1px solid #374151;
+  pointer-events: none;
+  z-index: 50;
+}

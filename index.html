@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BZT Cyber Security | Sıfırdan İleri Seviyeye Etik Hacker Akademisi & Laboratuvarı</title>
+  
+  <meta name="description" content="Sıfırdan ileri seviyeye (Junior'dan Senior Red Teamer'a) eksiksiz etik hackerlık ve siber güvenlik eğitim platformu. Canlı BZT-Shell Kali simülatörü, SQLi/XSS laboratuvarları ve siber araçlar.">
+  <meta name="author" content="Furkan Bozat (bozatfurkan)">
+
+  <!-- Cyber Shield SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              950: '#030712',
+              900: '#0b0f19',
+              850: '#111827',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              purple: '#a855f7',
+              red: '#ef4444',
+              amber: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body class="bg-cyber-950 text-gray-100 cyber-grid cyber-radial min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
+
+  <!-- =========================================================================
+       HEADER / NAVBAR
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/40 flex items-center justify-center glow-cyan-sm">
+          <svg class="w-6 h-6 text-cyan-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-lg tracking-wider text-white font-mono">BZT<span class="text-cyan-400">.CYBER</span></h1>
+            <span class="text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-800 px-1.5 py-0.5 rounded pulse-badge">v3.0 PRO</span>
+          </div>
+          <p class="text-xs text-gray-400">Zero-to-Hero Ethical Hacking Academy</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-1.5 p-1 bg-black/40 border border-gray-800 rounded-xl overflow-x-auto max-w-full">
+        <button class="nav-tab active px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent transition-all" data-tab="curriculum">
+          <span>📚</span> Müfredat
+        </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="terminal">
+          <span>⚡</span> BZT-Shell
+        </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="labs">
+          <span>🧪</span> Laboratuvar
+        </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="tools">
+          <span>🛠️</span> Araç Çantası
+        </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="cheatsheet">
+          <span>📑</span> Hızlı Referans
+        </button>
+      </nav>
+
+      <!-- User / Global Progress -->
+      <div class="hidden xl:flex items-center gap-3">
+        <div class="text-right">
+          <div class="text-[11px] text-gray-400 font-mono">Eğitim İlerlemesi: <span id="global-progress-text" class="text-emerald-400 font-bold">%0</span></div>
+          <div class="w-28 bg-gray-800 h-1.5 rounded-full overflow-hidden mt-1">
+            <div id="global-progress-bar" class="bg-gradient-to-r from-cyan-500 to-emerald-400 h-full w-0 transition-all duration-300"></div>
+          </div>
+        </div>
+        <a href="https://github.com/bozatfurkan/bzt-cyber-security" target="_blank" rel="noopener" class="p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-900 border border-gray-800 rounded-lg transition-colors" title="GitHub Deposu">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- =======================================================================
+         TAB 1: CURRICULUM (MÜFREDAT)
+         ======================================================================= -->
+    <div id="tab-curriculum" class="tab-pane space-y-8">
+      
+      <!-- Hero Banner -->
+      <div class="glass-panel p-6 lg:p-8 rounded-2xl border border-cyan-500/20 relative overflow-hidden">
+        <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-3xl space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 text-xs font-mono font-semibold">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            KAPSAMLI SİBER GÜVENLİK YOL HARİTASI
+          </div>
+          <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+            Sıfırdan İleri Seviyeye <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400">Etik Hacker</span> Olun
+          </h2>
+          <p class="text-sm lg:text-base text-gray-300 leading-relaxed">
+            Teoriden pratik istismara (exploitation), siber istihbarattan Active Directory dominasyonuna ve EDR atlatmaya kadar 7 aşamalı eksiksiz hacker eğitim yolculuğu.
+          </p>
+        </div>
+
+        <!-- Quick Stats Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-800/80 font-mono text-xs">
+          <div>
+            <div class="text-gray-400">Eğitim Fazı</div>
+            <div class="text-cyan-400 font-bold text-lg">7 Seviye</div>
+          </div>
+          <div>
+            <div class="text-gray-400">Etkileşimli Modül</div>
+            <div class="text-emerald-400 font-bold text-lg">10+ Kapsamlı Ders</div>
+          </div>
+          <div>
+            <div class="text-gray-400">Simüle Edilen Araç</div>
+            <div class="text-purple-400 font-bold text-lg">BZT-Shell Kali</div>
+          </div>
+          <div>
+            <div class="text-gray-400">Sertifika Hedefi</div>
+            <div class="text-amber-400 font-bold text-lg">OSCP & eJPT</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Search Bar -->
+      <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+        
+        <!-- Phase Filter Buttons -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full text-xs font-mono">
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-cyan-500 text-black font-bold transition-colors" data-phase="all">Tümü</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="1">Faz 1: Temeller</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="2">Faz 2: Keşif</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="3">Faz 3: Web</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="4">Faz 4: Sistem</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="5">Faz 5: Kablosuz</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="6">Faz 6: Red Team</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="7">Faz 7: Mavi Takım</button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative w-full md:w-72">
+          <input type="text" id="search-curriculum" placeholder="Ders, zafiyet veya araç ara (örn: SQLi)..." class="w-full bg-cyber-900 border border-gray-800 text-xs rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors font-mono">
+          <span class="absolute right-3 top-2.5 text-gray-500 text-xs">🔍</span>
+        </div>
+
+      </div>
+
+      <!-- Curriculum Cards Grid -->
+      <div id="curriculum-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dynamic Cards rendered via app.js -->
+      </div>
+
+    </div>
+
+    <!-- =======================================================================
+         TAB 2: BZT-SHELL (TERMINAL SIMULATOR)
+         ======================================================================= -->
+    <div id="tab-terminal" class="tab-pane hidden space-y-6">
+      
+      <div class="glass-panel p-5 rounded-xl border border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2 font-mono">
+            <span class="text-cyan-400">⚡</span> BZT-Shell v2.0 Terminal Simülatörü
+          </h2>
+          <p class="text-xs text-gray-400">Nmap, Sqlmap, Gobuster, Metasploit ve LinPEAS komutlarını canlı simüle edin.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono">
+          <span class="px-2 py-1 bg-emerald-950/80 text-emerald-400 border border-emerald-800 rounded">Root Erişimi: Aktif</span>
+          <span class="px-2 py-1 bg-cyan-950/80 text-cyan-400 border border-cyan-800 rounded">OS: Kali Linux x64</span>
+        </div>
+      </div>
+
+      <!-- Terminal Window Box -->
+      <div class="bg-black border border-gray-800 rounded-xl overflow-hidden shadow-2xl glow-cyan-sm">
+        
+        <!-- Terminal Header Bar -->
+        <div class="bg-gray-900/90 px-4 py-2 border-b border-gray-800 flex items-center justify-between select-none">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+            <span class="text-xs font-mono text-gray-400 ml-2">root@bzt-security: ~/bzt-workspace</span>
+          </div>
+          <div class="text-[11px] font-mono text-gray-500">
+            Tab: Tamamla | ↑/↓: Geçmiş
+          </div>
+        </div>
+
+        <!-- Terminal Output Area -->
+        <div id="terminal-output" class="p-4 font-mono text-xs md:text-sm h-96 overflow-y-auto space-y-1 custom-scrollbar">
+          <!-- Populated by terminal.js -->
+        </div>
+
+        <!-- Terminal Input Prompt -->
+        <div class="bg-gray-950/90 border-t border-gray-800/80 px-4 py-2.5 flex items-center gap-2">
+          <span id="terminal-prompt" class="font-mono text-xs md:text-sm text-cyan-400 font-bold whitespace-nowrap">
+            root@bzt-security:~#
+          </span>
+          <input type="text" id="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="bg-transparent text-white font-mono text-xs md:text-sm flex-1 focus:outline-none" placeholder="Komut yazın (örn: help, nmap 192.168.1.1, sqlmap, msfconsole)...">
+        </div>
+
+      </div>
+
+      <!-- Quick Command Buttons -->
+      <div class="glass-panel p-4 rounded-xl border border-gray-800 space-y-2">
+        <div class="text-xs font-mono font-bold text-gray-300">⚡ Hızlı Test Komutları:</div>
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <button onclick="document.getElementById('terminal-input').value='help'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">help</button>
+          <button onclick="document.getElementById('terminal-input').value='nmap -sV 192.168.1.100'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">nmap -sV 192.168.1.100</button>
+          <button onclick="document.getElementById('terminal-input').value='sqlmap -u http://target.local/id=1'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">sqlmap</button>
+          <button onclick="document.getElementById('terminal-input').value='gobuster dir -u http://hedef.local'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">gobuster</button>
+          <button onclick="document.getElementById('terminal-input').value='hashcat 5f4dcc3b5aa765d61d8327deb882cf99'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">hashcat</button>
+          <button onclick="document.getElementById('terminal-input').value='linpeas'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">linpeas</button>
+          <button onclick="document.getElementById('terminal-input').value='msfconsole'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">msfconsole</button>
+          <button onclick="document.getElementById('terminal-input').value='cat flag.txt'; document.getElementById('terminal-input').focus()" class="px-2.5 py-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded text-cyan-300">cat flag.txt</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =======================================================================
+         TAB 3: LABS (INTERACTIVE VULNERABILITY LABS)
+         ======================================================================= -->
+    <div id="tab-labs" class="tab-pane hidden space-y-8">
+      
+      <div class="glass-panel p-5 rounded-xl border border-gray-800">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>🧪</span> İnteraktif Güvenlik Laboratuvarları
+        </h2>
+        <p class="text-xs text-gray-400 mt-1">Zafiyetlerin mekanizmasını güvenli, tarayıcı tabanlı izole simülatörlerde deneyerek keşfedin.</p>
+      </div>
+
+      <!-- LAB 1: SQL INJECTION -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">💉</span>
+            <h3 class="text-lg font-bold text-cyan-400 font-mono">Lab 1: SQL Injection (Kimlik Doğrulama Bypass)</h3>
+          </div>
+          <span class="text-xs font-mono bg-red-950/80 text-red-400 border border-red-800 px-2 py-0.5 rounded">Kritik Seviye</span>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed">
+          Arka planda çalışan sorgu: <code class="bg-black/60 px-1.5 py-0.5 rounded text-yellow-300 font-mono">SELECT * FROM users WHERE username = '{GİRDİ}' AND is_active = 1</code>.
+          Geliştirici parametreyi doğrudan sorguya dahil ettiği için SQL tırnağı ve yorum karakterleri ile yetki kazanılabilir.
+        </p>
+
+        <!-- Quick Payload Chips -->
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="text-gray-400 self-center text-[11px]">Hızlı Payloadlar:</span>
+          <button class="sqli-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="admin' --">admin' --</button>
+          <button class="sqli-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="' OR 1=1 --">' OR 1=1 --</button>
+          <button class="sqli-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="' UNION SELECT 1,2,3,4,5 --">' UNION SELECT 1,2,3,4,5 --</button>
+          <button class="sqli-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="john_doe">john_doe (Normal)</button>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="flex gap-2">
+          <input type="text" id="sqli-payload-input" placeholder="Giriş / SQL Payload girin (örn: admin' --)..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-cyan-500">
+          <button id="sqli-run-btn" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs px-5 py-2.5 rounded-xl transition-all flex items-center gap-1">
+            <span>Sorguyu Çalıştır</span>
+            <span>⚡</span>
+          </button>
+        </div>
+
+        <div id="sqli-query-display" class="text-xs font-mono bg-black/60 p-2.5 rounded-lg border border-gray-800/80">
+          <span class="text-gray-500">Sorgu henüz oluşturulmadı. Yukarıya bir payload girin.</span>
+        </div>
+
+        <div id="sqli-result" class="min-h-[60px]"></div>
+      </div>
+
+      <!-- LAB 2: XSS PLAYGROUND -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🎯</span>
+            <h3 class="text-lg font-bold text-purple-400 font-mono">Lab 2: Cross-Site Scripting (XSS & WAF Evasion)</h3>
+          </div>
+          <span class="text-xs font-mono bg-purple-950/80 text-purple-400 border border-purple-800 px-2 py-0.5 rounded">Orta / Yüksek</span>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed">
+          WAF filtresini seçin ve payload'ınızın filtreyi aşıp aşmadığını test edin. Klasik <code class="bg-black/60 px-1 text-yellow-300 font-mono">&lt;script&gt;</code> etiketleri engellendiğinde HTML5 etkinlik işleyicileri (<code class="bg-black/60 px-1 text-yellow-300 font-mono">onerror</code>, <code class="bg-black/60 px-1 text-yellow-300 font-mono">onload</code>) devreye girer.
+        </p>
+
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="text-gray-400 self-center text-[11px]">Hızlı Payloadlar:</span>
+          <button class="xss-chip bg-gray-900 hover:bg-purple-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="<script>alert('XSS')</script>">&lt;script&gt;alert(1)&lt;/script&gt;</button>
+          <button class="xss-chip bg-gray-900 hover:bg-purple-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="<img src=x onerror=alert('BZT_PWNED')>">&lt;img src=x onerror=alert(1)&gt;</button>
+          <button class="xss-chip bg-gray-900 hover:bg-purple-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="<svg onload=alert(document.cookie)>">&lt;svg onload=alert(document.cookie)&gt;</button>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2">
+          <select id="xss-filter-select" class="bg-cyber-900 border border-gray-800 rounded-xl px-3 py-2.5 text-xs text-gray-200 font-mono focus:outline-none focus:border-purple-500">
+            <option value="waf-strict">WAF Koruması: &lt;script&gt; Etiketlerini Sil</option>
+            <option value="no-filter">Korumasız (Raw Reflection)</option>
+          </select>
+          <input type="text" id="xss-payload-input" placeholder="XSS payload girin..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-purple-500">
+          <button id="xss-run-btn" class="bg-purple-600 hover:bg-purple-500 text-white font-bold font-mono text-xs px-5 py-2.5 rounded-xl transition-all">
+            Enjekte Et 🚀
+          </button>
+        </div>
+
+        <div id="xss-status"></div>
+        <div class="text-xs text-gray-400 font-mono">
+          <span>İşlenen Ham Metin: </span><span id="xss-preview" class="text-emerald-400"></span>
+        </div>
+      </div>
+
+      <!-- LAB 3: COMMAND INJECTION -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">💣</span>
+            <h3 class="text-lg font-bold text-amber-400 font-mono">Lab 3: Command Injection & RCE Simülatörü</h3>
+          </div>
+          <span class="text-xs font-mono bg-amber-950/80 text-amber-400 border border-amber-800 px-2 py-0.5 rounded">RCE - Kritik</span>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed">
+          Uygulama arka planda sistem komutunu çağırıyor: <code class="bg-black/60 px-1.5 py-0.5 rounded text-yellow-300 font-mono">ping -c 1 {IP}</code>.
+          Noktalı virgül (<code class="bg-black/60 px-1 text-yellow-300 font-mono">;</code>), çift ve (<code class="bg-black/60 px-1 text-yellow-300 font-mono">&amp;&amp;</code>) veya pipe (<code class="bg-black/60 px-1 text-yellow-300 font-mono">|</code>) ile sunucuda ek komutlar çalıştırın.
+        </p>
+
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="text-gray-400 self-center text-[11px]">Hızlı Payloadlar:</span>
+          <button class="cmd-chip bg-gray-900 hover:bg-amber-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="127.0.0.1; whoami">127.0.0.1; whoami</button>
+          <button class="cmd-chip bg-gray-900 hover:bg-amber-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="127.0.0.1 && cat /etc/passwd">127.0.0.1 &amp;&amp; cat /etc/passwd</button>
+          <button class="cmd-chip bg-gray-900 hover:bg-amber-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="127.0.0.1 | id">127.0.0.1 | id</button>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="cmd-input" placeholder="IP Adresi veya Komut Enjeksiyonu (örn: 127.0.0.1; id)..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-amber-500">
+          <button id="cmd-run-btn" class="bg-amber-500 hover:bg-amber-400 text-black font-bold font-mono text-xs px-5 py-2.5 rounded-xl transition-all">
+            Komutu İlet ⚡
+          </button>
+        </div>
+
+        <div id="cmd-result"></div>
+      </div>
+
+    </div>
+
+    <!-- =======================================================================
+         TAB 4: TOOLS (HACKER TOOLKIT)
+         ======================================================================= -->
+    <div id="tab-tools" class="tab-pane hidden space-y-8">
+      
+      <div class="glass-panel p-5 rounded-xl border border-gray-800">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>🛠️</span> Siber Güvenlik Araç Çantası (Hacker Arsenal)
+        </h2>
+        <p class="text-xs text-gray-400 mt-1">Pentest operasyonlarında en sık ihtiyaç duyulan payload üreticileri, şifreleme ve hash araçları.</p>
+      </div>
+
+      <!-- TOOL 1: REVERSE SHELL GENERATOR -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-cyan-400 font-mono flex items-center gap-2">
+            <span>🐚</span> Ters Bağlantı Kabuğu Üretici (Reverse Shell Generator)
+          </h3>
+          <span class="text-xs font-mono text-gray-400">Tek Tıkla Kopyala</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-mono text-gray-400 mb-1">Saldırgan IP (LHOST)</label>
+            <input type="text" id="rev-ip" value="10.10.14.5" class="w-full bg-cyber-900 border border-gray-800 rounded-lg px-3 py-2 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500">
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-gray-400 mb-1">Dinleyici Port (LPORT)</label>
+            <input type="text" id="rev-port" value="4444" class="w-full bg-cyber-900 border border-gray-800 rounded-lg px-3 py-2 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500">
+          </div>
+        </div>
+
+        <!-- Generated Shells Container -->
+        <div id="rev-shells-container" class="space-y-3 pt-2">
+          <!-- Populated by tools.js -->
+        </div>
+      </div>
+
+      <!-- TOOL 2: ENCODER & DECODER -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <h3 class="text-lg font-bold text-emerald-400 font-mono flex items-center gap-2">
+          <span>🔄</span> Çoklu Kodlayıcı / Çözücü (Base64, URL, Hex)
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-mono text-gray-400 mb-1">Giriş Metni / Payload</label>
+            <textarea id="encoder-input" rows="4" placeholder="Metin veya kod girin..." class="w-full bg-cyber-900 border border-gray-800 rounded-xl p-3 text-xs font-mono text-gray-200 focus:outline-none focus:border-emerald-500"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-gray-400 mb-1">Çıktı (Dönüştürülmüş)</label>
+            <textarea id="encoder-output" rows="4" readonly placeholder="Dönüşüm sonucu burada belirecek..." class="w-full bg-black/80 border border-gray-800 rounded-xl p-3 text-xs font-mono text-emerald-400 focus:outline-none select-all"></textarea>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="b64-encode">Base64 Encode</button>
+          <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="b64-decode">Base64 Decode</button>
+          <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="url-encode">URL Encode</button>
+          <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="url-decode">URL Decode</button>
+          <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="hex-encode">Hex Encode</button>
+          <button class="encoder-action-btn bg-gray-900 hover:bg-emerald-950/50 border border-gray-700 text-gray-300 px-3 py-1.5 rounded-lg transition-colors" data-action="hex-decode">Hex Decode</button>
+        </div>
+      </div>
+
+      <!-- TOOL 3: HASH IDENTIFIER -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <h3 class="text-lg font-bold text-yellow-400 font-mono flex items-center gap-2">
+          <span>🔑</span> Parola Hash Tanımlayıcı (Hash Identifier)
+        </h3>
+        <p class="text-xs text-gray-300">
+          Ele geçirilen bir şifrelenmiş hash'i (MD5, SHA-256, NTLM, bcrypt, Argon2) analiz ederek türünü ve Hashcat kırma modunu öğrenin.
+        </p>
+
+        <div class="flex gap-2">
+          <input type="text" id="hash-input" placeholder="Hash girin (örn: 5f4dcc3b5aa765d61d8327deb882cf99)..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-yellow-500">
+          <button id="hash-id-btn" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold font-mono text-xs px-5 py-2.5 rounded-xl transition-all">
+            Türü Belirle 🔍
+          </button>
+        </div>
+
+        <div id="hash-result"></div>
+      </div>
+
+    </div>
+
+    <!-- =======================================================================
+         TAB 5: CHEATSHEET (HIZLI REFERANS & CEPHANE)
+         ======================================================================= -->
+    <div id="tab-cheatsheet" class="tab-pane hidden space-y-6">
+      
+      <div class="glass-panel p-5 rounded-xl border border-gray-800">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>📑</span> Hızlı Başvuru Kartları (Hacker Cheat Sheets)
+        </h2>
+        <p class="text-xs text-gray-400 mt-1">Sınavlarda (OSCP, eJPT) ve operasyonlarda hayat kurtaran kritik komut özetleri.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Sheet 1: Linux SUID & PrivEsc -->
+        <div class="glass-panel p-5 rounded-xl border border-gray-800 space-y-3">
+          <h3 class="text-sm font-bold text-cyan-400 font-mono flex items-center gap-2">
+            <span>👑</span> Linux Sudo & SUID Root Çıkışları
+          </h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Sudo Find ile Root:</div>
+              <div class="text-emerald-400 select-all">sudo find . -exec /bin/sh \; -quit</div>
+            </div>
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Sudo Nvim/Vim ile Root:</div>
+              <div class="text-emerald-400 select-all">sudo vim -c ':!/bin/sh'</div>
+            </div>
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">SUID Bash ile Root:</div>
+              <div class="text-emerald-400 select-all">/bin/bash -p</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sheet 2: Nmap En Çok Kullanılan Bayraklar -->
+        <div class="glass-panel p-5 rounded-xl border border-gray-800 space-y-3">
+          <h3 class="text-sm font-bold text-emerald-400 font-mono flex items-center gap-2">
+            <span>🛡️</span> Nmap Hızlı Bayrak Matrisi
+          </h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Kapsamlı Hızlı Tarama:</div>
+              <div class="text-cyan-300 select-all">nmap -sC -sV -T4 -Pn &lt;IP&gt;</div>
+            </div>
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Tüm Portları Tarama:</div>
+              <div class="text-cyan-300 select-all">nmap -p- --min-rate 1000 &lt;IP&gt;</div>
+            </div>
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Zafiyet Scripti (NSE Vuln):</div>
+              <div class="text-cyan-300 select-all">nmap --script vuln &lt;IP&gt;</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sheet 3: Web Pentest & Fuzzing -->
+        <div class="glass-panel p-5 rounded-xl border border-gray-800 space-y-3">
+          <h3 class="text-sm font-bold text-purple-400 font-mono flex items-center gap-2">
+            <span>🌐</span> Web Keşif & Fuzzing (Ffuf / Gobuster)
+          </h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Dizin Fuzzing (ffuf):</div>
+              <div class="text-purple-300 select-all">ffuf -w common.txt -u http://target/FUZZ -mc 200,301</div>
+            </div>
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Subdomain Fuzzing (VHost):</div>
+              <div class="text-purple-300 select-all">ffuf -w subs.txt -u http://target -H "Host: FUZZ.target" -fs 1234</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sheet 4: Windows & Active Directory -->
+        <div class="glass-panel p-5 rounded-xl border border-gray-800 space-y-3">
+          <h3 class="text-sm font-bold text-amber-400 font-mono flex items-center gap-2">
+            <span>🏰</span> Active Directory & Kerberos
+          </h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Kerberoasting (TGS Request):</div>
+              <div class="text-yellow-300 select-all">GetUserSPNs.py domain/user:pass -dc-ip 10.10.10.10 -request</div>
+            </div>
+            <div class="p-2 bg-black/70 rounded border border-gray-800">
+              <div class="text-gray-400 text-[11px]">Pass-the-Hash SMB Girişi:</div>
+              <div class="text-yellow-300 select-all">crackmapexec smb &lt;IP&gt; -u Administrator -H &lt;NTLM_HASH&gt;</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       LESSON MODAL (POPUP)
+       ========================================================================= -->
+  <div id="lesson-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-cyber-900 border border-cyan-500/40 w-full max-w-4xl max-h-[90vh] rounded-2xl flex flex-col shadow-2xl glow-cyan overflow-hidden animate-fade-in">
+      
+      <!-- Modal Header -->
+      <div class="p-4 border-b border-gray-800 flex items-center justify-between bg-black/40">
+        <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+          <span>BZT CYBER SECURITY ACADEMY - INTERACTIVE LESSON</span>
+        </div>
+        <button id="close-modal-btn" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors text-lg">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div id="lesson-modal-content" class="p-6 overflow-y-auto space-y-6 custom-scrollbar flex-1">
+        <!-- Injected via app.js -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="glass-panel border-t border-gray-800/80 mt-12 py-6 px-4 text-center text-xs text-gray-400 font-mono">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-cyan-400 font-bold">BZT Cyber Security Platform</span>
+        <span>•</span>
+        <span>Geliştirici: <a href="https://github.com/bozatfurkan" target="_blank" class="text-white hover:text-cyan-400 underline decoration-cyan-500/50">Furkan Bozat</a></span>
+      </div>
+      <div>
+        <span>⚖️ Yalnızca eğitim ve etik sızma testi amaçlıdır.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/curriculum.js"></script>
+  <script src="assets/js/terminal.js"></script>
+  <script src="assets/js/labs.js"></script>
+  <script src="assets/js/tools.js"></script>
+  <script src="assets/js/app.js"></script>
+
+</body>
+</html>
