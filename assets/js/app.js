@@ -58,6 +58,33 @@ const BZTApp = {
     }
   },
 
+  switchDrawerSection(section) {
+    const secCareers = document.getElementById("drawer-section-careers");
+    const secNav = document.getElementById("drawer-section-nav");
+    const btnCareers = document.getElementById("drawer-tab-btn-careers");
+    const btnNav = document.getElementById("drawer-tab-btn-nav");
+
+    if (section === "careers") {
+      if (secCareers) secCareers.classList.remove("hidden");
+      if (secNav) secNav.classList.add("hidden");
+      if (btnCareers) {
+        btnCareers.className = "flex-1 py-2 rounded-lg font-bold text-center transition-all bg-cyan-500 text-black shadow-sm text-xs font-mono";
+      }
+      if (btnNav) {
+        btnNav.className = "flex-1 py-2 rounded-lg font-semibold text-center text-gray-400 hover:text-white transition-all text-xs font-mono";
+      }
+    } else {
+      if (secCareers) secCareers.classList.add("hidden");
+      if (secNav) secNav.classList.remove("hidden");
+      if (btnNav) {
+        btnNav.className = "flex-1 py-2 rounded-lg font-bold text-center transition-all bg-cyan-500 text-black shadow-sm text-xs font-mono";
+      }
+      if (btnCareers) {
+        btnCareers.className = "flex-1 py-2 rounded-lg font-semibold text-center text-gray-400 hover:text-white transition-all text-xs font-mono";
+      }
+    }
+  },
+
   switchTab(targetTab) {
     if (!targetTab) return;
     const tabButtons = document.querySelectorAll(".nav-tab");
@@ -256,47 +283,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.innerHTML = `
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded border ${badgeColor}">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border ${badgeColor}">
               ${item.difficulty}
             </span>
-            <div class="flex items-center gap-2 text-xs font-mono">
+            <div class="flex items-center gap-2 text-[11px] font-mono text-gray-400">
               <span class="text-yellow-400 font-bold">+${item.xp} XP</span>
-              <span class="text-gray-400">Süre: ${item.duration}</span>
+              <span>•</span>
+              <span>${item.duration}</span>
             </div>
           </div>
 
-          <div class="text-xs font-mono text-cyan-400/90 font-medium mb-1">
+          <div class="text-[11px] font-mono text-cyan-400/90 font-medium mb-1">
             ${item.phaseTitle}
           </div>
 
-          <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
+          <h3 class="text-base font-bold text-white group-hover:text-cyan-400 transition-colors mb-2 leading-snug">
             ${item.title}
           </h3>
 
-          <p class="text-xs text-gray-400 line-clamp-3 mb-4 leading-relaxed">
+          <p class="text-xs text-gray-400 line-clamp-2 mb-3 leading-relaxed">
             ${item.summary}
           </p>
         </div>
 
         <div>
-          <div class="flex flex-wrap gap-1.5 mb-4">
-            ${item.tags.map(t => `<span class="text-[10px] font-mono bg-gray-900 border border-gray-800 text-gray-300 px-2 py-0.5 rounded">${t}</span>`).join("")}
+          <div class="flex flex-wrap gap-1 mb-3">
+            ${item.tags.slice(0, 3).map(t => `<span class="text-[10px] font-mono bg-gray-900/90 border border-gray-800/80 text-gray-400 px-2 py-0.5 rounded">${t}</span>`).join("")}
           </div>
 
-          <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-              <button class="open-lesson-btn text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/40 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5" data-id="${item.id}">
+          <div class="pt-2.5 border-t border-gray-800/80 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+              <button class="open-lesson-btn text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/40 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1" data-id="${item.id}">
                 <span>${startText}</span>
                 <span>→</span>
               </button>
-              <button class="open-slide-btn text-xs font-bold bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-black border border-purple-500/40 px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1" data-id="${item.id}" title="${lang === 'tr' ? 'Ders Slaytını Aç' : 'Open Slide Deck'}">
-                
+              <button class="open-slide-btn text-xs font-semibold bg-gray-900 hover:bg-purple-950 border border-gray-800 hover:border-purple-500/40 text-gray-300 hover:text-purple-300 px-2.5 py-1.5 rounded-lg transition-all" data-id="${item.id}" title="${lang === 'tr' ? 'Ders Slaytını Aç' : 'Open Slide Deck'}">
                 <span>${lang === 'tr' ? 'Slayt' : 'Slide'}</span>
               </button>
             </div>
 
-            <button class="toggle-done-btn text-xs px-2 py-1 rounded transition-colors ${isDone ? 'text-emerald-400 font-bold' : 'text-gray-500 hover:text-gray-300'}" data-id="${item.id}">
+            <button class="toggle-done-btn text-xs px-2 py-1 rounded transition-colors ${isDone ? 'text-emerald-400 font-bold' : 'text-gray-500 hover:text-gray-300 font-mono'}" data-id="${item.id}">
               ${doneText}
             </button>
           </div>

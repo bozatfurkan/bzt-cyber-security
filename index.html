@@ -43,52 +43,50 @@
   <!-- =========================================================================
        HEADER / NAVBAR WITH CYBER HAMBURGER
        ========================================================================= -->
-  <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-3 sm:px-6 lg:px-8 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+  <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-4 sm:px-6 lg:px-8 py-2.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       
-      <!-- Left: Brand Logo -->
-      <div class="flex items-center gap-3 cursor-pointer select-none" onclick="window.BZTApp?.switchTab('curriculum'); window.scrollTo({top:0, behavior:'smooth'})">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/40 flex items-center justify-center glow-cyan-sm transition-transform hover:scale-105">
-          <svg class="w-6 h-6 text-cyan-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Left: Clean Brand Logo -->
+      <div class="flex items-center gap-2.5 cursor-pointer select-none" onclick="window.BZTApp?.switchTab('curriculum'); window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center glow-cyan-sm transition-transform hover:scale-105">
+          <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <path d="m9 12 2 2 4-4"/>
           </svg>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-lg tracking-wider text-white font-mono">BZT<span class="text-cyan-400">.CYBER</span></h1>
-            <span class="text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-800 px-1.5 py-0.5 rounded pulse-badge hidden sm:inline-block">v3.0 PRO</span>
+            <h1 class="font-extrabold text-base tracking-wider text-white font-mono">BZT<span class="text-cyan-400">.CYBER</span></h1>
+            <span class="text-[9px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-800/80 px-1.5 py-0.2 rounded hidden sm:inline-block">v3.5 PRO</span>
           </div>
-          <p class="text-[11px] text-gray-400 hidden sm:block" data-i18n="brand_sub">Zero-to-Hero Ethical Hacking Academy</p>
+          <p class="text-[10px] text-gray-500 hidden sm:block font-mono">Ethical Hacking Academy</p>
         </div>
       </div>
 
-      <!-- Center: Clean Desktop Quick Navigation (Visible on lg+ screens) -->
-      <nav class="hidden lg:flex items-center gap-1 p-1 bg-black/50 border border-gray-800 rounded-xl">
-        <button class="nav-tab active px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-1.5 border border-transparent transition-all" data-tab="curriculum">
+      <!-- Center: Clean Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1 p-1 bg-black/40 border border-gray-800 rounded-xl">
+        <button class="nav-tab active px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent transition-all" data-tab="curriculum">
           <span data-i18n="nav_curriculum">Müfredat</span>
         </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-1.5 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="terminal">
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="terminal">
           <span data-i18n="nav_terminal">BZT-Shell</span>
         </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-1.5 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="labs">
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="labs">
           <span data-i18n="nav_labs">Laboratuvar</span>
         </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-1.5 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="ctf">
-          <span data-i18n="nav_ctf">CTF Arena</span>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="ctf">
+          <span data-i18n="nav_ctf">CTF</span>
+        </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="tools">
+          <span data-i18n="nav_tools">Araçlar</span>
         </button>
       </nav>
 
       <!-- Right: User Badges, Language, and Hamburger Button -->
       <div class="flex items-center gap-2 sm:gap-3">
         
-        <!-- Active Persona/Career Quick Chip -->
-        <button onclick="BZTCareers.openDrawer()" class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-cyber-900 border border-cyan-500/30 text-cyan-300 hover:text-white hover:border-cyan-400 text-xs font-mono font-bold transition-all shadow-sm">
-          <span id="top-active-role-text" data-i18n="career_btn_open">Kariyerler</span>
-        </button>
-
-        <!-- Compact User Level & XP -->
-        <div class="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 border border-gray-800 rounded-xl font-mono text-xs">
+        <!-- Compact User XP -->
+        <div class="flex items-center gap-1 px-2.5 py-1.5 bg-black/60 border border-gray-800 rounded-xl font-mono text-xs">
           <span class="text-yellow-400 font-bold user-xp-display">0 XP</span>
         </div>
 
@@ -99,13 +97,13 @@
         </div>
 
         <!-- HAMBURGER MENU BUTTON -->
-        <button id="hamburger-btn" class="hamburger-btn flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-cyan-950/80 to-purple-950/80 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white text-xs font-mono font-bold transition-all shadow-lg glow-cyan-sm" title="Menü">
+        <button id="hamburger-btn" class="hamburger-btn flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cyan-950/70 hover:bg-cyan-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white text-xs font-mono font-bold transition-all shadow-md" title="Kariyerler ve Menü">
           <div class="hamburger-icon space-y-1">
             <span></span>
             <span></span>
             <span></span>
           </div>
-          <span class="hidden sm:inline" data-i18n="menu_btn">Menü</span>
+          <span class="hidden sm:inline">Kariyer & Menü</span>
         </button>
 
       </div>
@@ -116,46 +114,47 @@
   <!-- =========================================================================
        MAIN CONTENT CONTAINER
        ========================================================================= -->
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-1 w-full">
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 flex-1 w-full">
 
     <!-- =======================================================================
          TAB 1: CURRICULUM (MÜFREDAT)
          ======================================================================= -->
-    <div id="tab-curriculum" class="tab-pane space-y-8">
+    <div id="tab-curriculum" class="tab-pane space-y-6">
       
-      <!-- Hero Banner -->
-      <div class="glass-panel p-6 lg:p-8 rounded-2xl border border-cyan-500/20 relative overflow-hidden">
-        <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="max-w-3xl space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 text-xs font-mono font-semibold">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            KAPSAMLI SİBER GÜVENLİK YOL HARİTASI
+      <!-- Streamlined Clean Hero Banner -->
+      <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-gray-800/90 relative overflow-hidden bg-gradient-to-b from-[#0b101d] to-[#040814]">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div class="space-y-1.5 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-[10px] font-mono font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+              <span>BZT CYBER SECURITY ACADEMY</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Sıfırdan İleri Seviyeye <span class="text-cyan-400">Etik Hacking & Siber Savunma</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
+              16 uygulamalı zafiyet modülü, simüle edilmiş Kali terminali, interaktif lablar ve 10 uzmanlık kariyer yolu.
+            </p>
           </div>
-          <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Sıfırdan İleri Seviyeye <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400">Etik Hacker</span> Olun
-          </h2>
-          <p class="text-sm lg:text-base text-gray-300 leading-relaxed">
-            Teoriden pratik istismara (exploitation), siber istihbarattan Active Directory dominasyonuna ve EDR atlatmaya kadar 7 aşamalı eksiksiz hacker eğitim yolculuğu.
-          </p>
-        </div>
 
-        <!-- Quick Stats Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-800/80 font-mono text-xs">
-          <div>
-            <div class="text-gray-400">Eğitim Fazı</div>
-            <div class="text-cyan-400 font-bold text-lg">7 Seviye</div>
-          </div>
-          <div>
-            <div class="text-gray-400">Etkileşimli Modül</div>
-            <div class="text-emerald-400 font-bold text-lg">10+ Kapsamlı Ders</div>
-          </div>
-          <div>
-            <div class="text-gray-400">Simüle Edilen Araç</div>
-            <div class="text-purple-400 font-bold text-lg">BZT-Shell Kali</div>
-          </div>
-          <div>
-            <div class="text-gray-400">Sertifika Hedefi</div>
-            <div class="text-amber-400 font-bold text-lg">OSCP & eJPT</div>
+          <!-- Sleek Inline Stats Badge Cluster -->
+          <div class="flex items-center flex-wrap gap-2">
+            <div class="px-3 py-1.5 rounded-xl bg-black/50 border border-gray-800/80 text-center min-w-[70px]">
+              <div class="text-[9px] text-gray-500 font-mono">MODÜL</div>
+              <div class="text-xs font-bold text-white font-mono">16 Ders</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-xl bg-black/50 border border-gray-800/80 text-center min-w-[70px]">
+              <div class="text-[9px] text-gray-500 font-mono">SEVİYE</div>
+              <div class="text-xs font-bold text-cyan-400 font-mono">7 Faz</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-xl bg-black/50 border border-gray-800/80 text-center min-w-[70px]">
+              <div class="text-[9px] text-gray-500 font-mono">UZMANLIK</div>
+              <div class="text-xs font-bold text-emerald-400 font-mono">10 Meslek</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-xl bg-black/50 border border-gray-800/80 text-center min-w-[70px]">
+              <div class="text-[9px] text-gray-500 font-mono">HEDEF</div>
+              <div class="text-xs font-bold text-yellow-400 font-mono">OSCP / eJPT</div>
+            </div>
           </div>
         </div>
       </div>
@@ -163,25 +162,24 @@
       <!-- Active Career Track Notification Banner -->
       <div id="active-career-indicator" class="hidden glass-panel p-4 rounded-xl border border-cyan-500/40 bg-cyan-950/30 flex items-center justify-between gap-4 animate-fade-in"></div>
 
-      <!-- Filters & Search Bar -->
-      <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+      <!-- Compact Filters & Search Bar -->
+      <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         
         <!-- Phase Filter Buttons -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full text-xs font-mono">
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full text-xs font-mono scrollbar-none">
           <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-cyan-500 text-black font-bold transition-colors" data-phase="all">Tümü</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="1">Faz 1: Temeller</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="2">Faz 2: Keşif</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="3">Faz 3: Web</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="4">Faz 4: Sistem</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="5">Faz 5: Kablosuz</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="6">Faz 6: Red Team</button>
-          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors" data-phase="7">Faz 7: Mavi Takım</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="1">1. Temeller</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="2">2. Keşif</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="3">3. Web</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="4">4. Sistem</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="5">5. Kablosuz</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="6">6. Red Team</button>
+          <button class="phase-filter-btn px-2.5 py-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white transition-colors whitespace-nowrap" data-phase="7">7. Savunma</button>
         </div>
 
         <!-- Search Input -->
-        <div class="relative w-full md:w-72">
-          <input type="text" id="search-curriculum" placeholder="Ders, zafiyet veya araç ara (örn: SQLi)..." class="w-full bg-cyber-900 border border-gray-800 text-xs rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors font-mono">
-          
+        <div class="relative w-full md:w-64 flex-shrink-0">
+          <input type="text" id="search-curriculum" placeholder="Ders veya zafiyet ara..." class="w-full bg-cyber-900 border border-gray-800 text-xs rounded-xl px-3.5 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors font-mono">
         </div>
 
       </div>
@@ -863,104 +861,26 @@
       <button id="close-drawer-btn" class="p-2 text-gray-400 hover:text-white rounded-xl hover:bg-gray-800 transition-colors text-xs font-mono font-bold" title="Kapat">[X]</button>
     </div>
 
+    <!-- Drawer Dual-Tab Segmented Switcher -->
+    <div class="flex items-center border-b border-gray-800 bg-[#070b14] p-2 gap-1.5 select-none">
+      <button id="drawer-tab-btn-careers" onclick="BZTApp.switchDrawerSection('careers')" class="flex-1 py-2 rounded-lg font-bold text-center transition-all bg-cyan-500 text-black shadow-sm text-xs font-mono">
+        10 Kariyer & Şapkalar
+      </button>
+      <button id="drawer-tab-btn-nav" onclick="BZTApp.switchDrawerSection('nav')" class="flex-1 py-2 rounded-lg font-semibold text-center text-gray-400 hover:text-white transition-all text-xs font-mono">
+        Platform Menüsü
+      </button>
+    </div>
+
     <!-- Drawer Content Scrollable -->
-    <div class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
-      
-      <!-- User Profile & Progress Widget -->
-      <div class="bg-[#0b0f19] border border-cyan-500/30 rounded-2xl p-4 space-y-3 glow-cyan-sm">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-mono font-bold text-cyan-400">[USER]</span>
-            <div>
-              <div class="text-xs font-bold text-white font-mono user-rank-display">Cyber Apprentice</div>
-              <div class="text-[11px] text-yellow-400 font-mono user-xp-display">0 XP</div>
-            </div>
-          </div>
-          <span class="text-xs font-mono font-bold text-emerald-400" id="drawer-progress-text">%0</span>
-        </div>
-        
-        <!-- Progress Bar -->
-        <div class="w-full bg-gray-900 h-2 rounded-full overflow-hidden border border-gray-800">
-          <div id="drawer-progress-bar" class="bg-gradient-to-r from-cyan-500 via-emerald-400 to-purple-500 h-full w-0 transition-all duration-300"></div>
-        </div>
-      </div>
+    <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
 
-      <!-- Navigation Links (All 8 Academy Tabs) -->
-      <div class="space-y-1.5">
-        <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400 font-bold px-3 mb-2" data-i18n="drawer_nav_header">Platform Bölümleri</div>
-        
-        <button class="drawer-nav-item w-full nav-tab active" data-tab="curriculum">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[01]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_curriculum">Müfredat & Akademi</div>
-            <div class="text-[10px] text-gray-400 font-normal">15 Modül, 7 Seviye</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="terminal">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[02]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_terminal">BZT-Shell Terminal</div>
-            <div class="text-[10px] text-gray-400 font-normal">Kali Linux Simülatörü</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="labs">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[03]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_labs">İnteraktif Laboratuvar</div>
-            <div class="text-[10px] text-gray-400 font-normal">SQLi, XSS, CmdI, LFI, JWT</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="ctf">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[04]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_ctf">CTF Arena</div>
-            <div class="text-[10px] text-gray-400 font-normal">5 Seviyeli Bayrak Avı</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="games">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[05]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_games">Siber Oyunlar</div>
-            <div class="text-[10px] text-gray-400 font-normal">Firewall Defender & Command Rush</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="tools">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[06]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_tools">Araç Kütüphanesi (Arsenal)</div>
-            <div class="text-[10px] text-gray-400 font-normal">Reverse Shell, Hash ID, Decoder</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="cheatsheet">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[07]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_cheatsheet">Referans Kartları</div>
-            <div class="text-[10px] text-gray-400 font-normal">Hacker Cheat Sheets</div>
-          </div>
-        </button>
-
-        <button class="drawer-nav-item w-full nav-tab" data-tab="certificate">
-          <span class="text-xs font-mono text-cyan-400 font-bold">[08]</span>
-          <div class="text-left flex-1">
-            <div class="text-white" data-i18n="nav_certificate">BZT Başarı Sertifikası</div>
-            <div class="text-[10px] text-gray-400 font-normal">Doğrulanabilir PNG Sertifika</div>
-          </div>
-        </button>
-      </div>
-
-      <!-- 10 Cybersecurity Professions & Specializations Section -->
-      <div class="space-y-2 pt-3 border-t border-gray-800/80">
-        <div class="flex items-center justify-between px-2">
-          <div class="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold flex items-center gap-1.5">
-            <span data-i18n="drawer_professions_title">10 SİBER GÜVENLİK MESLEĞİ</span>
-          </div>
-          <button onclick="BZTCareers.clearFilter(); BZTHats.clearFilter(); window.BZTApp?.switchTab('curriculum'); window.BZTApp?.closeDrawer();" class="text-[10px] font-mono text-gray-500 hover:text-cyan-400 transition-colors">Tümü</button>
+      <!-- ===================================================================
+           TAB 1: 10 CAREER TRACKS & 7 HACKER HATS (DEFAULT ACTIVE)
+           =================================================================== -->
+      <div id="drawer-section-careers" class="space-y-2.5">
+        <div class="flex items-center justify-between px-1 mb-2">
+          <div class="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold" data-i18n="drawer_professions_title">10 SİBER GÜVENLİK MESLEĞİ</div>
+          <button onclick="BZTCareers.clearFilter(); BZTHats.clearFilter(); window.BZTApp?.switchTab('curriculum'); window.BZTApp?.closeDrawer();" class="text-[10px] font-mono text-gray-500 hover:text-cyan-400 transition-colors">Tümünü Göster</button>
         </div>
 
         <!-- 1. HACKER & PENETRATION TESTER (WITH HACKER TYPES ACCORDION) -->
@@ -992,7 +912,7 @@
                   <div class="text-[9px] text-gray-400">Yasal Savunma & Sızma Testi</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-cyan-400">Seç</span>
+              <span class="text-[10px] font-mono text-cyan-400">Aç →</span>
             </button>
 
             <button onclick="BZTHats.selectHatFromDrawer('black-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-red-950/40 border border-transparent hover:border-red-500/30 text-left text-xs transition-colors">
@@ -1003,7 +923,7 @@
                   <div class="text-[9px] text-gray-400">Tehdit & Saldırgan Taktik Analizi</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-red-400">Seç</span>
+              <span class="text-[10px] font-mono text-red-400">Aç →</span>
             </button>
 
             <button onclick="BZTHats.selectHatFromDrawer('grey-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-gray-900 border border-transparent hover:border-gray-500/30 text-left text-xs transition-colors">
@@ -1014,7 +934,7 @@
                   <div class="text-[9px] text-gray-400">Bağımsız Güvenlik Araştırmacısı</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-gray-400">Seç</span>
+              <span class="text-[10px] font-mono text-gray-400">Aç →</span>
             </button>
 
             <button onclick="BZTHats.selectHatFromDrawer('red-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-amber-950/40 border border-transparent hover:border-amber-500/30 text-left text-xs transition-colors">
@@ -1025,7 +945,7 @@
                   <div class="text-[9px] text-gray-400">Agresif Tehdit Karşıtı Vigilante</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-amber-400">Seç</span>
+              <span class="text-[10px] font-mono text-amber-400">Aç →</span>
             </button>
 
             <button onclick="BZTHats.selectHatFromDrawer('blue-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-blue-950/40 border border-transparent hover:border-blue-500/30 text-left text-xs transition-colors">
@@ -1036,7 +956,7 @@
                   <div class="text-[9px] text-gray-400">Yazılım & Ürün Güvenlik Denetçisi</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-blue-400">Seç</span>
+              <span class="text-[10px] font-mono text-blue-400">Aç →</span>
             </button>
 
             <button onclick="BZTHats.selectHatFromDrawer('green-hat')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-emerald-950/40 border border-transparent hover:border-emerald-500/30 text-left text-xs transition-colors">
@@ -1047,7 +967,7 @@
                   <div class="text-[9px] text-gray-400">Öğrenme Azmiyle Dolu Hacker Çırağı</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-emerald-400">Seç</span>
+              <span class="text-[10px] font-mono text-emerald-400">Aç →</span>
             </button>
 
             <button onclick="BZTHats.selectHatFromDrawer('purple-team')" class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-purple-950/40 border border-transparent hover:border-purple-500/30 text-left text-xs transition-colors">
@@ -1058,7 +978,7 @@
                   <div class="text-[9px] text-gray-400">Saldırı & Savunma Ortaklığı</div>
                 </div>
               </div>
-              <span class="text-[10px] font-mono text-purple-400">Seç</span>
+              <span class="text-[10px] font-mono text-purple-400">Aç →</span>
             </button>
           </div>
         </div>
@@ -1172,23 +1092,117 @@
         </button>
 
         <!-- Full Career Roadmap Modal trigger -->
-        <button onclick="window.BZTApp?.closeDrawer(); BZTCareers.openDrawer()" class="w-full text-center py-2 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 hover:underline">
+        <button onclick="window.BZTApp?.closeDrawer(); BZTCareers.openDrawer()" class="w-full text-center py-2.5 mt-2 rounded-xl border border-dashed border-gray-800 hover:border-cyan-500/50 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 transition-all">
           Tüm Detaylı Kariyer Haritasını Gör (Modal) →
         </button>
       </div>
 
-      <!-- Settings & Controls -->
-      <div class="space-y-3 pt-2 border-t border-gray-800/80">
-        <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400 font-bold px-3" data-i18n="drawer_settings_header">Sistem & Ayarlar</div>
+      <!-- ===================================================================
+           TAB 2: PLATFORM NAVIGATION & USER PROGRESS (SECONDARY TAB)
+           =================================================================== -->
+      <div id="drawer-section-nav" class="hidden space-y-4">
         
-        <button id="drawer-reset-btn" class="w-full py-2.5 px-3 rounded-xl bg-red-950/40 hover:bg-red-950/80 border border-red-900/60 hover:border-red-500 text-red-300 text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all">
-          <span data-i18n="btn_reset_progress">İlerlemeyi Sıfırla</span>
-        </button>
+        <!-- User Profile & Progress Widget -->
+        <div class="bg-[#0b0f19] border border-cyan-500/30 rounded-2xl p-4 space-y-3 glow-cyan-sm">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono font-bold text-cyan-400">[USER]</span>
+              <div>
+                <div class="text-xs font-bold text-white font-mono user-rank-display">Cyber Apprentice</div>
+                <div class="text-[11px] text-yellow-400 font-mono user-xp-display">0 XP</div>
+              </div>
+            </div>
+            <span class="text-xs font-mono font-bold text-emerald-400" id="drawer-progress-text">%0</span>
+          </div>
+          
+          <!-- Progress Bar -->
+          <div class="w-full bg-gray-900 h-2 rounded-full overflow-hidden border border-gray-800">
+            <div id="drawer-progress-bar" class="bg-gradient-to-r from-cyan-500 via-emerald-400 to-purple-500 h-full w-0 transition-all duration-300"></div>
+          </div>
+        </div>
 
-        <a href="https://github.com/bozatfurkan/bzt-cyber-security" target="_blank" rel="noopener" class="w-full py-2.5 px-3 rounded-xl bg-gray-900/80 hover:bg-gray-800 border border-gray-800 text-gray-300 hover:text-cyan-400 text-xs font-mono flex items-center justify-center gap-2 transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          <span>GitHub: bozatfurkan</span>
-        </a>
+        <!-- Navigation Links (All 8 Academy Tabs) -->
+        <div class="space-y-1">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400 font-bold px-3 mb-1" data-i18n="drawer_nav_header">Platform Bölümleri</div>
+          
+          <button class="drawer-nav-item w-full nav-tab active" data-tab="curriculum">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[01]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_curriculum">Müfredat & Akademi</div>
+              <div class="text-[10px] text-gray-400 font-normal">16 Modül, 7 Seviye</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="terminal">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[02]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_terminal">BZT-Shell Terminal</div>
+              <div class="text-[10px] text-gray-400 font-normal">Kali Linux Simülatörü</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="labs">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[03]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_labs">İnteraktif Laboratuvar</div>
+              <div class="text-[10px] text-gray-400 font-normal">SQLi, XSS, CmdI, LFI, JWT</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="ctf">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[04]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_ctf">CTF Arena</div>
+              <div class="text-[10px] text-gray-400 font-normal">5 Seviyeli Bayrak Avı</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="games">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[05]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_games">Siber Oyunlar</div>
+              <div class="text-[10px] text-gray-400 font-normal">Firewall Defender & Command Rush</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="tools">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[06]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_tools">Araç Kütüphanesi (Arsenal)</div>
+              <div class="text-[10px] text-gray-400 font-normal">Reverse Shell, Hash ID, Decoder</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="cheatsheet">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[07]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_cheatsheet">Referans Kartları</div>
+              <div class="text-[10px] text-gray-400 font-normal">Hacker Cheat Sheets</div>
+            </div>
+          </button>
+
+          <button class="drawer-nav-item w-full nav-tab" data-tab="certificate">
+            <span class="text-xs font-mono text-cyan-400 font-bold">[08]</span>
+            <div class="text-left flex-1">
+              <div class="text-white text-xs font-bold" data-i18n="nav_certificate">BZT Başarı Sertifikası</div>
+              <div class="text-[10px] text-gray-400 font-normal">Doğrulanabilir PNG Sertifika</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Settings & Controls -->
+        <div class="space-y-2 pt-3 border-t border-gray-800/80">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400 font-bold px-2" data-i18n="drawer_settings_header">Sistem & Ayarlar</div>
+          
+          <button id="drawer-reset-btn" class="w-full py-2 px-3 rounded-xl bg-red-950/40 hover:bg-red-950/80 border border-red-900/60 hover:border-red-500 text-red-300 text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all">
+            <span data-i18n="btn_reset_progress">İlerlemeyi Sıfırla</span>
+          </button>
+
+          <a href="https://github.com/bozatfurkan/bzt-cyber-security" target="_blank" rel="noopener" class="w-full py-2 px-3 rounded-xl bg-gray-900/80 hover:bg-gray-800 border border-gray-800 text-gray-300 hover:text-cyan-400 text-xs font-mono flex items-center justify-center gap-2 transition-colors">
+            <span>GitHub: bozatfurkan</span>
+          </a>
+        </div>
+
       </div>
 
     </div>
