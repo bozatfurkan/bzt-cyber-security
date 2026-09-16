@@ -88,6 +88,16 @@
         </button>
       </nav>
 
+              <!-- Language Switcher Toggle -->
+        <div class="flex items-center bg-black/60 border border-gray-800 rounded-xl p-1 text-xs font-mono">
+          <button id="lang-btn-tr" onclick="BZTI18n.setLanguage('tr')" class="px-2.5 py-1 rounded-lg font-bold bg-cyan-500 text-black transition-all flex items-center gap-1">
+            <span>🇹🇷</span> <span>TR</span>
+          </button>
+          <button id="lang-btn-en" onclick="BZTI18n.setLanguage('en')" class="px-2.5 py-1 rounded-lg text-gray-400 hover:text-white transition-all flex items-center gap-1">
+            <span>🇬🇧</span> <span>EN</span>
+          </button>
+        </div>
+
       <!-- User / Global Progress & Stats -->
       <div class="hidden xl:flex items-center gap-4 font-mono text-xs">
         <div class="p-1.5 px-3 bg-cyber-900 border border-gray-800 rounded-lg flex items-center gap-2">
@@ -373,6 +383,74 @@
 
     </div>
 
+    
+      <!-- LAB 4: DIRECTORY TRAVERSAL / LFI -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">📂</span>
+            <h3 class="text-lg font-bold text-cyan-400 font-mono" data-i18n="lab4_title">Lab 4: Dizin Atlama (Path Traversal / LFI)</h3>
+          </div>
+          <span class="text-xs font-mono bg-cyan-950/80 text-cyan-400 border border-cyan-800 px-2 py-0.5 rounded">LFI / Source Leak</span>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed" data-i18n="lab4_desc">
+          Sunucu tarafında 'include(["file"])' çalıştırılıyor. '../' ile dizinleri aşarak /etc/passwd dosyasını okuyun veya 'php://filter' ile kaynak kod çekin.
+        </p>
+
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="text-gray-400 self-center text-[11px]">Hızlı Payloadlar:</span>
+          <button class="lfi-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="../../../../etc/passwd">../../../../etc/passwd</button>
+          <button class="lfi-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="php://filter/convert.base64-encode/resource=secret.php">php://filter/resource=secret.php</button>
+          <button class="lfi-chip bg-gray-900 hover:bg-cyan-950/40 border border-gray-700 text-gray-300 px-2.5 py-1 rounded" data-payload="about.php">about.php (Normal)</button>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="lfi-input" placeholder="Dosya adı girin (örn: ../../../../etc/passwd)..." class="flex-1 bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-cyan-500">
+          <button id="lfi-run-btn" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs px-5 py-2.5 rounded-xl transition-all" data-i18n="lab4_btn">
+            Dosyayı Dahil Et 📂
+          </button>
+        </div>
+
+        <div id="lfi-result"></div>
+      </div>
+
+      <!-- LAB 5: JWT TAMPERING -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🔐</span>
+            <h3 class="text-lg font-bold text-yellow-400 font-mono" data-i18n="lab5_title">Lab 5: JSON Web Token (JWT) Manipülasyonu</h3>
+          </div>
+          <span class="text-xs font-mono bg-yellow-950/80 text-yellow-400 border border-yellow-800 px-2 py-0.5 rounded">Auth Bypass</span>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed" data-i18n="lab5_desc">
+          Zayıf doğrulamalı JWT tokenlarını inceleyin. Algoritmayı 'none' yaparak ve rolü 'admin'e çevirerek yetki yükseltin (Privilege Escalation).
+        </p>
+
+        <div class="space-y-2 text-xs font-mono">
+          <label class="text-gray-400 block">Örnek Düşük Yetkili Kullanıcı Token'ı (role: guest):</label>
+          <input type="text" id="jwt-token-input" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ3Vlc3RfdXNlciIsInJvbGUiOiJndWVzdCIsImlzX2FkbWluIjpmYWxzZX0.somesignature" class="w-full bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-yellow-300 font-mono focus:outline-none focus:border-yellow-500 select-all">
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs font-mono pt-1">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="jwt-check-admin" checked class="rounded bg-gray-900 border-gray-700 text-cyan-500">
+            <span class="text-emerald-400 font-bold">Rolü Admin Yap (role: 'admin', is_admin: true)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="jwt-check-none" checked class="rounded bg-gray-900 border-gray-700 text-cyan-500">
+            <span class="text-yellow-400 font-bold">Algoritmayı None Yap (alg: 'none')</span>
+          </label>
+          <button id="jwt-tamper-btn" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold font-mono text-xs px-5 py-2 rounded-xl transition-all ml-auto" data-i18n="lab5_btn">
+            Token'ı Modifiye Et & Test Et 🔐
+          </button>
+        </div>
+
+        <div id="jwt-result"></div>
+      </div>
+
+    </div>
+
     <!-- =======================================================================
          TAB 4: TOOLS (HACKER TOOLKIT)
          ======================================================================= -->
@@ -645,7 +723,9 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/curriculum.js"></script>
+  <script src="assets/js/curriculum_en.js"></script>
   <script src="assets/js/terminal.js"></script>
   <script src="assets/js/labs.js"></script>
   <script src="assets/js/ctf.js"></script>

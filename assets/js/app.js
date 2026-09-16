@@ -1,16 +1,16 @@
 /**
- * BZT Cyber Security - Main Application Controller (v3.5 PRO)
+ * BZT Cyber Security - Main Application Controller (v3.5 PRO with Full i18n)
  * Coordinates Curriculum, Labs, CTF Engine, Terminal, Tools, Gamification, and Certificates
  */
 
 const BZTApp = {
   // Rank Levels
   ranks: [
-    { min: 0, max: 200, title: "Script Kiddie", color: "text-emerald-400", badge: "🟢 Başlangıç" },
-    { min: 201, max: 500, title: "Cyber Apprentice", color: "text-cyan-400", badge: "🔵 Çırak" },
-    { min: 501, max: 1000, title: "Junior Pentester", color: "text-purple-400", badge: "🟣 Pentester" },
-    { min: 1001, max: 1800, title: "Elite Red Teamer", color: "text-red-400", badge: "🔴 Red Team" },
-    { min: 1801, max: 99999, title: "BZT Grand Master Hacker", color: "text-yellow-400", badge: "👑 Üstat" }
+    { min: 0, max: 200, titleTr: "Script Kiddie", titleEn: "Script Kiddie", color: "text-emerald-400" },
+    { min: 201, max: 500, titleTr: "Cyber Apprentice", titleEn: "Cyber Apprentice", color: "text-cyan-400" },
+    { min: 501, max: 1000, titleTr: "Junior Pentester", titleEn: "Junior Pentester", color: "text-purple-400" },
+    { min: 1001, max: 1800, titleTr: "Elite Red Teamer", titleEn: "Elite Red Teamer", color: "text-red-400" },
+    { min: 1801, max: 99999, titleTr: "BZT Grand Master Hacker", titleEn: "BZT Grand Master Hacker", color: "text-yellow-400" }
   ],
 
   getXp() {
@@ -25,7 +25,12 @@ const BZTApp = {
   },
 
   getRank(xp) {
-    return this.ranks.find(r => xp >= r.min && xp <= r.max) || this.ranks[0];
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
+    const match = this.ranks.find(r => xp >= r.min && xp <= r.max) || this.ranks[0];
+    return {
+      title: lang === "tr" ? match.titleTr : match.titleEn,
+      color: match.color
+    };
   },
 
   updateUserStats() {
@@ -41,7 +46,7 @@ const BZTApp = {
       el.innerText = rank.title;
     });
 
-    // Update global progress bar
+    // Update progress bar
     const totalLessons = CURRICULUM_DATA.length;
     const completed = JSON.parse(localStorage.getItem("bzt_completed_lessons") || "[]");
     const pct = totalLessons > 0 ? Math.round((completed.length / totalLessons) * 100) : 0;
@@ -73,6 +78,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-curriculum");
   const phaseFilters = document.querySelectorAll(".phase-filter-btn");
 
+  // Helper to fetch localized lesson content
+  function getLessonData(item) {
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
+    if (lang === "en" && window.CURRICULUM_EN && window.CURRICULUM_EN[item.id]) {
+      const en = window.CURRICULUM_EN[item.id];
+      return {
+        ...item,
+        phaseTitle: en.phaseTitle || item.phaseTitle,
+        title: en.title || item.title,
+        difficulty: en.difficulty || item.difficulty,
+        duration: en.duration || item.duration,
+        summary: en.summary || item.summary,
+        sections: en.sections || item.sections,
+        quiz: en.quiz || item.quiz
+      };
+    }
+    return item;
+  }
+
   // 1. TAB NAVIGATION
   tabButtons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -96,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (targetTab === "ctf" && window.BZT_CTF) {
         BZT_CTF.renderChallenges("ctf-challenges-container");
       } else if (targetTab === "certificate" && window.BZTCertificate) {
-        updateCertPreview();
+        window.updateCertPreview();
       }
     });
   });
@@ -106,7 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!curriculumGrid) return;
     curriculumGrid.innerHTML = "";
 
-    const filtered = CURRICULUM_DATA.filter(item => {
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
+
+    const filtered = CURRICULUM_DATA.map(getLessonData).filter(item => {
       const matchesPhase = currentFilterPhase === "all" || item.phase.toString() === currentFilterPhase;
       const q = searchQuery.toLowerCase();
       const matchesSearch = !q || 
@@ -120,8 +146,12 @@ document.addEventListener("DOMContentLoaded", () => {
       curriculumGrid.innerHTML = `
         <div class="col-span-full text-center py-12 text-gray-400">
           <div class="text-3xl mb-2">🔍</div>
-          <div class="font-bold text-lg text-gray-200">Aramanıza uygun ders veya modül bulunamadı.</div>
-          <div class="text-sm">Farklı bir arama terimi veya filtre seçmeyi deneyin.</div>
+          <div class="font-bold text-lg text-gray-200">
+            ${lang === 'tr' ? 'Aramanıza uygun ders veya modül bulunamadı.' : 'No lessons or modules found matching your query.'}
+          </div>
+          <div class="text-sm">
+            ${lang === 'tr' ? 'Farklı bir arama terimi veya filtre seçmeyi deneyin.' : 'Try a different search term or filter category.'}
+          </div>
         </div>`;
       return;
     }
@@ -132,9 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "glass-panel p-5 rounded-xl border border-gray-800 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-950/30 group";
       
       let badgeColor = "bg-emerald-950/80 text-emerald-400 border-emerald-800";
-      if (item.difficulty === "Orta") badgeColor = "bg-cyan-950/80 text-cyan-400 border-cyan-800";
-      if (item.difficulty === "İleri") badgeColor = "bg-purple-950/80 text-purple-400 border-purple-800";
-      if (item.difficulty === "Uzman") badgeColor = "bg-red-950/80 text-red-400 border-red-800";
+      if (item.difficulty.includes("Orta") || item.difficulty.includes("Intermediate")) badgeColor = "bg-cyan-950/80 text-cyan-400 border-cyan-800";
+      if (item.difficulty.includes("İleri") || item.difficulty.includes("Advanced")) badgeColor = "bg-purple-950/80 text-purple-400 border-purple-800";
+      if (item.difficulty.includes("Uzman") || item.difficulty.includes("Expert")) badgeColor = "bg-red-950/80 text-red-400 border-red-800";
+
+      const startText = lang === 'tr' ? 'Eğitimi Başlat' : 'Start Lesson';
+      const doneText = isDone ? (lang === 'tr' ? '✓ Tamamlandı' : '✓ Completed') : (lang === 'tr' ? '○ Bitir' : '○ Mark Done');
 
       card.innerHTML = `
         <div>
@@ -168,12 +201,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between">
             <button class="open-lesson-btn text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/40 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5" data-id="${item.id}">
-              <span>Eğitimi Başlat</span>
+              <span>${startText}</span>
               <span>→</span>
             </button>
 
             <button class="toggle-done-btn text-xs px-2 py-1 rounded transition-colors ${isDone ? 'text-emerald-400 font-bold' : 'text-gray-500 hover:text-gray-300'}" data-id="${item.id}">
-              ${isDone ? '✓ Tamamlandı' : '○ Bitir'}
+              ${doneText}
             </button>
           </div>
         </div>
@@ -185,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     BZTApp.updateUserStats();
     attachCardListeners();
   }
+  window.renderCurriculum = renderCurriculum;
 
   // 3. ATTACH CARD LISTENERS
   function attachCardListeners() {
@@ -198,13 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".toggle-done-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = btn.getAttribute("data-id");
-        const lesson = CURRICULUM_DATA.find(x => x.id === id);
+        const raw = CURRICULUM_DATA.find(x => x.id === id);
 
         if (completedLessons.includes(id)) {
           completedLessons = completedLessons.filter(x => x !== id);
         } else {
           completedLessons.push(id);
-          if (lesson && lesson.xp) BZTApp.addXp(lesson.xp);
+          if (raw && raw.xp) BZTApp.addXp(raw.xp);
         }
         localStorage.setItem("bzt_completed_lessons", JSON.stringify(completedLessons));
         renderCurriculum();
@@ -218,13 +252,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModalBtn = document.getElementById("close-modal-btn");
 
   function openLessonModal(id) {
-    const lesson = CURRICULUM_DATA.find(x => x.id === id);
-    if (!lesson || !modal || !modalContent) return;
+    const raw = CURRICULUM_DATA.find(x => x.id === id);
+    if (!raw || !modal || !modalContent) return;
+
+    const lesson = getLessonData(raw);
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
 
     modalContent.innerHTML = `
       <div class="border-b border-gray-800 pb-4 mb-6">
         <div class="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
-          <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty} Seviye</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
+          <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty}</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
         </div>
         <h2 class="text-2xl font-bold text-white mb-2">${lesson.title}</h2>
         <p class="text-sm text-gray-400 leading-relaxed">${lesson.summary}</p>
@@ -242,8 +279,10 @@ document.addEventListener("DOMContentLoaded", () => {
             ${sec.codeSnippet ? `
               <div class="code-block p-4 my-3 font-mono text-xs text-emerald-400 overflow-x-auto rounded-lg border border-gray-800">
                 <div class="flex justify-between items-center text-gray-500 pb-2 mb-2 border-b border-gray-800/60 text-[11px]">
-                  <span>KOD ÖRNEĞİ / EXPLOIT</span>
-                  <button class="copy-code-btn hover:text-cyan-400 transition-colors" data-code="${encodeURIComponent(sec.codeSnippet)}">📋 Kopyala</button>
+                  <span>${lang === 'tr' ? 'KOD ÖRNEĞİ / EXPLOIT' : 'CODE SNIPPET / EXPLOIT'}</span>
+                  <button class="copy-code-btn hover:text-cyan-400 transition-colors" data-code="${encodeURIComponent(sec.codeSnippet)}">
+                    📋 ${lang === 'tr' ? 'Kopyala' : 'Copy'}
+                  </button>
                 </div>
                 <pre>${escapeHtml(sec.codeSnippet)}</pre>
               </div>
@@ -251,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             ${sec.tip ? `
               <div class="p-3 bg-cyan-950/40 border-l-4 border-cyan-500 rounded-r-lg text-xs text-cyan-200">
-                <b>💡 Hacker Notu & İpucu:</b> ${sec.tip}
+                <b>💡 ${lang === 'tr' ? 'Hacker Notu & İpucu:' : 'Hacker Note & Tip:'}</b> ${sec.tip}
               </div>
             ` : ""}
 
@@ -259,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="flex items-center justify-between p-2.5 bg-black/60 border border-gray-800 rounded-lg text-xs font-mono">
                 <span class="text-gray-400">$ <span class="text-yellow-300">${sec.terminalCommand}</span></span>
                 <button class="run-in-term-btn bg-cyan-500/20 hover:bg-cyan-500 text-cyan-400 hover:text-black px-2 py-1 rounded transition-colors text-[11px]" data-cmd="${sec.terminalCommand}">
-                  BZT-Shell'de Çalıştır ⚡
+                  ${lang === 'tr' ? "BZT-Shell'de Çalıştır ⚡" : 'Run in BZT-Shell ⚡'}
                 </button>
               </div>
             ` : ""}
@@ -270,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${lesson.quiz ? `
           <div class="mt-8 p-5 bg-gray-900/90 border border-gray-800 rounded-xl space-y-4">
             <div class="text-sm font-bold text-yellow-400 flex items-center gap-2">
-              <span>🧠</span> Modül Pekiştirme Sorusu (+50 XP)
+              <span>🧠</span> ${lang === 'tr' ? 'Modül Pekiştirme Sorusu (+50 XP)' : 'Module Knowledge Check (+50 XP)'}
             </div>
             <div class="text-sm font-medium text-gray-200">${lesson.quiz.question}</div>
             <div class="space-y-2">
@@ -290,8 +329,8 @@ document.addEventListener("DOMContentLoaded", () => {
       b.addEventListener("click", () => {
         const code = decodeURIComponent(b.getAttribute("data-code"));
         navigator.clipboard.writeText(code);
-        b.innerText = "✓ Kopyalandı!";
-        setTimeout(() => b.innerText = "📋 Kopyala", 1500);
+        b.innerText = lang === 'tr' ? "✓ Kopyalandı!" : "✓ Copied!";
+        setTimeout(() => b.innerText = lang === 'tr' ? "📋 Kopyala" : "📋 Copy", 1500);
       });
     });
 
@@ -322,11 +361,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (selected === correct) {
           feedback.classList.add("bg-emerald-950/70", "border", "border-emerald-500", "text-emerald-300");
-          feedback.innerHTML = `<b>🎉 Doğru Cevap!</b> (+50 XP) ${lesson.quiz.explanation}`;
+          feedback.innerHTML = `<b>🎉 ${lang === 'tr' ? 'Doğru Cevap!' : 'Correct Answer!'}</b> (+50 XP) ${lesson.quiz.explanation}`;
           BZTApp.addXp(50);
         } else {
           feedback.classList.add("bg-red-950/70", "border", "border-red-500", "text-red-300");
-          feedback.innerHTML = `<b>❌ Yanlış Seçenek.</b> Doğru cevap: <b>${String.fromCharCode(65 + correct)}</b>. Açıklama: ${lesson.quiz.explanation}`;
+          feedback.innerHTML = `<b>❌ ${lang === 'tr' ? 'Yanlış Seçenek.' : 'Incorrect Choice.'}</b> ${lang === 'tr' ? 'Doğru cevap:' : 'Correct:'} <b>${String.fromCharCode(65 + correct)}</b>. ${lesson.quiz.explanation}`;
         }
       });
     });
@@ -361,7 +400,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 6. LABS EVENT LISTENERS
-  // SQLi
   const sqliInput = document.getElementById("sqli-payload-input");
   const sqliBtn = document.getElementById("sqli-run-btn");
   if (sqliBtn && sqliInput) {
@@ -377,7 +415,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // XSS
   const xssInput = document.getElementById("xss-payload-input");
   const xssFilter = document.getElementById("xss-filter-select");
   const xssBtn = document.getElementById("xss-run-btn");
@@ -394,7 +431,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Command Injection
   const cmdInput = document.getElementById("cmd-input");
   const cmdBtn = document.getElementById("cmd-run-btn");
   if (cmdBtn && cmdInput) {
@@ -410,7 +446,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // LFI Lab
   const lfiInput = document.getElementById("lfi-input");
   const lfiBtn = document.getElementById("lfi-run-btn");
   if (lfiBtn && lfiInput) {
@@ -426,7 +461,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // JWT Lab
   const jwtInput = document.getElementById("jwt-token-input");
   const jwtBtn = document.getElementById("jwt-tamper-btn");
   if (jwtBtn && jwtInput) {
@@ -447,13 +481,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const ip = revIp ? revIp.value : "10.10.14.5";
     const port = revPort ? revPort.value : "4444";
     const shells = BZTTools.generateShells(ip, port);
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
 
     revContainer.innerHTML = shells.map(s => `
       <div class="p-3 bg-gray-950 border border-gray-800 rounded-lg space-y-1">
         <div class="flex justify-between items-center text-xs">
           <span class="font-bold text-cyan-400">${s.name}</span>
           <button class="copy-shell-btn text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-300 px-2 py-0.5 rounded transition-colors" data-shell="${encodeURIComponent(s.code)}">
-            📋 Kopyala
+            📋 ${lang === 'tr' ? 'Kopyala' : 'Copy'}
           </button>
         </div>
         <div class="text-[11px] text-gray-400">${s.desc}</div>
@@ -465,8 +500,8 @@ document.addEventListener("DOMContentLoaded", () => {
       b.addEventListener("click", () => {
         const code = decodeURIComponent(b.getAttribute("data-shell"));
         navigator.clipboard.writeText(code);
-        b.innerText = "✓ Kopyalandı!";
-        setTimeout(() => b.innerText = "📋 Kopyala", 1500);
+        b.innerText = lang === 'tr' ? "✓ Kopyalandı!" : "✓ Copied!";
+        setTimeout(() => b.innerText = lang === 'tr' ? "📋 Kopyala" : "📋 Copy", 1500);
       });
     });
   }
@@ -509,29 +544,31 @@ document.addEventListener("DOMContentLoaded", () => {
   if (hashBtn && hashInput && hashResult) {
     hashBtn.addEventListener("click", () => {
       const res = BZTTools.identifyHash(hashInput.value);
+      const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
+
       hashResult.innerHTML = `
         <div class="p-3 bg-gray-950 border border-gray-800 rounded-lg text-xs space-y-1 font-mono">
-          <div><span class="text-gray-400">Muhtemel Algoritma:</span> <b class="text-cyan-400 text-sm">${res.type}</b></div>
-          <div><span class="text-gray-400">Doğruluk Güveni:</span> <span class="text-emerald-400">${res.confidence}</span></div>
-          <div><span class="text-gray-400">Hashcat Kırma Önerisi:</span> <span class="text-yellow-300">${res.sampleMode}</span></div>
+          <div><span class="text-gray-400">${lang === 'tr' ? 'Muhtemel Algoritma:' : 'Detected Algorithm:'}</span> <b class="text-cyan-400 text-sm">${res.type}</b></div>
+          <div><span class="text-gray-400">${lang === 'tr' ? 'Doğruluk Güveni:' : 'Confidence Level:'}</span> <span class="text-emerald-400">${res.confidence}</span></div>
+          <div><span class="text-gray-400">${lang === 'tr' ? 'Hashcat Önerisi:' : 'Recommended Mode:'}</span> <span class="text-yellow-300">${res.sampleMode}</span></div>
         </div>
       `;
     });
   }
 
-  // 10. CERTIFICATE LOGIC
+  // 10. CERTIFICATE PREVIEW & DOWNLOAD
   const certNameInput = document.getElementById("cert-student-name");
   const certPreviewImg = document.getElementById("cert-preview-img");
   const certDownloadBtn = document.getElementById("cert-download-btn");
 
-  function updateCertPreview() {
+  window.updateCertPreview = function() {
     if (!certPreviewImg) return;
     const name = certNameInput ? certNameInput.value : "Furkan Bozat";
     certPreviewImg.src = BZTCertificate.generate(name);
-  }
+  };
 
   if (certNameInput) {
-    certNameInput.addEventListener("input", updateCertPreview);
+    certNameInput.addEventListener("input", window.updateCertPreview);
   }
   if (certDownloadBtn) {
     certDownloadBtn.addEventListener("click", () => {
@@ -548,7 +585,11 @@ document.addEventListener("DOMContentLoaded", () => {
               .replace(/'/g, "&#039;");
   }
 
-  // Initial Curriculum & Stats Render
-  renderCurriculum();
-  BZTApp.updateUserStats();
+  // Initial Curriculum, Stats & i18n Render
+  if (window.BZTI18n) {
+    BZTI18n.applyTranslations();
+  } else {
+    renderCurriculum();
+    BZTApp.updateUserStats();
+  }
 });

@@ -1,6 +1,6 @@
 /**
- * BZT Cyber Security - Professional Certificate Generator
- * Generates verified Cyber Security Completion Certificates via HTML5 Canvas
+ * BZT Cyber Security - Professional Certificate Generator (v3.5 PRO)
+ * Generates verified Cyber Security Completion Certificates in Turkish & English
  */
 
 const BZTCertificate = {
@@ -10,9 +10,10 @@ const BZTCertificate = {
     canvas.height = 1100;
     const ctx = canvas.getContext("2d");
 
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
     const name = (studentName || "Furkan Bozat").trim();
-    const dateStr = "16 Eylül 2026";
     const certId = "BZT-" + Math.random().toString(36).substring(2, 10).toUpperCase() + "-2026";
+    const dateStr = lang === "tr" ? "16 Eylül 2026" : "September 16, 2026";
 
     // 1. Background (Cyber Dark Gradient)
     const bgGrad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
@@ -68,12 +69,18 @@ const BZTCertificate = {
 
     ctx.fillStyle = "#ffffff";
     ctx.font = "800 52px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("BAŞARI VE YETKİNLİK SERTİFİKASI", canvas.width / 2, 240);
+    const certHeading = lang === "tr" ? "BAŞARI VE YETKİNLİK SERTİFİKASI" : "CERTIFICATE OF ACHIEVEMENT & EXCELLENCE";
+    ctx.fillText(certHeading, canvas.width / 2, 240);
 
     ctx.fillStyle = "#94a3b8";
     ctx.font = "20px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("Bu sertifika, aşağıdaki adayın etik hackerlık ve siber sızma testleri alanındaki", canvas.width / 2, 310);
-    ctx.fillText("kapsamlı eğitim, laboratuvar ve pratik CTF aşamalarını üstün başarıyla tamamladığını onaylar:", canvas.width / 2, 345);
+    if (lang === "tr") {
+      ctx.fillText("Bu sertifika, aşağıdaki adayın etik hackerlık ve siber sızma testleri alanındaki", canvas.width / 2, 310);
+      ctx.fillText("kapsamlı eğitim, laboratuvar ve pratik CTF aşamalarını üstün başarıyla tamamladığını onaylar:", canvas.width / 2, 345);
+    } else {
+      ctx.fillText("This certificate hereby certifies that the following candidate has successfully completed", canvas.width / 2, 310);
+      ctx.fillText("hands-on training, security laboratories, and CTF challenges in ethical hacking and penetration testing:", canvas.width / 2, 345);
+    }
 
     // 5. Student Name
     ctx.fillStyle = "#38bdf8";
@@ -101,13 +108,22 @@ const BZTCertificate = {
     // 7. Bullet Qualifications
     ctx.fillStyle = "#cbd5e1";
     ctx.font = "19px 'Plus Jakarta Sans', sans-serif";
-    const specs = [
+    const specsTr = [
       "✓ Ağ Keşfi & Nmap Derinlemesine Zafiyet Analizi",
       "✓ OWASP Top 10 Web Penetration Testing (SQLi, XSS, RCE, SSRF)",
       "✓ Linux & Windows Privilege Escalation (SUID, Sudoers, Kernel Exploits)",
       "✓ Active Directory Dominasyonu & Kerberoasting İstismarı",
       "✓ AV/EDR Atlatma (Evasion) & C2 Mimari Temelleri"
     ];
+    const specsEn = [
+      "✓ Network Reconnaissance & In-Depth Nmap Vulnerability Assessment",
+      "✓ OWASP Top 10 Web Penetration Testing (SQLi, XSS, RCE, SSRF, LFI)",
+      "✓ Linux & Windows Privilege Escalation (SUID, Sudoers, Kernel Exploits)",
+      "✓ Active Directory Penetration Testing & Kerberoasting Exploitation",
+      "✓ AV/EDR Evasion & Command & Control (C2) Architecture Foundations"
+    ];
+    const specs = lang === "tr" ? specsTr : specsEn;
+
     let startY = 630;
     specs.forEach(s => {
       ctx.fillText(s, canvas.width / 2, startY);
@@ -118,9 +134,9 @@ const BZTCertificate = {
     ctx.textAlign = "left";
     ctx.fillStyle = "#64748b";
     ctx.font = "16px 'Fira Code', monospace";
-    ctx.fillText(`DOĞRULAMA ID: ${certId}`, 120, 960);
-    ctx.fillText(`DÜZENLENME TARİHİ: ${dateStr}`, 120, 990);
-    ctx.fillText("DURUM: ONAYLANDI (VERIFIED ON-CHAIN & REPO)", 120, 1020);
+    ctx.fillText(`ID: ${certId}`, 120, 960);
+    ctx.fillText(`DATE: ${dateStr}`, 120, 990);
+    ctx.fillText("STATUS: VERIFIED ON-CHAIN & BZT REPOSITORY", 120, 1020);
 
     ctx.textAlign = "right";
     ctx.fillStyle = "#38bdf8";
@@ -128,7 +144,7 @@ const BZTCertificate = {
     ctx.fillText("BZT CYBER SECURITY ACADEMY", canvas.width - 120, 960);
     ctx.fillStyle = "#94a3b8";
     ctx.font = "italic 16px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("Baş Eğitmen & Baş Güvenlik Araştırmacısı: Furkan Bozat", canvas.width - 120, 990);
+    ctx.fillText(lang === "tr" ? "Baş Araştırmacı: Furkan Bozat" : "Lead Security Researcher: Furkan Bozat", canvas.width - 120, 990);
     ctx.fillStyle = "#10b981";
     ctx.font = "14px 'Fira Code', monospace";
     ctx.fillText("OFFICIAL CRYPTOGRAPHIC SEAL: [VALID]", canvas.width - 120, 1020);
@@ -139,7 +155,7 @@ const BZTCertificate = {
   download(studentName) {
     const dataUrl = this.generate(studentName);
     const link = document.createElement("a");
-    link.download = `BZT-Cyber-Security-Sertifika-${(studentName || "Furkan-Bozat").replace(/\s+/g, "_")}.png`;
+    link.download = `BZT-Cyber-Security-Certificate-${(studentName || "Furkan-Bozat").replace(/\s+/g, "_")}.png`;
     link.href = dataUrl;
     link.click();
   }

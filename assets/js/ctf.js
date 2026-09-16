@@ -1,68 +1,93 @@
 /**
- * BZT Cyber Security - CTF Challenge & Wargame Engine (OverTheWire / HTB Style)
- * Interactive Capture-The-Flag Challenges
+ * BZT Cyber Security - CTF Challenge & Wargame Engine (v3.5 PRO)
+ * Interactive Capture-The-Flag Challenges in Turkish & English
  */
 
 const BZT_CTF_CHALLENGES = [
   {
     id: "ctf-1",
     level: 1,
-    title: "Level 1: Gizli Kaynak & Robots.txt",
-    category: "Recon & Web",
+    title: { tr: "Level 1: Gizli Kaynak & Robots.txt", en: "Level 1: Hidden Source & Robots.txt" },
+    category: { tr: "Keşif & Web", en: "Recon & Web" },
     points: 100,
-    difficulty: "Kolay",
-    description: "Web sitelerindeki arama motoru indeksleme dosyaları (robots.txt) veya HTML kaynak kodları geliştiricilerin unuttuğu gizli dizinleri ve bayrakları barındırabilir.",
-    hint: "BZT-Shell terminaline gidin ve 'cat robots.txt' komutunu çalıştırın veya terminalde 'ls' yapın!",
-    flag: "BZT{robots_txt_recon_master_2026}",
-    completed: false
+    difficulty: { tr: "Kolay", en: "Easy" },
+    description: {
+      tr: "Web sitelerindeki arama motoru indeksleme dosyaları (robots.txt) veya kaynak kodları geliştiricilerin unuttuğu gizli dizinleri ve bayrakları barındırabilir.",
+      en: "Search engine crawler directives (robots.txt) or source comments often expose hidden endpoints, backup paths, or sensitive test flags."
+    },
+    hint: {
+      tr: "BZT-Shell terminaline gidin ve 'cat robots.txt' komutunu çalıştırın!",
+      en: "Go to the BZT-Shell terminal and execute 'cat robots.txt'!"
+    },
+    flag: "BZT{robots_txt_recon_master_2026}"
   },
   {
     id: "ctf-2",
     level: 2,
-    title: "Level 2: İkili Şifreli Ajan Mesajı",
-    category: "Kriptografi",
+    title: { tr: "Level 2: İkili Şifreli Ajan Mesajı", en: "Level 2: Encoded Spy Transmission" },
+    category: { tr: "Kriptografi", en: "Cryptography" },
     points: 150,
-    difficulty: "Orta",
-    description: "Yakalanan casus mesajı Base64 ile kodlanmıştır: <code class='bg-black/60 px-1 py-0.5 rounded text-cyan-300 font-mono'>QlpUe2Jhc2U2NF9jcnlwdG9fYnJlYWtlcl85OX0=</code>. Bu şifreyi Araçlar sekmesindeki Base64 çözücü ile açın ve bayrağı bulun.",
-    hint: "Araç Çantası (Tools) sekmesindeki 'Base64 Decode' fonksiyonunu kullanın.",
-    flag: "BZT{base64_crypto_breaker_99}",
-    completed: false
+    difficulty: { tr: "Orta", en: "Medium" },
+    description: {
+      tr: "Yakalanan casus mesajı Base64 ile kodlanmıştır: <code class='bg-black/60 px-1 py-0.5 rounded text-cyan-300 font-mono'>QlpUe2Jhc2U2NF9jcnlwdG9fYnJlYWtlcl85OX0=</code>. Bu şifreyi Araçlar sekmesindeki Base64 çözücü ile açın ve bayrağı bulun.",
+      en: "An intercepted transmission was encoded in Base64: <code class='bg-black/60 px-1 py-0.5 rounded text-cyan-300 font-mono'>QlpUe2Jhc2U2NF9jcnlwdG9fYnJlYWtlcl85OX0=</code>. Use the Base64 Decoder in the Arsenal tab to uncover the flag."
+    },
+    hint: {
+      tr: "Araçlar (Arsenal) sekmesindeki 'Base64 Decode' fonksiyonunu kullanın.",
+      en: "Use the 'Base64 Decode' button under the Arsenal tab."
+    },
+    flag: "BZT{base64_crypto_breaker_99}"
   },
   {
     id: "ctf-3",
     level: 3,
-    title: "Level 3: Veritabanı Sızıntısı (SQLi)",
-    category: "Web Exploitation",
+    title: { tr: "Level 3: Veritabanı Sızıntısı (SQLi)", en: "Level 3: Database Data Leak (SQLi)" },
+    category: { tr: "Web Sızma", en: "Web Exploitation" },
     points: 200,
-    difficulty: "Orta",
-    description: "Laboratuvar sekmesindeki SQL Injection Lab'ında kimlik doğrulama bypass (Auth Bypass) payload'ı kullanarak Admin hesabına sızın ve ekrana dökülen gizli bayrağı buraya girin.",
-    hint: "SQLi Lab'da 'admin\\' --' payload'ını çalıştırın.",
-    flag: "BZT{sqli_auth_bypass_godmode}",
-    completed: false
+    difficulty: { tr: "Orta", en: "Medium" },
+    description: {
+      tr: "Laboratuvar sekmesindeki SQL Injection Lab'ında kimlik doğrulama bypass (Auth Bypass) payload'ı kullanarak Admin hesabına sızın ve ekrana dökülen gizli bayrağı buraya girin.",
+      en: "Navigate to the SQL Injection Lab, trigger an Authentication Bypass payload against the admin user, and capture the revealed secret flag."
+    },
+    hint: {
+      tr: "SQLi Lab'da 'admin\\' --' payload'ını çalıştırın.",
+      en: "Run 'admin\\' --' in the SQL Injection Lab."
+    },
+    flag: "BZT{sqli_auth_bypass_godmode}"
   },
   {
     id: "ctf-4",
     level: 4,
-    title: "Level 4: Root Bayrağı (Privilege Escalation)",
-    category: "Linux & Sistem",
+    title: { tr: "Level 4: Root Bayrağı (Privilege Escalation)", en: "Level 4: Root Flag (Privilege Escalation)" },
+    category: { tr: "Linux & Sistem", en: "Linux & System" },
     points: 250,
-    difficulty: "İleri",
-    description: "BZT-Shell Kali simülatöründe root dizinindeki 'flag.txt' dosyasının içeriğini okuyun.",
-    hint: "BZT-Shell'e 'cat flag.txt' yazın.",
-    flag: "BZT{3l1t3_h4ck3r_m4st3rm1nd_2026}",
-    completed: false
+    difficulty: { tr: "İleri", en: "Advanced" },
+    description: {
+      tr: "BZT-Shell Kali simülatöründe root dizinindeki 'flag.txt' dosyasının içeriğini okuyun.",
+      en: "Read the secret 'flag.txt' file inside the root workspace of the BZT-Shell Kali simulator."
+    },
+    hint: {
+      tr: "BZT-Shell terminalinde 'cat flag.txt' komutunu çalıştırın.",
+      en: "Execute 'cat flag.txt' in BZT-Shell."
+    },
+    flag: "BZT{3l1t3_h4ck3r_m4st3rm1nd_2026}"
   },
   {
     id: "ctf-5",
     level: 5,
-    title: "Level 5: Hash Kırma Ustası (Hashcat)",
-    category: "Password Cracking",
+    title: { tr: "Level 5: Hash Kırma Ustası (Hashcat)", en: "Level 5: Hash Cracking Master (Hashcat)" },
+    category: { tr: "Parola Kırma", en: "Password Cracking" },
     points: 300,
-    difficulty: "İleri",
-    description: "Sızdırılan MD5 parolası: <code class='bg-black/60 px-1 py-0.5 rounded text-yellow-300 font-mono'>5f4dcc3b5aa765d61d8327deb882cf99</code>. BZT-Shell'de 'hashcat' komutu ile veya parola sözlükleri ile bu hash'i kırın. Bayrak formatı: <b>BZT{kirilan_parola}</b>.",
-    hint: "BZT-Shell terminalinde 'hashcat 5f4dcc3b5aa765d61d8327deb882cf99' komutunu çalıştırarak şifreyi görebilirsiniz (Örn: parola 'password' ise bayrak: BZT{password}).",
-    flag: "BZT{password}",
-    completed: false
+    difficulty: { tr: "İleri", en: "Advanced" },
+    description: {
+      tr: "Sızdırılan MD5 parolası: <code class='bg-black/60 px-1 py-0.5 rounded text-yellow-300 font-mono'>5f4dcc3b5aa765d61d8327deb882cf99</code>. BZT-Shell'de 'hashcat' komutu ile bu hash'i kırın. Bayrak formatı: <b>BZT{kirilan_parola}</b>.",
+      en: "Leaked MD5 hash: <code class='bg-black/60 px-1 py-0.5 rounded text-yellow-300 font-mono'>5f4dcc3b5aa765d61d8327deb882cf99</code>. Crack this hash in BZT-Shell using 'hashcat'. Flag format: <b>BZT{cracked_password}</b>."
+    },
+    hint: {
+      tr: "BZT-Shell terminalinde 'hashcat 5f4dcc3b5aa765d61d8327deb882cf99' komutunu çalıştırarak şifreyi görebilirsiniz.",
+      en: "Execute 'hashcat 5f4dcc3b5aa765d61d8327deb882cf99' in BZT-Shell."
+    },
+    flag: "BZT{password}"
   }
 ];
 
@@ -74,6 +99,9 @@ const BZT_CTF = {
   renderChallenges(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
+
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
+    const getT = (obj) => typeof obj === "object" && obj !== null ? (obj[lang] || obj.tr || obj.en || "") : obj;
 
     const solved = this.getSolvedFlags();
     let totalScore = 0;
@@ -89,7 +117,7 @@ const BZT_CTF = {
               <div>
                 <div class="flex items-center justify-between mb-3">
                   <span class="text-xs font-mono px-2 py-0.5 rounded border ${isSolved ? 'bg-emerald-900/60 border-emerald-500 text-emerald-300' : 'bg-gray-900 border-gray-700 text-gray-400'}">
-                    ${ch.category}
+                    ${getT(ch.category)}
                   </span>
                   <span class="text-xs font-mono font-bold ${isSolved ? 'text-emerald-400' : 'text-yellow-400'}">
                     +${ch.points} XP
@@ -98,30 +126,30 @@ const BZT_CTF = {
 
                 <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
                   <span>${isSolved ? '🚩' : '🎯'}</span>
-                  ${ch.title}
+                  ${getT(ch.title)}
                 </h4>
 
                 <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                  ${ch.description}
+                  ${getT(ch.description)}
                 </p>
 
                 <div class="p-2.5 bg-black/50 border border-gray-800 rounded-lg text-xs text-cyan-300/80 mb-4">
-                  <b>💡 İpucu:</b> ${ch.hint}
+                  <b>💡 ${lang === 'tr' ? 'İpucu:' : 'Hint:'}</b> ${getT(ch.hint)}
                 </div>
               </div>
 
               <div>
                 ${isSolved ? `
                   <div class="p-2.5 bg-emerald-950/80 border border-emerald-500/60 rounded-lg text-xs font-mono text-emerald-300 font-bold flex items-center justify-between">
-                    <span>✓ ÇÖZÜLDÜ (SOLVED)</span>
+                    <span>✓ ${lang === 'tr' ? 'ÇÖZÜLDÜ (SOLVED)' : 'SOLVED'}</span>
                     <span>+${ch.points} XP</span>
                   </div>
                 ` : `
                   <div class="space-y-2">
                     <div class="flex gap-2">
-                      <input type="text" id="flag-input-${ch.id}" placeholder="BZT{...} bayrağını girin" class="flex-1 bg-cyber-900 border border-gray-800 rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-cyan-500">
+                      <input type="text" id="flag-input-${ch.id}" placeholder="${lang === 'tr' ? 'BZT{...} bayrağını girin' : 'Enter BZT{...} flag'}" class="flex-1 bg-cyber-900 border border-gray-800 rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-cyan-500">
                       <button onclick="BZT_CTF.submitFlag('${ch.id}')" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs px-3 py-1.5 rounded-lg transition-colors">
-                        Gönder
+                        ${lang === 'tr' ? 'Gönder' : 'Submit'}
                       </button>
                     </div>
                     <div id="flag-feedback-${ch.id}" class="text-[11px] font-mono min-h-[18px]"></div>
@@ -142,6 +170,7 @@ const BZT_CTF = {
     const ch = BZT_CTF_CHALLENGES.find(x => x.id === chId);
     if (!ch) return;
 
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
     const input = document.getElementById(`flag-input-${chId}`);
     const feedback = document.getElementById(`flag-feedback-${chId}`);
     if (!input || !feedback) return;
@@ -149,7 +178,7 @@ const BZT_CTF = {
     const submitted = input.value.trim();
 
     if (submitted === ch.flag) {
-      feedback.innerHTML = `<span class="text-emerald-400 font-bold">🎉 Doğru Bayrak! +${ch.points} XP Kazanıldı!</span>`;
+      feedback.innerHTML = `<span class="text-emerald-400 font-bold">🎉 ${lang === 'tr' ? 'Doğru Bayrak!' : 'Correct Flag!'} +${ch.points} XP!</span>`;
       const solved = this.getSolvedFlags();
       if (!solved.includes(chId)) {
         solved.push(chId);
@@ -162,7 +191,7 @@ const BZT_CTF = {
         this.renderChallenges("ctf-challenges-container");
       }, 800);
     } else {
-      feedback.innerHTML = `<span class="text-red-400">❌ Yanlış bayrak formatı veya değeri. İpucunu kontrol edin.</span>`;
+      feedback.innerHTML = `<span class="text-red-400">❌ ${lang === 'tr' ? 'Yanlış bayrak değeri. İpucunu kontrol edin.' : 'Incorrect flag. Check the hint.'}</span>`;
     }
   }
 };
