@@ -1,25 +1,28 @@
 /* ==========================================================================
-   BZT Cyber Security - Custom Cyber Theme & Effects
+   BZT Cyber Security - Kodluyoruz / CyberStart 2.0 Theme
+   Light Academic Theme with Signature Orange (#f37021) Accents
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --bg-deep: #030712;
-  --bg-surface: #0b0f19;
-  --bg-card: rgba(17, 24, 39, 0.75);
-  --border-subtle: rgba(31, 41, 55, 0.8);
-  --border-neon: rgba(6, 182, 212, 0.4);
-  --neon-cyan: #06b6d4;
-  --neon-emerald: #10b981;
-  --neon-purple: #a855f7;
-  --neon-red: #ef4444;
-  --neon-amber: #f59e0b;
+  --primary-orange: #f37021;
+  --primary-orange-hover: #e05d0e;
+  --orange-soft: #fff7ed;
+  --orange-border: #fed7aa;
+  
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-subtle: #e2e8f0;
+  
+  --terminal-bg: #090d16;
 }
 
 body {
-  background-color: var(--bg-deep);
-  color: #f3f4f6;
+  background-color: var(--bg-main);
+  color: var(--text-main);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
@@ -28,74 +31,89 @@ body {
   font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* Background Cyber Grid */
-.cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(6, 182, 212, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
-}
-
-.cyber-radial {
-  background: radial-gradient(circle at 50% 10%, rgba(6, 182, 212, 0.12) 0%, rgba(3, 7, 18, 0) 70%);
-}
-
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #94a3b8;
 }
 
-/* Neon Glows */
-.glow-cyan {
-  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.35);
-}
-.glow-cyan-sm {
-  box-shadow: 0 0 12px -2px rgba(6, 182, 212, 0.45);
-}
-.glow-emerald {
-  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.35);
-}
-.glow-purple {
-  box-shadow: 0 0 25px -4px rgba(168, 85, 247, 0.35);
+/* Kodluyoruz Section Divider (—— LABEL ——) */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 3rem 0 1.5rem 0;
 }
 
-/* Terminal Glassmorphism */
-.glass-panel {
-  background: rgba(11, 15, 25, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.section-divider .divider-line {
+  height: 2px;
+  background-color: #fed7aa;
+  flex: 1;
+  max-width: 140px;
 }
 
-.glass-panel:hover {
-  border-color: rgba(6, 182, 212, 0.3);
+.section-divider .divider-text {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #f37021;
+  text-transform: uppercase;
 }
 
-/* Badge Pulse */
-@keyframes cyber-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+/* Kodluyoruz Feature Cards */
+.kodluyoruz-card-blue {
+  background-color: #f0f4f8;
+  border: 1px solid #dbeafe;
+  border-radius: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.pulse-badge {
-  animation: cyber-pulse 2s infinite ease-in-out;
+.kodluyoruz-card-blue:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08);
 }
 
-/* Code block line highlight */
+.kodluyoruz-card-orange {
+  background-color: #f37021;
+  color: #ffffff;
+  border-radius: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 30px -5px rgba(243, 112, 33, 0.35);
+}
+.kodluyoruz-card-orange:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -6px rgba(243, 112, 33, 0.45);
+}
+
+/* Clean White Card */
+.clean-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+.clean-card:hover {
+  border-color: #f37021;
+  box-shadow: 0 10px 24px -4px rgba(243, 112, 33, 0.12);
+}
+
+/* Code block highlight */
 .code-block {
   background: #090d16;
-  border: 1px solid rgba(75, 85, 99, 0.3);
-  border-radius: 8px;
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  border-radius: 10px;
   position: relative;
 }
 
@@ -108,80 +126,52 @@ body {
   display: inline-block;
   width: 8px;
   height: 15px;
-  background-color: #06b6d4;
+  background-color: #f37021;
   vertical-align: middle;
   animation: blink 1s infinite;
   margin-left: 2px;
 }
 
-/* Tab Active Styles */
+/* Tab Navigation Active Styles */
 .nav-tab.active {
-  color: #06b6d4;
-  border-color: #06b6d4;
-  background: rgba(6, 182, 212, 0.1);
+  color: #f37021 !important;
+  border-color: #f37021 !important;
+  background-color: #fff7ed !important;
+  font-weight: 700;
 }
 
-/* Custom Tooltips */
-[data-tooltip] {
-  position: relative;
-}
-[data-tooltip]:hover::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #111827;
-  color: #93c5fd;
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 4px;
-  white-space: nowrap;
-  border: 1px solid #374151;
-  pointer-events: none;
-  z-index: 50;
+/* Signature Kodluyoruz Orange 2-Line Hamburger */
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
 }
 
-/* ==========================================================================
-   SLIDE MODAL & OPAQUE PRESENTATION (No bleed-through)
-   ========================================================================== */
-#slides-modal {
-  background-color: #030712 !important;
-  opacity: 1 !important;
-  z-index: 9999 !important;
+.hamburger-icon span {
+  display: block;
+  height: 2.5px;
+  width: 22px;
+  background-color: #f37021;
+  border-radius: 9999px;
+  transition: all 0.2s ease-in-out;
 }
 
-#lesson-modal {
-  z-index: 5000 !important;
+.hamburger-btn:hover .hamburger-icon span {
+  background-color: #e05d0e;
+  transform: scaleX(1.05);
 }
 
-/* ==========================================================================
-   CYBER NAVIGATION DRAWER & HAMBURGER
-   ========================================================================== */
+/* Navigation Drawer */
 #cyber-nav-drawer {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: -10px 0 35px -5px rgba(0, 0, 0, 0.8), -2px 0 15px -2px rgba(6, 182, 212, 0.2);
+  box-shadow: -10px 0 40px -5px rgba(0, 0, 0, 0.15);
 }
 
 #drawer-backdrop {
   transition: opacity 0.3s ease;
 }
 
-.hamburger-icon span {
-  display: block;
-  height: 2px;
-  width: 18px;
-  background-color: #06b6d4;
-  border-radius: 2px;
-  transition: all 0.25s ease-in-out;
-}
-
-.hamburger-btn:hover .hamburger-icon span {
-  background-color: #38bdf8;
-  box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
-}
-
-/* Drawer navigation items */
 .drawer-nav-item {
   display: flex;
   align-items: center;
@@ -191,23 +181,33 @@ body {
   font-size: 0.8125rem;
   font-family: 'Fira Code', monospace;
   font-weight: 600;
-  color: #9ca3af;
+  color: #475569;
   border: 1px solid transparent;
-  background: rgba(11, 15, 25, 0.6);
+  background: #f8fafc;
   transition: all 0.2s ease;
 }
 
 .drawer-nav-item:hover {
-  color: #ffffff;
-  background: rgba(6, 182, 212, 0.12);
-  border-color: rgba(6, 182, 212, 0.4);
+  color: #0f172a;
+  background: #fff7ed;
+  border-color: #fed7aa;
   transform: translateX(4px);
 }
 
 .drawer-nav-item.active {
-  color: #06b6d4;
-  background: rgba(6, 182, 212, 0.16);
-  border-color: #06b6d4;
-  box-shadow: 0 0 12px -2px rgba(6, 182, 212, 0.3);
+  color: #f37021;
+  background: #fff7ed;
+  border-color: #f37021;
+  font-weight: 700;
 }
 
+/* Modals */
+#lesson-modal {
+  z-index: 5000 !important;
+}
+
+#slides-modal {
+  background-color: #090d16 !important;
+  opacity: 1 !important;
+  z-index: 9999 !important;
+}

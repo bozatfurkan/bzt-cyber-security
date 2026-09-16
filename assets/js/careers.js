@@ -263,25 +263,25 @@ const BZTCareers = {
       const isSelected = this.activeCareerId === c.id;
 
       return `
-        <div class="glass-panel p-4 rounded-xl border transition-all duration-200 cursor-pointer ${isSelected ? 'border-cyan-500 bg-cyan-950/30 shadow-lg shadow-cyan-950/40' : 'border-gray-800 hover:border-gray-700'}" onclick="BZTCareers.selectCareerFromDrawer('${c.id}')">
+        <div class="clean-card p-4 border transition-all duration-200 cursor-pointer ${isSelected ? 'border-[#f37021] bg-orange-50/60 shadow-md' : 'border-slate-200 hover:border-slate-300 bg-white'}" onclick="BZTCareers.selectCareerFromDrawer('${c.id}')">
           <div class="flex items-start justify-between gap-3 mb-2">
             <div class="flex items-center gap-2">
-              <span class="text-xs font-mono font-bold text-cyan-400 px-2 py-1 bg-gray-900 border border-gray-800 rounded">${c.icon}</span>
+              <span class="text-xs font-mono font-bold text-[#f37021] px-2 py-1 bg-orange-50 border border-orange-200 rounded-lg">${c.icon}</span>
               <div>
-                <h4 class="font-bold text-white text-sm hover:text-cyan-400 transition-colors">${getT(c.title)}</h4>
-                <div class="text-[11px] font-mono text-cyan-400">${getT(c.level)} • <span class="text-emerald-400">${c.salary}</span></div>
+                <h4 class="font-bold text-slate-900 text-sm hover:text-[#f37021] transition-colors">${getT(c.title)}</h4>
+                <div class="text-[11px] font-mono text-[#f37021]">${getT(c.level)} • <span class="text-emerald-600 font-semibold">${c.salary}</span></div>
               </div>
             </div>
-            <button onclick="event.stopPropagation(); BZTCareers.selectCareerFromDrawer('${c.id}')" class="text-xs px-2.5 py-1 rounded font-mono font-bold transition-all ${isSelected ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}">
+            <button onclick="event.stopPropagation(); BZTCareers.selectCareerFromDrawer('${c.id}')" class="text-xs px-3 py-1.5 rounded-lg font-mono font-bold transition-all ${isSelected ? 'bg-[#f37021] text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
               ${isSelected ? (lang === 'tr' ? 'Seçildi' : 'Active') : (lang === 'tr' ? 'Eğitimi Aç' : 'Open Track')}
             </button>
           </div>
 
-          <p class="text-xs text-gray-400 mb-3 leading-relaxed">${getT(c.tagline)}</p>
+          <p class="text-xs text-slate-600 mb-3 leading-relaxed">${getT(c.tagline)}</p>
 
-          <div class="space-y-1.5 text-xs font-mono pt-2 border-t border-gray-800/80">
-            <div><span class="text-gray-500">${lang === 'tr' ? 'Popüler Sertifikalar:' : 'Certifications:'}</span> <span class="text-yellow-300">${c.certs.join(", ")}</span></div>
-            <div><span class="text-gray-500">${lang === 'tr' ? 'Kritik Araçlar:' : 'Core Tools:'}</span> <span class="text-emerald-400">${c.tools.slice(0, 4).join(", ")}</span></div>
+          <div class="space-y-1 text-xs font-mono pt-2.5 border-t border-slate-200">
+            <div><span class="text-slate-500">${lang === 'tr' ? 'Popüler Sertifikalar:' : 'Certifications:'}</span> <span class="text-slate-800 font-semibold">${c.certs.join(", ")}</span></div>
+            <div><span class="text-slate-500">${lang === 'tr' ? 'Kritik Araçlar:' : 'Core Tools:'}</span> <span class="text-emerald-700 font-semibold">${c.tools.slice(0, 4).join(", ")}</span></div>
           </div>
         </div>
       `;
@@ -312,24 +312,24 @@ const BZTCareers = {
         const firstLesson = (active.recommendedLessons && active.recommendedLessons.length > 0) ? active.recommendedLessons[0] : null;
         indicator.innerHTML = `
           <div class="flex items-center gap-3">
-            <span class="text-xs font-mono font-bold px-2.5 py-1.5 rounded-lg bg-cyan-950/80 border border-cyan-500 text-cyan-300 shadow-sm">${active.icon}</span>
+            <span class="text-xs font-mono font-bold px-2.5 py-1.5 rounded-xl bg-white border border-orange-200 text-[#f37021] shadow-xs">${active.icon}</span>
             <div>
-              <div class="text-cyan-300 font-bold font-mono text-sm">
-                ${lang === 'tr' ? 'Aktif Kariyer Yolu & Eğitim Programı:' : 'Active Career Track & Curriculum:'} <span class="text-white">${active.title[lang] || active.title.tr}</span>
+              <div class="text-slate-900 font-bold font-mono text-sm">
+                ${lang === 'tr' ? 'Aktif Kariyer Yolu & Eğitim Programı:' : 'Active Career Track & Curriculum:'} <span class="text-[#f37021]">${active.title[lang] || active.title.tr}</span>
               </div>
-              <div class="text-xs text-gray-400 font-mono mt-0.5">
+              <div class="text-xs text-slate-600 font-mono mt-0.5">
                 ${lang === 'tr' ? `Bu uzmanlık için özel ${active.recommendedLessons.length} adet eğitim modülü açıldı.` : `${active.recommendedLessons.length} modules curated for this specialization.`}
               </div>
             </div>
           </div>
           <div class="flex items-center gap-2">
             ${firstLesson ? `
-              <button onclick="window.openLessonModal('${firstLesson}')" class="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-mono font-bold transition-all shadow-md flex items-center gap-1">
+              <button onclick="window.openLessonModal('${firstLesson}')" class="px-3.5 py-2 rounded-xl bg-[#f37021] hover:bg-[#e05d0e] text-white text-xs font-mono font-bold transition-all shadow-xs flex items-center gap-1">
                 <span>${lang === 'tr' ? 'İlk Eğitime Başla' : 'Start First Lesson'}</span>
                 <span>→</span>
               </button>
             ` : ''}
-            <button onclick="BZTCareers.clearFilter()" class="px-3 py-1.5 rounded-lg bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-300 hover:text-white text-xs font-mono transition-all">
+            <button onclick="BZTCareers.clearFilter()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 hover:text-slate-900 text-xs font-mono transition-all">
               [X] ${lang === 'tr' ? 'Tümünü Göster' : 'Show All'}
             </button>
           </div>

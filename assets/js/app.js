@@ -68,19 +68,19 @@ const BZTApp = {
       if (secCareers) secCareers.classList.remove("hidden");
       if (secNav) secNav.classList.add("hidden");
       if (btnCareers) {
-        btnCareers.className = "flex-1 py-2 rounded-lg font-bold text-center transition-all bg-cyan-500 text-black shadow-sm text-xs font-mono";
+        btnCareers.className = "flex-1 py-2 rounded-xl font-bold text-center transition-all bg-[#f37021] text-white shadow-xs text-xs font-mono";
       }
       if (btnNav) {
-        btnNav.className = "flex-1 py-2 rounded-lg font-semibold text-center text-gray-400 hover:text-white transition-all text-xs font-mono";
+        btnNav.className = "flex-1 py-2 rounded-xl font-semibold text-center text-slate-600 hover:text-slate-900 transition-all text-xs font-mono";
       }
     } else {
       if (secCareers) secCareers.classList.add("hidden");
       if (secNav) secNav.classList.remove("hidden");
       if (btnNav) {
-        btnNav.className = "flex-1 py-2 rounded-lg font-bold text-center transition-all bg-cyan-500 text-black shadow-sm text-xs font-mono";
+        btnNav.className = "flex-1 py-2 rounded-xl font-bold text-center transition-all bg-[#f37021] text-white shadow-xs text-xs font-mono";
       }
       if (btnCareers) {
-        btnCareers.className = "flex-1 py-2 rounded-lg font-semibold text-center text-gray-400 hover:text-white transition-all text-xs font-mono";
+        btnCareers.className = "flex-1 py-2 rounded-xl font-semibold text-center text-slate-600 hover:text-slate-900 transition-all text-xs font-mono";
       }
     }
   },
@@ -93,11 +93,11 @@ const BZTApp = {
     tabButtons.forEach(b => {
       const bTab = b.getAttribute("data-tab");
       if (bTab === targetTab) {
-        b.classList.add("active", "border-cyan-500", "text-cyan-400");
-        b.classList.remove("text-gray-400");
+        b.classList.add("active", "bg-orange-50", "text-[#f37021]", "border-[#f37021]");
+        b.classList.remove("text-slate-600");
       } else {
-        b.classList.remove("active", "border-cyan-500", "text-cyan-400");
-        b.classList.add("text-gray-400");
+        b.classList.remove("active", "bg-orange-50", "text-[#f37021]", "border-[#f37021]");
+        b.classList.add("text-slate-600");
       }
     });
 
@@ -271,59 +271,59 @@ document.addEventListener("DOMContentLoaded", () => {
     filtered.forEach(item => {
       const isDone = completedLessons.includes(item.id);
       const card = document.createElement("div");
-      card.className = "glass-panel p-5 rounded-xl border border-gray-800 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-950/30 group";
+      card.className = "clean-card p-6 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:border-[#f37021] hover:shadow-xl group cursor-pointer";
       
-      let badgeColor = "bg-emerald-950/80 text-emerald-400 border-emerald-800";
-      if (item.difficulty.includes("Orta") || item.difficulty.includes("Intermediate")) badgeColor = "bg-cyan-950/80 text-cyan-400 border-cyan-800";
-      if (item.difficulty.includes("İleri") || item.difficulty.includes("Advanced")) badgeColor = "bg-purple-950/80 text-purple-400 border-purple-800";
-      if (item.difficulty.includes("Uzman") || item.difficulty.includes("Expert")) badgeColor = "bg-red-950/80 text-red-400 border-red-800";
+      let badgeColor = "bg-emerald-50 text-emerald-700 border-emerald-200";
+      if (item.difficulty.includes("Orta") || item.difficulty.includes("Intermediate")) badgeColor = "bg-blue-50 text-blue-700 border-blue-200";
+      if (item.difficulty.includes("İleri") || item.difficulty.includes("Advanced")) badgeColor = "bg-purple-50 text-purple-700 border-purple-200";
+      if (item.difficulty.includes("Uzman") || item.difficulty.includes("Expert")) badgeColor = "bg-red-50 text-red-700 border-red-200";
 
       const startText = lang === 'tr' ? 'Eğitimi Başlat' : 'Start Lesson';
       const doneText = isDone ? (lang === 'tr' ? 'Tamamlandı' : 'Completed') : (lang === 'tr' ? '○ Bitir' : '○ Mark Done');
 
       card.innerHTML = `
         <div>
-          <div class="flex items-center justify-between gap-2 mb-2.5">
-            <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border ${badgeColor}">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg border ${badgeColor}">
               ${item.difficulty}
             </span>
-            <div class="flex items-center gap-2 text-[11px] font-mono text-gray-400">
-              <span class="text-yellow-400 font-bold">+${item.xp} XP</span>
+            <div class="flex items-center gap-2 text-[11px] font-mono text-slate-500">
+              <span class="text-[#f37021] font-bold">+${item.xp} XP</span>
               <span>•</span>
               <span>${item.duration}</span>
             </div>
           </div>
 
-          <div class="text-[11px] font-mono text-cyan-400/90 font-medium mb-1">
+          <div class="text-[11px] font-mono text-[#f37021] font-semibold mb-1">
             ${item.phaseTitle}
           </div>
 
-          <h3 class="text-base font-bold text-white group-hover:text-cyan-400 transition-colors mb-2 leading-snug">
+          <h3 class="text-base font-bold text-slate-900 group-hover:text-[#f37021] transition-colors mb-2 leading-snug">
             ${item.title}
           </h3>
 
-          <p class="text-xs text-gray-400 line-clamp-2 mb-3 leading-relaxed">
+          <p class="text-xs text-slate-600 line-clamp-2 mb-4 leading-relaxed">
             ${item.summary}
           </p>
         </div>
 
         <div>
-          <div class="flex flex-wrap gap-1 mb-3">
-            ${item.tags.slice(0, 3).map(t => `<span class="text-[10px] font-mono bg-gray-900/90 border border-gray-800/80 text-gray-400 px-2 py-0.5 rounded">${t}</span>`).join("")}
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            ${item.tags.slice(0, 3).map(t => `<span class="text-[10px] font-mono bg-slate-100 border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md">${t}</span>`).join("")}
           </div>
 
-          <div class="pt-2.5 border-t border-gray-800/80 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-1.5">
-              <button class="open-lesson-btn text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/40 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1" data-id="${item.id}">
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <button class="open-lesson-btn text-xs font-bold bg-[#f37021] hover:bg-[#e05d0e] text-white px-3.5 py-2 rounded-xl transition-all shadow-xs flex items-center gap-1" data-id="${item.id}">
                 <span>${startText}</span>
                 <span>→</span>
               </button>
-              <button class="open-slide-btn text-xs font-semibold bg-gray-900 hover:bg-purple-950 border border-gray-800 hover:border-purple-500/40 text-gray-300 hover:text-purple-300 px-2.5 py-1.5 rounded-lg transition-all" data-id="${item.id}" title="${lang === 'tr' ? 'Ders Slaytını Aç' : 'Open Slide Deck'}">
+              <button class="open-slide-btn text-xs font-semibold bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 px-2.5 py-2 rounded-xl transition-all" data-id="${item.id}" title="${lang === 'tr' ? 'Ders Slaytını Aç' : 'Open Slide Deck'}">
                 <span>${lang === 'tr' ? 'Slayt' : 'Slide'}</span>
               </button>
             </div>
 
-            <button class="toggle-done-btn text-xs px-2 py-1 rounded transition-colors ${isDone ? 'text-emerald-400 font-bold' : 'text-gray-500 hover:text-gray-300 font-mono'}" data-id="${item.id}">
+            <button class="toggle-done-btn text-xs px-2 py-1 rounded transition-colors ${isDone ? 'text-emerald-600 font-bold font-mono' : 'text-slate-400 hover:text-slate-600 font-mono'}" data-id="${item.id}">
               ${doneText}
             </button>
           </div>
@@ -396,33 +396,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
 
     modalContent.innerHTML = `
-      <div class="border-b border-gray-800 pb-4 mb-6">
+      <div class="border-b border-slate-200 pb-5 mb-6">
         <div class="flex items-center justify-between gap-2 mb-2">
-          <div class="flex items-center gap-2 text-xs font-mono text-cyan-400">
-            <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty}</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
+          <div class="flex items-center gap-2 text-xs font-mono text-[#f37021] font-semibold">
+            <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty}</span> • <span>${lesson.duration}</span> • <span class="text-orange-600 font-bold">+${lesson.xp} XP</span>
           </div>
-          <button onclick="BZTSlides.start('${lesson.id}')" class="px-3 py-1.5 bg-gradient-to-r from-purple-600/40 to-pink-600/40 hover:from-purple-600 hover:to-pink-600 text-purple-200 hover:text-white border border-purple-500/50 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-sm glow-purple">
+          <button onclick="BZTSlides.start('${lesson.id}')" class="px-3.5 py-2 bg-[#f37021] hover:bg-[#e05d0e] text-white rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-xs">
              <span>${lang === 'tr' ? 'Slayt Modu (Slide Deck)' : 'Slide Presentation'}</span>
           </button>
         </div>
-        <h2 class="text-2xl font-bold text-white mb-2">${lesson.title}</h2>
-        <p class="text-sm text-gray-400 leading-relaxed">${lesson.summary}</p>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">${lesson.title}</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">${lesson.summary}</p>
       </div>
 
       <div class="space-y-8">
         ${lesson.sections.map((sec) => `
           <div class="space-y-3">
-            <h4 class="text-lg font-bold text-cyan-300 flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#f37021]"></span>
               ${sec.heading}
             </h4>
-            <div class="text-sm text-gray-300 leading-relaxed whitespace-pre-line">${sec.content}</div>
+            <div class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">${sec.content}</div>
 
             ${sec.codeSnippet ? `
-              <div class="code-block p-4 my-3 font-mono text-xs text-emerald-400 overflow-x-auto rounded-lg border border-gray-800">
-                <div class="flex justify-between items-center text-gray-500 pb-2 mb-2 border-b border-gray-800/60 text-[11px]">
+              <div class="code-block p-4 my-3 font-mono text-xs text-emerald-400 overflow-x-auto rounded-xl border border-slate-800 bg-[#090d16]">
+                <div class="flex justify-between items-center text-slate-400 pb-2 mb-2 border-b border-slate-800 text-[11px]">
                   <span>${lang === 'tr' ? 'KOD ÖRNEĞİ / EXPLOIT' : 'CODE SNIPPET / EXPLOIT'}</span>
-                  <button class="copy-code-btn hover:text-cyan-400 transition-colors" data-code="${encodeURIComponent(sec.codeSnippet)}">
+                  <button class="copy-code-btn hover:text-[#f37021] text-slate-300 transition-colors font-bold" data-code="${encodeURIComponent(sec.codeSnippet)}">
                     ${lang === 'tr' ? 'Kopyala' : 'Copy'}
                   </button>
                 </div>
@@ -431,15 +431,15 @@ document.addEventListener("DOMContentLoaded", () => {
             ` : ""}
 
             ${sec.tip ? `
-              <div class="p-3 bg-cyan-950/40 border-l-4 border-cyan-500 rounded-r-lg text-xs text-cyan-200">
-                <b>${lang === 'tr' ? 'Hacker Notu & İpucu:' : 'Hacker Note & Tip:'}</b> ${sec.tip}
+              <div class="p-3.5 bg-orange-50 border-l-4 border-[#f37021] rounded-r-xl text-xs text-slate-800">
+                <b class="text-[#f37021]">${lang === 'tr' ? 'Hacker Notu & İpucu:' : 'Hacker Note & Tip:'}</b> ${sec.tip}
               </div>
             ` : ""}
 
             ${sec.terminalCommand ? `
-              <div class="flex items-center justify-between p-2.5 bg-black/60 border border-gray-800 rounded-lg text-xs font-mono">
-                <span class="text-gray-400">$ <span class="text-yellow-300">${sec.terminalCommand}</span></span>
-                <button class="run-in-term-btn bg-cyan-500/20 hover:bg-cyan-500 text-cyan-400 hover:text-black px-2 py-1 rounded transition-colors text-[11px]" data-cmd="${sec.terminalCommand}">
+              <div class="flex items-center justify-between p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-slate-300">
+                <span class="text-slate-400">$ <span class="text-yellow-300">${sec.terminalCommand}</span></span>
+                <button class="run-in-term-btn bg-[#f37021] hover:bg-[#e05d0e] text-white px-2.5 py-1 rounded-lg transition-colors text-[11px] font-bold" data-cmd="${sec.terminalCommand}">
                   ${lang === 'tr' ? "BZT-Shell'de Çalıştır" : 'Run in BZT-Shell'}
                 </button>
               </div>
@@ -449,19 +449,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <!-- Mini Quiz Section -->
         ${lesson.quiz ? `
-          <div class="mt-8 p-5 bg-gray-900/90 border border-gray-800 rounded-xl space-y-4">
-            <div class="text-sm font-bold text-yellow-400 flex items-center gap-2">
-              <span class="text-cyan-400 font-mono">[TEST]</span> ${lang === 'tr' ? 'Modül Pekiştirme Sorusu (+50 XP)' : 'Module Knowledge Check (+50 XP)'}
+          <div class="mt-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
+            <div class="text-sm font-bold text-[#f37021] flex items-center gap-2">
+              <span class="font-mono">[TEST]</span> ${lang === 'tr' ? 'Modül Pekiştirme Sorusu (+50 XP)' : 'Module Knowledge Check (+50 XP)'}
             </div>
-            <div class="text-sm font-medium text-gray-200">${lesson.quiz.question}</div>
+            <div class="text-sm font-semibold text-slate-900">${lesson.quiz.question}</div>
             <div class="space-y-2">
               ${lesson.quiz.options.map((opt, oIdx) => `
-                <button class="quiz-opt-btn w-full text-left p-3 rounded-lg border border-gray-800 hover:border-cyan-500/50 bg-black/40 hover:bg-cyan-950/20 text-xs text-gray-300 transition-all" data-qidx="${oIdx}" data-correct="${lesson.quiz.correct}">
+                <button class="quiz-opt-btn w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-[#f37021] bg-white hover:bg-orange-50/50 text-xs text-slate-800 font-medium transition-all" data-qidx="${oIdx}" data-correct="${lesson.quiz.correct}">
                   ${String.fromCharCode(65 + oIdx)}) ${opt}
                 </button>
               `).join("")}
             </div>
-            <div id="quiz-feedback" class="hidden text-xs p-3 rounded-lg"></div>
+            <div id="quiz-feedback" class="hidden text-xs p-3.5 rounded-xl"></div>
           </div>
         ` : ""}
       </div>
@@ -651,15 +651,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
 
     revContainer.innerHTML = shells.map(s => `
-      <div class="p-3 bg-gray-950 border border-gray-800 rounded-lg space-y-1">
+      <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
         <div class="flex justify-between items-center text-xs">
-          <span class="font-bold text-cyan-400">${s.name}</span>
-          <button class="copy-shell-btn text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-300 px-2 py-0.5 rounded transition-colors" data-shell="${encodeURIComponent(s.code)}">
+          <span class="font-bold text-slate-900 font-mono">${s.name}</span>
+          <button class="copy-shell-btn text-[11px] bg-white hover:bg-orange-50 border border-slate-200 text-slate-700 px-2.5 py-1 rounded-lg transition-colors font-mono font-bold" data-shell="${encodeURIComponent(s.code)}">
             ${lang === 'tr' ? 'Kopyala' : 'Copy'}
           </button>
         </div>
-        <div class="text-[11px] text-gray-400">${s.desc}</div>
-        <pre class="font-mono text-xs text-emerald-400 bg-black/60 p-2 rounded overflow-x-auto whitespace-pre-wrap select-all">${escapeHtml(s.code)}</pre>
+        <div class="text-[11px] text-slate-500">${s.desc}</div>
+        <pre class="font-mono text-xs text-emerald-400 bg-[#090d16] p-3 rounded-lg border border-slate-800 overflow-x-auto whitespace-pre-wrap select-all">${escapeHtml(s.code)}</pre>
       </div>
     `).join("");
 
