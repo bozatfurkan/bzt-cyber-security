@@ -1,7 +1,59 @@
 /**
- * BZT Cyber Security - Main Application Controller
- * Manages tabs, search, curriculum rendering, quizzes, and tool interactions
+ * BZT Cyber Security - Main Application Controller (v3.5 PRO)
+ * Coordinates Curriculum, Labs, CTF Engine, Terminal, Tools, Gamification, and Certificates
  */
+
+const BZTApp = {
+  // Rank Levels
+  ranks: [
+    { min: 0, max: 200, title: "Script Kiddie", color: "text-emerald-400", badge: "🟢 Başlangıç" },
+    { min: 201, max: 500, title: "Cyber Apprentice", color: "text-cyan-400", badge: "🔵 Çırak" },
+    { min: 501, max: 1000, title: "Junior Pentester", color: "text-purple-400", badge: "🟣 Pentester" },
+    { min: 1001, max: 1800, title: "Elite Red Teamer", color: "text-red-400", badge: "🔴 Red Team" },
+    { min: 1801, max: 99999, title: "BZT Grand Master Hacker", color: "text-yellow-400", badge: "👑 Üstat" }
+  ],
+
+  getXp() {
+    return parseInt(localStorage.getItem("bzt_user_xp") || "0");
+  },
+
+  addXp(amount) {
+    const current = this.getXp();
+    const next = current + amount;
+    localStorage.setItem("bzt_user_xp", next.toString());
+    this.updateUserStats();
+  },
+
+  getRank(xp) {
+    return this.ranks.find(r => xp >= r.min && xp <= r.max) || this.ranks[0];
+  },
+
+  updateUserStats() {
+    const xp = this.getXp();
+    const rank = this.getRank(xp);
+
+    const xpDisplays = document.querySelectorAll(".user-xp-display");
+    const rankDisplays = document.querySelectorAll(".user-rank-display");
+
+    xpDisplays.forEach(el => el.innerText = `${xp} XP`);
+    rankDisplays.forEach(el => {
+      el.className = `user-rank-display font-bold ${rank.color}`;
+      el.innerText = rank.title;
+    });
+
+    // Update global progress bar
+    const totalLessons = CURRICULUM_DATA.length;
+    const completed = JSON.parse(localStorage.getItem("bzt_completed_lessons") || "[]");
+    const pct = totalLessons > 0 ? Math.round((completed.length / totalLessons) * 100) : 0;
+
+    const progBar = document.getElementById("global-progress-bar");
+    const progText = document.getElementById("global-progress-text");
+    if (progBar) progBar.style.width = `${pct}%`;
+    if (progText) progText.innerText = `%${pct}`;
+  }
+};
+
+window.BZTApp = BZTApp;
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize Terminal
@@ -20,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const curriculumGrid = document.getElementById("curriculum-grid");
   const searchInput = document.getElementById("search-curriculum");
   const phaseFilters = document.querySelectorAll(".phase-filter-btn");
-  const progressBar = document.getElementById("global-progress-bar");
-  const progressPercentText = document.getElementById("global-progress-text");
 
   // 1. TAB NAVIGATION
   tabButtons.forEach(btn => {
@@ -39,11 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // If terminal tab opened, focus input
       if (targetTab === "terminal" && window.bztTerminalInstance) {
         setTimeout(() => {
           document.getElementById("terminal-input")?.focus();
         }, 100);
+      } else if (targetTab === "ctf" && window.BZT_CTF) {
+        BZT_CTF.renderChallenges("ctf-challenges-container");
+      } else if (targetTab === "certificate" && window.BZTCertificate) {
+        updateCertPreview();
       }
     });
   });
@@ -68,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="col-span-full text-center py-12 text-gray-400">
           <div class="text-3xl mb-2">🔍</div>
           <div class="font-bold text-lg text-gray-200">Aramanıza uygun ders veya modül bulunamadı.</div>
-          <div class="text-sm">Farklı bir anahtar kelime veya filtre seçmeyi deneyin.</div>
+          <div class="text-sm">Farklı bir arama terimi veya filtre seçmeyi deneyin.</div>
         </div>`;
       return;
     }
@@ -89,9 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded border ${badgeColor}">
               ${item.difficulty}
             </span>
-            <span class="text-xs text-gray-400 font-mono flex items-center gap-1">
-              ⏱️ ${item.duration}
-            </span>
+            <div class="flex items-center gap-2 text-xs font-mono">
+              <span class="text-yellow-400 font-bold">+${item.xp} XP</span>
+              <span class="text-gray-400">⏱️ ${item.duration}</span>
+            </div>
           </div>
 
           <div class="text-xs font-mono text-cyan-400/90 font-medium mb-1">
@@ -128,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
       curriculumGrid.appendChild(card);
     });
 
-    updateProgress();
+    BZTApp.updateUserStats();
     attachCardListeners();
   }
 
@@ -144,10 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".toggle-done-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = btn.getAttribute("data-id");
+        const lesson = CURRICULUM_DATA.find(x => x.id === id);
+
         if (completedLessons.includes(id)) {
           completedLessons = completedLessons.filter(x => x !== id);
         } else {
           completedLessons.push(id);
+          if (lesson && lesson.xp) BZTApp.addXp(lesson.xp);
         }
         localStorage.setItem("bzt_completed_lessons", JSON.stringify(completedLessons));
         renderCurriculum();
@@ -167,14 +224,14 @@ document.addEventListener("DOMContentLoaded", () => {
     modalContent.innerHTML = `
       <div class="border-b border-gray-800 pb-4 mb-6">
         <div class="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
-          <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty} Seviye</span> • <span>${lesson.duration}</span>
+          <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty} Seviye</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
         </div>
         <h2 class="text-2xl font-bold text-white mb-2">${lesson.title}</h2>
         <p class="text-sm text-gray-400 leading-relaxed">${lesson.summary}</p>
       </div>
 
       <div class="space-y-8">
-        ${lesson.sections.map((sec, idx) => `
+        ${lesson.sections.map((sec) => `
           <div class="space-y-3">
             <h4 class="text-lg font-bold text-cyan-300 flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
@@ -213,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${lesson.quiz ? `
           <div class="mt-8 p-5 bg-gray-900/90 border border-gray-800 rounded-xl space-y-4">
             <div class="text-sm font-bold text-yellow-400 flex items-center gap-2">
-              <span>🧠</span> Modül Pekiştirme Sorusu
+              <span>🧠</span> Modül Pekiştirme Sorusu (+50 XP)
             </div>
             <div class="text-sm font-medium text-gray-200">${lesson.quiz.question}</div>
             <div class="space-y-2">
@@ -229,7 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    // Copy code button listeners
     modalContent.querySelectorAll(".copy-code-btn").forEach(b => {
       b.addEventListener("click", () => {
         const code = decodeURIComponent(b.getAttribute("data-code"));
@@ -239,12 +295,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Run in terminal button
     modalContent.querySelectorAll(".run-in-term-btn").forEach(b => {
       b.addEventListener("click", () => {
         const cmd = b.getAttribute("data-cmd");
         modal.classList.add("hidden");
-        // Switch to terminal tab
         const termTabBtn = document.querySelector('.nav-tab[data-tab="terminal"]');
         if (termTabBtn) termTabBtn.click();
         if (window.bztTerminalInstance) {
@@ -257,7 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Quiz options listener
     modalContent.querySelectorAll(".quiz-opt-btn").forEach(b => {
       b.addEventListener("click", () => {
         const selected = parseInt(b.getAttribute("data-qidx"));
@@ -269,7 +322,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (selected === correct) {
           feedback.classList.add("bg-emerald-950/70", "border", "border-emerald-500", "text-emerald-300");
-          feedback.innerHTML = `<b>🎉 Doğru Cevap!</b> ${lesson.quiz.explanation}`;
+          feedback.innerHTML = `<b>🎉 Doğru Cevap!</b> (+50 XP) ${lesson.quiz.explanation}`;
+          BZTApp.addXp(50);
         } else {
           feedback.classList.add("bg-red-950/70", "border", "border-red-500", "text-red-300");
           feedback.innerHTML = `<b>❌ Yanlış Seçenek.</b> Doğru cevap: <b>${String.fromCharCode(65 + correct)}</b>. Açıklama: ${lesson.quiz.explanation}`;
@@ -287,17 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. UPDATE PROGRESS
-  function updateProgress() {
-    const total = CURRICULUM_DATA.length;
-    const done = completedLessons.length;
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-
-    if (progressBar) progressBar.style.width = `${pct}%`;
-    if (progressPercentText) progressPercentText.innerText = `%${pct}`;
-  }
-
-  // 6. PHASE FILTER & SEARCH
+  // 5. PHASE FILTER & SEARCH
   phaseFilters.forEach(btn => {
     btn.addEventListener("click", () => {
       phaseFilters.forEach(b => b.classList.remove("bg-cyan-500", "text-black", "font-bold"));
@@ -316,22 +360,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 7. LABS INTERACTION
-  // SQLi Lab
+  // 6. LABS EVENT LISTENERS
+  // SQLi
   const sqliInput = document.getElementById("sqli-payload-input");
   const sqliBtn = document.getElementById("sqli-run-btn");
-  const sqliQuickChips = document.querySelectorAll(".sqli-chip");
-
   if (sqliBtn && sqliInput) {
-    sqliBtn.addEventListener("click", () => {
-      BZTLabs.runSqlLab(sqliInput.value);
-    });
-    sqliInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") BZTLabs.runSqlLab(sqliInput.value);
-    });
+    sqliBtn.addEventListener("click", () => BZTLabs.runSqlLab(sqliInput.value));
+    sqliInput.addEventListener("keydown", (e) => { if (e.key === "Enter") BZTLabs.runSqlLab(sqliInput.value); });
   }
-
-  sqliQuickChips.forEach(chip => {
+  document.querySelectorAll(".sqli-chip").forEach(chip => {
     chip.addEventListener("click", () => {
       if (sqliInput) {
         sqliInput.value = chip.getAttribute("data-payload");
@@ -340,22 +377,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // XSS Lab
+  // XSS
   const xssInput = document.getElementById("xss-payload-input");
   const xssFilter = document.getElementById("xss-filter-select");
   const xssBtn = document.getElementById("xss-run-btn");
-  const xssQuickChips = document.querySelectorAll(".xss-chip");
-
   if (xssBtn && xssInput && xssFilter) {
-    xssBtn.addEventListener("click", () => {
-      BZTLabs.runXssLab(xssInput.value, xssFilter.value);
-    });
-    xssInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") BZTLabs.runXssLab(xssInput.value, xssFilter.value);
-    });
+    xssBtn.addEventListener("click", () => BZTLabs.runXssLab(xssInput.value, xssFilter.value));
+    xssInput.addEventListener("keydown", (e) => { if (e.key === "Enter") BZTLabs.runXssLab(xssInput.value, xssFilter.value); });
   }
-
-  xssQuickChips.forEach(chip => {
+  document.querySelectorAll(".xss-chip").forEach(chip => {
     chip.addEventListener("click", () => {
       if (xssInput) {
         xssInput.value = chip.getAttribute("data-payload");
@@ -364,21 +394,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Command Injection Lab
+  // Command Injection
   const cmdInput = document.getElementById("cmd-input");
   const cmdBtn = document.getElementById("cmd-run-btn");
-  const cmdChips = document.querySelectorAll(".cmd-chip");
-
   if (cmdBtn && cmdInput) {
-    cmdBtn.addEventListener("click", () => {
-      BZTLabs.runCmdLab(cmdInput.value);
-    });
-    cmdInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") BZTLabs.runCmdLab(cmdInput.value);
-    });
+    cmdBtn.addEventListener("click", () => BZTLabs.runCmdLab(cmdInput.value));
+    cmdInput.addEventListener("keydown", (e) => { if (e.key === "Enter") BZTLabs.runCmdLab(cmdInput.value); });
   }
-
-  cmdChips.forEach(chip => {
+  document.querySelectorAll(".cmd-chip").forEach(chip => {
     chip.addEventListener("click", () => {
       if (cmdInput) {
         cmdInput.value = chip.getAttribute("data-payload");
@@ -387,7 +410,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 8. TOOLS: REVERSE SHELL GENERATOR
+  // LFI Lab
+  const lfiInput = document.getElementById("lfi-input");
+  const lfiBtn = document.getElementById("lfi-run-btn");
+  if (lfiBtn && lfiInput) {
+    lfiBtn.addEventListener("click", () => BZTLabs.runLfiLab(lfiInput.value));
+    lfiInput.addEventListener("keydown", (e) => { if (e.key === "Enter") BZTLabs.runLfiLab(lfiInput.value); });
+  }
+  document.querySelectorAll(".lfi-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      if (lfiInput) {
+        lfiInput.value = chip.getAttribute("data-payload");
+        BZTLabs.runLfiLab(lfiInput.value);
+      }
+    });
+  });
+
+  // JWT Lab
+  const jwtInput = document.getElementById("jwt-token-input");
+  const jwtBtn = document.getElementById("jwt-tamper-btn");
+  if (jwtBtn && jwtInput) {
+    jwtBtn.addEventListener("click", () => {
+      const makeAdmin = document.getElementById("jwt-check-admin")?.checked;
+      const setNone = document.getElementById("jwt-check-none")?.checked;
+      BZTLabs.tamperJwt(jwtInput.value, makeAdmin, setNone);
+    });
+  }
+
+  // 7. TOOLS: REVERSE SHELLS
   const revIp = document.getElementById("rev-ip");
   const revPort = document.getElementById("rev-port");
   const revContainer = document.getElementById("rev-shells-container");
@@ -427,7 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateRevShells();
   }
 
-  // 9. TOOLS: ENCODER / DECODER
+  // 8. TOOLS: ENCODER / DECODER
   const encInput = document.getElementById("encoder-input");
   const encOutput = document.getElementById("encoder-output");
 
@@ -444,11 +494,14 @@ document.addEventListener("DOMContentLoaded", () => {
         case "url-decode": encOutput.value = BZTTools.decodeUrl(val); break;
         case "hex-encode": encOutput.value = BZTTools.encodeHex(val); break;
         case "hex-decode": encOutput.value = BZTTools.decodeHex(val); break;
+        case "rot13": encOutput.value = BZTTools.rot13(val); break;
+        case "to-bin": encOutput.value = BZTTools.toBinary(val); break;
+        case "from-bin": encOutput.value = BZTTools.fromBinary(val); break;
       }
     });
   });
 
-  // 10. TOOLS: HASH IDENTIFIER
+  // 9. TOOLS: HASH IDENTIFIER
   const hashInput = document.getElementById("hash-input");
   const hashBtn = document.getElementById("hash-id-btn");
   const hashResult = document.getElementById("hash-result");
@@ -458,11 +511,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = BZTTools.identifyHash(hashInput.value);
       hashResult.innerHTML = `
         <div class="p-3 bg-gray-950 border border-gray-800 rounded-lg text-xs space-y-1 font-mono">
-          <div><span class="text-gray-400">Muhtemel Tür:</span> <b class="text-cyan-400 text-sm">${res.type}</b></div>
+          <div><span class="text-gray-400">Muhtemel Algoritma:</span> <b class="text-cyan-400 text-sm">${res.type}</b></div>
           <div><span class="text-gray-400">Doğruluk Güveni:</span> <span class="text-emerald-400">${res.confidence}</span></div>
-          <div><span class="text-gray-400">Örnek Kırma Komutu:</span> <span class="text-yellow-300">${res.sampleMode}</span></div>
+          <div><span class="text-gray-400">Hashcat Kırma Önerisi:</span> <span class="text-yellow-300">${res.sampleMode}</span></div>
         </div>
       `;
+    });
+  }
+
+  // 10. CERTIFICATE LOGIC
+  const certNameInput = document.getElementById("cert-student-name");
+  const certPreviewImg = document.getElementById("cert-preview-img");
+  const certDownloadBtn = document.getElementById("cert-download-btn");
+
+  function updateCertPreview() {
+    if (!certPreviewImg) return;
+    const name = certNameInput ? certNameInput.value : "Furkan Bozat";
+    certPreviewImg.src = BZTCertificate.generate(name);
+  }
+
+  if (certNameInput) {
+    certNameInput.addEventListener("input", updateCertPreview);
+  }
+  if (certDownloadBtn) {
+    certDownloadBtn.addEventListener("click", () => {
+      const name = certNameInput ? certNameInput.value : "Furkan Bozat";
+      BZTCertificate.download(name);
     });
   }
 
@@ -474,6 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
               .replace(/'/g, "&#039;");
   }
 
-  // Initial Curriculum Render
+  // Initial Curriculum & Stats Render
   renderCurriculum();
+  BZTApp.updateUserStats();
 });

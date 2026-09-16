@@ -74,19 +74,30 @@
         <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="labs">
           <span>🧪</span> Laboratuvar
         </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="ctf">
+          <span>🚩</span> CTF Arena
+        </button>
         <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="tools">
-          <span>🛠️</span> Araç Çantası
+          <span>🛠️</span> Araçlar
         </button>
         <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="cheatsheet">
-          <span>📑</span> Hızlı Referans
+          <span>📑</span> Referans
+        </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="certificate">
+          <span>🎓</span> Sertifika
         </button>
       </nav>
 
-      <!-- User / Global Progress -->
-      <div class="hidden xl:flex items-center gap-3">
+      <!-- User / Global Progress & Stats -->
+      <div class="hidden xl:flex items-center gap-4 font-mono text-xs">
+        <div class="p-1.5 px-3 bg-cyber-900 border border-gray-800 rounded-lg flex items-center gap-2">
+          <span class="user-rank-display font-bold text-cyan-400">Cyber Apprentice</span>
+          <span class="text-gray-600">•</span>
+          <span class="user-xp-display text-yellow-400 font-bold">0 XP</span>
+        </div>
         <div class="text-right">
-          <div class="text-[11px] text-gray-400 font-mono">Eğitim İlerlemesi: <span id="global-progress-text" class="text-emerald-400 font-bold">%0</span></div>
-          <div class="w-28 bg-gray-800 h-1.5 rounded-full overflow-hidden mt-1">
+          <div class="text-[11px] text-gray-400">İlerleme: <span id="global-progress-text" class="text-emerald-400 font-bold">%0</span></div>
+          <div class="w-24 bg-gray-800 h-1.5 rounded-full overflow-hidden mt-1">
             <div id="global-progress-bar" class="bg-gradient-to-r from-cyan-500 to-emerald-400 h-full w-0 transition-all duration-300"></div>
           </div>
         </div>
@@ -542,6 +553,54 @@
 
     </div>
 
+
+    <!-- =======================================================================
+         TAB: CTF ARENA (WARGAMES & CHALLENGES)
+         ======================================================================= -->
+    <div id="tab-ctf" class="tab-pane hidden space-y-6">
+      <div class="glass-panel p-5 rounded-xl border border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>🚩</span> BZT-CTF Meydan Okuma Arenası (OverTheWire & HTB Stili)
+          </h2>
+          <p class="text-xs text-gray-400 mt-1">İpuçlarını takip edin, BZT-Shell ve zafiyet lablarını kullanarak gizli bayrakları (BZT{...}) bulun ve XP kazanın.</p>
+        </div>
+        <div class="px-3 py-1.5 bg-yellow-950/80 border border-yellow-500/50 rounded-lg text-xs font-mono text-yellow-300 font-bold">
+          Toplam CTF Skoru: <span id="ctf-total-score">0 / 1000 XP</span>
+        </div>
+      </div>
+
+      <div id="ctf-challenges-container"></div>
+    </div>
+
+    <!-- =======================================================================
+         TAB: CERTIFICATE GENERATOR
+         ======================================================================= -->
+    <div id="tab-certificate" class="tab-pane hidden space-y-6">
+      <div class="glass-panel p-5 rounded-xl border border-gray-800">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>🎓</span> Resmi BZT Siber Güvenlik Başarı Sertifikası
+        </h2>
+        <p class="text-xs text-gray-400 mt-1">Eğitimi, laboratuvarları ve CTF bayraklarını tamamladığınızda adınıza özel oluşturulan yüksek çözünürlüklü onaylı sertifikanızı indirin.</p>
+      </div>
+
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-6">
+        <div class="flex flex-col sm:flex-row gap-3 items-end">
+          <div class="flex-1">
+            <label class="block text-xs font-mono text-gray-400 mb-1">Sertifika Üzerindeki İsim & Soyisim:</label>
+            <input type="text" id="cert-student-name" value="Furkan Bozat" class="w-full bg-cyber-900 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-cyan-500">
+          </div>
+          <button id="cert-download-btn" class="bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-black font-bold font-mono text-xs px-6 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-cyan-950/50">
+            <span>📥 Sertifikayı İndir (PNG)</span>
+          </button>
+        </div>
+
+        <div class="rounded-xl overflow-hidden border border-gray-800 bg-black/60 p-2 flex justify-center">
+          <img id="cert-preview-img" class="w-full max-w-3xl rounded-lg shadow-2xl glow-cyan-sm border border-cyan-500/30" alt="BZT Siber Güvenlik Sertifika Önizleme">
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- =========================================================================
@@ -589,6 +648,8 @@
   <script src="assets/js/curriculum.js"></script>
   <script src="assets/js/terminal.js"></script>
   <script src="assets/js/labs.js"></script>
+  <script src="assets/js/ctf.js"></script>
+  <script src="assets/js/certificate.js"></script>
   <script src="assets/js/tools.js"></script>
   <script src="assets/js/app.js"></script>
 
