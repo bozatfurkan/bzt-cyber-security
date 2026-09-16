@@ -132,7 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
 
+    const activeCareer = window.BZTCareers && window.BZTCareers.activeCareerId ? BZT_CAREERS.find(c => c.id === window.BZTCareers.activeCareerId) : null;
+
     const filtered = CURRICULUM_DATA.map(getLessonData).filter(item => {
+      if (activeCareer && !activeCareer.recommendedLessons.includes(item.id)) {
+        return false;
+      }
       const matchesPhase = currentFilterPhase === "all" || item.phase.toString() === currentFilterPhase;
       const q = searchQuery.toLowerCase();
       const matchesSearch = !q || 
@@ -260,8 +265,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     modalContent.innerHTML = `
       <div class="border-b border-gray-800 pb-4 mb-6">
-        <div class="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
-          <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty}</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2 text-xs font-mono text-cyan-400">
+            <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty}</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
+          </div>
+          <button onclick="BZTSlides.start('${lesson.id}')" class="px-3 py-1.5 bg-gradient-to-r from-purple-600/40 to-pink-600/40 hover:from-purple-600 hover:to-pink-600 text-purple-200 hover:text-white border border-purple-500/50 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-sm glow-purple">
+            <span>📊</span> <span>${lang === 'tr' ? 'Slayt Modu (Slide Deck)' : 'Slide Presentation'}</span>
+          </button>
         </div>
         <h2 class="text-2xl font-bold text-white mb-2">${lesson.title}</h2>
         <p class="text-sm text-gray-400 leading-relaxed">${lesson.summary}</p>
@@ -584,6 +594,10 @@ document.addEventListener("DOMContentLoaded", () => {
               .replace(/"/g, "&quot;")
               .replace(/'/g, "&#039;");
   }
+
+  // Initial Hats & Careers
+  if (window.BZTHats) BZTHats.updateHatUI();
+  if (window.BZTCareers) BZTCareers.renderDrawer();
 
   // Initial Curriculum, Stats & i18n Render
   if (window.BZTI18n) {

@@ -77,8 +77,11 @@
         <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="ctf">
           <span>🚩</span> CTF Arena
         </button>
+        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="games">
+          <span>🎮</span> <span data-i18n="nav_games">Oyunlar</span>
+        </button>
         <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="tools">
-          <span>🛠️</span> Araçlar
+          <span>🛠️</span> <span data-i18n="nav_tools">Araçlar</span>
         </button>
         <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono flex items-center gap-2 border border-transparent text-gray-400 hover:text-gray-200 transition-all" data-tab="cheatsheet">
           <span>📑</span> Referans
@@ -88,7 +91,17 @@
         </button>
       </nav>
 
-              <!-- Language Switcher Toggle -->
+                      <!-- Career & Hat Selectors -->
+        <div class="flex items-center gap-2">
+          <button onclick="BZTCareers.openDrawer()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-purple-600/20 border border-cyan-500/40 text-cyan-300 hover:text-white hover:border-cyan-400 text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-sm glow-cyan-sm">
+            <span>🎯</span> <span data-i18n="career_btn_open">Kariyerler</span>
+          </button>
+          <button onclick="BZTHats.openModal()" id="active-hat-nav-badge" class="px-3 py-1.5 rounded-xl bg-cyber-900 border border-gray-700 text-gray-200 hover:text-white hover:border-gray-500 text-xs font-mono font-bold flex items-center gap-1.5 transition-all">
+            <span>🎩</span> <span data-i18n="hat_btn_open">Şapka</span>
+          </button>
+        </div>
+
+        <!-- Language Switcher Toggle -->
         <div class="flex items-center bg-black/60 border border-gray-800 rounded-xl p-1 text-xs font-mono">
           <button id="lang-btn-tr" onclick="BZTI18n.setLanguage('tr')" class="px-2.5 py-1 rounded-lg font-bold bg-cyan-500 text-black transition-all flex items-center gap-1">
             <span>🇹🇷</span> <span>TR</span>
@@ -451,6 +464,76 @@
 
     </div>
 
+
+    <!-- =======================================================================
+         TAB: CYBER GAMES
+         ======================================================================= -->
+    <div id="tab-games" class="tab-pane hidden space-y-8">
+      <div class="glass-panel p-5 rounded-xl border border-gray-800">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>🎮</span> <span data-i18n="games_title">Siber Güvenlik Mini Oyunları</span>
+        </h2>
+        <p class="text-xs text-gray-400 mt-1" data-i18n="games_desc">Reflekslerinizi ve siber bilginizi eğlenceli simülasyonlarla test edin, XP kazanın.</p>
+      </div>
+
+      <!-- GAME 1: FIREWALL DEFENDER -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-3 border-b border-gray-800">
+          <div>
+            <h3 class="text-lg font-bold text-cyan-400 font-mono flex items-center gap-2">
+              <span>🛡️</span> <span data-i18n="game1_title">Güvenlik Duvarı Savunucusu (Firewall Defender)</span>
+            </h3>
+            <p class="text-xs text-gray-400" data-i18n="game1_desc">Gelen paketleri inceleyin: Zararlı paketleri DROP edin, meşru trafiğe ALLOW verin.</p>
+          </div>
+          <div class="flex items-center gap-3 font-mono text-xs">
+            <span class="text-gray-400">Skor: <b id="fw-score" class="text-yellow-400 text-sm">0</b></span>
+            <span class="text-gray-400">Can: <span id="fw-lives">❤️❤️❤️</span></span>
+            <span class="text-gray-400">Kombo: <b id="fw-streak" class="text-emerald-400">x0</b></span>
+          </div>
+        </div>
+
+        <div id="fw-packet-card" class="p-6 rounded-xl border border-gray-800 bg-black/60 text-center space-y-3">
+          <p class="text-sm text-gray-300">Oyuna başlamak için aşağıdaki butona tıklayın!</p>
+          <button onclick="BZTGames.fwGame.start()" class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs transition-all shadow-lg glow-cyan-sm">
+            Oyunu Başlat ⚡
+          </button>
+        </div>
+
+        <div id="fw-feedback" class="text-xs font-mono min-h-[20px]"></div>
+
+        <div class="flex gap-3 pt-2">
+          <button onclick="BZTGames.fwGame.decide('ALLOW')" class="flex-1 py-3 rounded-xl bg-emerald-950/80 hover:bg-emerald-600 border border-emerald-500/60 text-emerald-300 hover:text-white font-bold font-mono text-xs transition-all flex items-center justify-center gap-2">
+            <span>🟢 İZİN VER (ALLOW TRAFFIC)</span>
+          </button>
+          <button onclick="BZTGames.fwGame.decide('DROP')" class="flex-1 py-3 rounded-xl bg-red-950/80 hover:bg-red-600 border border-red-500/60 text-red-300 hover:text-white font-bold font-mono text-xs transition-all flex items-center justify-center gap-2">
+            <span>🔴 ENGELLE (DROP PACKET)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- GAME 2: COMMAND RUSH -->
+      <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4">
+        <div class="flex justify-between items-center pb-3 border-b border-gray-800">
+          <div>
+            <h3 class="text-lg font-bold text-yellow-400 font-mono flex items-center gap-2">
+              <span>⚡</span> <span data-i18n="game2_title">Terminal Hız Testi (Command Rush)</span>
+            </h3>
+            <p class="text-xs text-gray-400" data-i18n="game2_desc">Süreye karşı yarışın! Senaryoya uygun doğru komutu 15 saniyede seçin.</p>
+          </div>
+        </div>
+
+        <div id="cmd-rush-card" class="p-6 rounded-xl border border-gray-800 bg-black/60 text-center space-y-3">
+          <p class="text-sm text-gray-300">10 senaryoluk hız testini başlatmaya hazır mısınız?</p>
+          <button onclick="BZTGames.cmdGame.start()" class="px-6 py-2.5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-bold font-mono text-xs transition-all shadow-lg">
+            Testi Başlat 🚀
+          </button>
+        </div>
+
+        <div id="rush-feedback" class="text-xs font-mono min-h-[20px]"></div>
+      </div>
+    </div>
+
+
     <!-- =======================================================================
          TAB 4: TOOLS (HACKER TOOLKIT)
          ======================================================================= -->
@@ -726,12 +809,95 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/curriculum.js"></script>
   <script src="assets/js/curriculum_en.js"></script>
+  <script src="assets/js/careers.js"></script>
+  <script src="assets/js/hats.js"></script>
+  <script src="assets/js/slides.js"></script>
+  <script src="assets/js/games.js"></script>
   <script src="assets/js/terminal.js"></script>
   <script src="assets/js/labs.js"></script>
   <script src="assets/js/ctf.js"></script>
   <script src="assets/js/certificate.js"></script>
   <script src="assets/js/tools.js"></script>
   <script src="assets/js/app.js"></script>
+
+
+  <!-- =========================================================================
+       CAREER TRACKS SLIDE-OVER DRAWER
+       ========================================================================= -->
+  <div id="career-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-cyber-900 border-l border-cyan-500/40 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="p-5 border-b border-gray-800 flex items-center justify-between bg-black/40">
+      <div>
+        <h3 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+          <span>🎯</span> <span data-i18n="career_drawer_title">Siber Güvenlik Kariyer Yolları</span>
+        </h3>
+        <p class="text-xs text-gray-400 mt-0.5" data-i18n="career_drawer_desc">Uzmanlaşmak istediğiniz mesleği seçin.</p>
+      </div>
+      <button onclick="BZTCareers.closeDrawer()" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800 transition-colors text-lg">✕</button>
+    </div>
+
+    <div id="career-tracks-list" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+      <!-- Injected via careers.js -->
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       HACKER HATS MODAL
+       ========================================================================= -->
+  <div id="hat-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-cyber-900 border border-purple-500/40 w-full max-w-3xl max-h-[85vh] rounded-2xl flex flex-col shadow-2xl glow-purple overflow-hidden animate-fade-in">
+      <div class="p-4 border-b border-gray-800 flex items-center justify-between bg-black/40">
+        <div class="flex items-center gap-2 text-xs font-mono text-purple-400 font-bold">
+          <span>🎩</span> <span>HACKER ŞAPKALARI & PERSONA SEÇİCİ</span>
+        </div>
+        <button onclick="BZTHats.closeModal()" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors text-lg">✕</button>
+      </div>
+      <div id="hat-selector-list" class="p-4 overflow-y-auto space-y-3 custom-scrollbar flex-1">
+        <!-- Injected via hats.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SLIDE DECK PRESENTATION MODAL
+       ========================================================================= -->
+  <div id="slides-modal" class="fixed inset-0 z-50 bg-cyber-950/98 hidden flex flex-col p-4 md:p-8 animate-fade-in select-none">
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between pb-4 border-b border-gray-800/80">
+      <div class="flex items-center gap-3">
+        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span class="text-xs font-mono font-bold text-cyan-400">BZT SLIDE PRESENTATION MODE</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span id="slides-indicator" class="text-xs font-mono text-gray-400 font-bold">1 / 5</span>
+        <button onclick="BZTSlides.close()" class="px-3 py-1 rounded-lg bg-gray-900 hover:bg-red-950 border border-gray-800 text-xs text-gray-300 hover:text-red-400 font-mono transition-colors">
+          ✕ Çıkış (ESC)
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="w-full bg-gray-900 h-1 mt-2 rounded-full overflow-hidden">
+      <div id="slides-progress-bar" class="bg-gradient-to-r from-cyan-500 to-emerald-400 h-full w-0 transition-all duration-300"></div>
+    </div>
+
+    <!-- Slide Content Body -->
+    <div id="slides-content" class="flex-1 flex flex-col justify-center overflow-y-auto py-6 custom-scrollbar">
+      <!-- Injected via slides.js -->
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs font-mono text-gray-400">
+      <div>Klavye: [← / →] Slayt Değiştir | [ESC] Çıkış</div>
+      <div class="flex gap-2">
+        <button onclick="BZTSlides.prevSlide()" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 text-white rounded-xl transition-all">
+          ← Önceki
+        </button>
+        <button onclick="BZTSlides.nextSlide()" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-xl transition-all">
+          Sonraki →
+        </button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
