@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const phaseFilters = document.querySelectorAll(".phase-filter-btn");
 
   // Helper to fetch localized lesson content
+  window.getLessonData = getLessonData;
   function getLessonData(item) {
     const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
     if (lang === "en" && window.CURRICULUM_EN && window.CURRICULUM_EN[item.id]) {
@@ -388,6 +389,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalContent = document.getElementById("lesson-modal-content");
   const closeModalBtn = document.getElementById("close-modal-btn");
 
+  
+  // Format markdown-like cyber content for lesson modal
+  function formatCyberContent(text) {
+    if (!text) return "";
+    const lines = text.split("\n");
+    return lines.map(line => {
+      let l = line.trim();
+      if (!l) return '<div class="h-2"></div>';
+      l = l.replace(/\*\*(.*?)\*\*/g, '<b class="text-white font-semibold">$1</b>');
+      l = l.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-black/80 border border-gray-800 text-orange-300 font-mono text-xs">$1</code>');
+      if (l.startsWith("- ") || l.startsWith("* ")) {
+        const rest = l.substring(2);
+        return `<div class="flex items-start gap-2.5 my-1.5 text-gray-300"><span class="text-[#f37021] font-mono mt-0.5 text-sm shrink-0 font-bold">›</span><span class="leading-relaxed">${rest}</span></div>`;
+      }
+      const numMatch = l.match(/^(\d+)\.\s+(.*)$/);
+      if (numMatch) {
+        const num = numMatch[1];
+        const rest = numMatch[2];
+        return `<div class="flex items-start gap-3 my-2 text-gray-200"><span class="shrink-0 w-5 h-5 rounded-full bg-orange-950/70 border border-orange-500/40 text-[#f37021] text-[11px] font-mono font-bold flex items-center justify-center mt-0.5">${num}</span><span class="leading-relaxed">${rest}</span></div>`;
+      }
+      return `<p class="leading-relaxed text-gray-300 my-1">${l}</p>`;
+    }).join("");
+  }
+
   function openLessonModal(id) {
     const raw = CURRICULUM_DATA.find(x => x.id === id);
     if (!raw || !modal || !modalContent) return;
@@ -416,7 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <span class="w-2.5 h-2.5 rounded-full bg-[#f37021]"></span>
               ${sec.heading}
             </h4>
-            <div class="text-sm text-gray-300 leading-relaxed whitespace-pre-line">${sec.content}</div>
+            <div class="bg-[#030712] p-4 sm:p-5 rounded-xl border border-gray-800/80 space-y-1">${formatCyberContent(sec.content)}</div>
 
             ${sec.codeSnippet ? `
               <div class="code-block p-4 my-3 font-mono text-xs text-emerald-400 overflow-x-auto rounded-xl border border-gray-800 bg-[#050811]">

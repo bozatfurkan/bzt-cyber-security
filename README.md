@@ -1,7 +1,7 @@
-# 🛡️ BZT Cyber Security - Sıfırdan İleri Seviyeye Etik Hacker Akademisi & Laboratuvarı
+# [SEC] BZT Cyber Security - Sıfırdan İleri Seviyeye Etik Hacker Akademisi & Laboratuvarı
 
 <div align="center">
-  <h3>⚡ Zero-to-Hero Interactive Cyber Security Academy & Penetration Testing Suite ⚡</h3>
+  <h3>[BZT] Zero-to-Hero Interactive Cyber Security Academy & Penetration Testing Suite [BZT]</h3>
   <p><strong>Kapsamlı Ağ Protokolleri, Web Zafiyetleri (OWASP Top 10), Sistem Sızma Testleri, Active Directory Dominasyonu, EDR/AV Atlatma ve Canlı BZT-Shell Kali Simülatörü</strong></p>
 
   [![Platform: GitHub Pages](https://img.shields.io/badge/Platform-GitHub_Pages-2563eb?style=for-the-badge&logo=githubpages&logoColor=white)](https://bozatfurkan.github.io/bzt-cyber-security/)
@@ -11,13 +11,13 @@
   [![Status: Production Ready](https://img.shields.io/badge/Status-Live_v3.0_PRO-cyan?style=for-the-badge)](#)
 
   <br><br>
-  <strong>🌐 Canlı Web Uygulaması & Akademi:</strong><br>
+  <strong>[WEB] Canlı Web Uygulaması & Akademi:</strong><br>
   <a href="https://bozatfurkan.github.io/bzt-cyber-security/">https://bozatfurkan.github.io/bzt-cyber-security/</a>
 </div>
 
 ---
 
-## 📑 İçindekiler
+## [DOCS] İçindekiler
 
 - [Proje Genel Bakış](#-proje-genel-bakış)
 - [Öne Çıkan Yetenekler & Modüller](#-öne-çıkan-yetenekler--modüller)
@@ -31,7 +31,7 @@
 
 ---
 
-## 🎯 Proje Genel Bakış
+## [GOAL] Proje Genel Bakış
 
 **BZT Cyber Security**, siber güvenliğe yeni başlayanlardan ileri düzey sızma testi uzmanlarına (Red Teamer / Pentester) kadar herkes için tasarlanmış, **eksiksiz ve interaktif bir siber güvenlik akademisidir**.
 
@@ -43,7 +43,7 @@ Platform, yalnızca kuru teorik metinler sunmak yerine:
 
 ---
 
-## 🚀 7 Aşamalı Hacker Eğitim Müfredatı
+## [MODULES] 7 Aşamalı Hacker Eğitim Müfredatı
 
 Platform, sektörün altın standartları olan **OSCP**, **eJPT**, **CEH** ve **PNPT** sınavlarının kapsamını birebir kapsayan 7 aşamalı bir yol haritası sunar:
 
@@ -59,7 +59,7 @@ Platform, sektörün altın standartları olan **OSCP**, **eJPT**, **CEH** ve **
 
 ---
 
-## 🧪 İnteraktif Laboratuvarlar (Labs)
+## [LABS] İnteraktif Laboratuvarlar (Labs)
 
 1. **SQL Injection Lab:**
    - Kimlik doğrulama atlatma (`admin' --`) ve Tautology (`' OR 1=1 --`) simülasyonu.
@@ -72,7 +72,7 @@ Platform, sektörün altın standartları olan **OSCP**, **eJPT**, **CEH** ve **
 
 ---
 
-## ⚡ BZT-Shell Kali Terminal Simülatörü
+## [BZT] BZT-Shell Kali Terminal Simülatörü
 
 Tarayıcı içi JavaScript terminal motoru aşağıdaki komutları eksiksiz simüle eder:
 - `nmap <IP>`: Port, servis ve zafiyetli sürüm tespit taraması.
@@ -85,7 +85,7 @@ Tarayıcı içi JavaScript terminal motoru aşağıdaki komutları eksiksiz sim�
 
 ---
 
-## 🛠️ Hacker Araç Çantası (Arsenal)
+## [TOOLS] Hacker Araç Çantası (Arsenal)
 
 - **Reverse Shell Generator:** Tek tıkla Bash, Netcat FIFO, Python3 PTY, PowerShell, PHP ve Socat ters bağlantı kodları üretir.
 - **Encoder & Decoder:** Base64, URL ve Hex formatlarında çift yönlü hızlı dönüştürücü.
@@ -93,7 +93,7 @@ Tarayıcı içi JavaScript terminal motoru aşağıdaki komutları eksiksiz sim�
 
 ---
 
-## 💻 Yerel Kurulum & Çalıştırma
+## [SETUP] Yerel Kurulum & Çalıştırma
 
 Projeyi bilgisayarınızda çalıştırmak için herhangi bir derleme (build), Node.js veya veritabanı kurulumuna gerek yoktur:
 
@@ -112,7 +112,7 @@ Tarayıcınızda `http://localhost:8000` adresine gidin.
 
 ---
 
-## 🚀 GitHub Pages Dağıtımı
+## [MODULES] GitHub Pages Dağıtımı
 
 Deponuzu GitHub'a push ettikten sonra:
 1. GitHub deponuzda **Settings** > **Pages** sekmesine gidin.
@@ -122,7 +122,7 @@ Deponuzu GitHub'a push ettikten sonra:
 
 ---
 
-## ⚖️ Yasal & Etik Uyarı
+## [LEGAL] Yasal & Etik Uyarı
 
 Bu platformda yer alan bilgiler, araçlar ve teknikler **yalnızca eğitim, meşru güvenlik araştırmaları ve izinli sızma testleri (etik hackerlık)** amacıyla paylaşılmıştır. İzin alınmamış sistemlere yönelik saldırı ve testler yasa dışıdır ve cezai sorumluluk doğurur.
 
