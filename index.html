@@ -67,21 +67,42 @@
       </div>
 
       <!-- Center: Clean Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-1 p-1 bg-black/60 border border-gray-800 rounded-xl">
-        <button class="nav-tab active px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent transition-all" data-tab="curriculum">
-          <span data-i18n="nav_curriculum">Müfredat</span>
-        </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-white transition-all" data-tab="terminal">
-          <span data-i18n="nav_terminal">BZT-Shell</span>
-        </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-white transition-all" data-tab="labs">
-          <span data-i18n="nav_labs">Laboratuvar</span>
-        </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-white transition-all" data-tab="ctf">
-          <span data-i18n="nav_ctf">CTF</span>
-        </button>
-        <button class="nav-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono border border-transparent text-gray-400 hover:text-white transition-all" data-tab="tools">
-          <span data-i18n="nav_tools">Araçlar</span>
+      <nav class="hidden lg:flex items-center gap-1 font-mono text-xs">
+        <!-- 1. Platform & Müfredat (Hover Mega Menu) -->
+        <div class="nav-dropdown-item relative" data-menu="platform">
+          <button class="nav-dropdown-btn flex items-center gap-1.5 px-3 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-black/40 border border-transparent hover:border-gray-800 transition-all font-semibold cursor-pointer">
+            <span data-i18n="nav_platform">Platform &amp; Müfredat</span>
+            <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+        </div>
+
+        <!-- 2. Hacker Şapkaları (Hover Mega Menu) -->
+        <div class="nav-dropdown-item relative" data-menu="hats">
+          <button class="nav-dropdown-btn flex items-center gap-1.5 px-3 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-black/40 border border-transparent hover:border-gray-800 transition-all font-semibold cursor-pointer">
+            <span data-i18n="nav_hats">Hacker Şapkaları</span>
+            <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+        </div>
+
+        <!-- 3. Kariyer Yolları (Hover Mega Menu) -->
+        <div class="nav-dropdown-item relative" data-menu="careers">
+          <button class="nav-dropdown-btn flex items-center gap-1.5 px-3 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-black/40 border border-transparent hover:border-gray-800 transition-all font-semibold cursor-pointer">
+            <span data-i18n="nav_careers">Kariyer Yolları</span>
+            <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+        </div>
+
+        <!-- 4. Laboratuvar & CTF (Hover Mega Menu) -->
+        <div class="nav-dropdown-item relative" data-menu="labs">
+          <button class="nav-dropdown-btn flex items-center gap-1.5 px-3 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-black/40 border border-transparent hover:border-gray-800 transition-all font-semibold cursor-pointer">
+            <span data-i18n="nav_labs_menu">Laboratuvar &amp; CTF</span>
+            <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+        </div>
+
+        <!-- 5. Direct BZT-Shell Tab -->
+        <button class="nav-tab px-3 py-2 rounded-xl text-gray-300 hover:text-[#f37021] hover:bg-black/40 border border-transparent hover:border-gray-800 transition-all font-semibold cursor-pointer" data-tab="terminal">
+          <span class="text-[#f37021] font-mono font-bold">&gt;_</span> BZT-Shell
         </button>
       </nav>
 
@@ -112,6 +133,16 @@
       </div>
 
     </div>
+
+    <!-- MEGA MENU DROPDOWN (OPENS ON HOVER WITHOUT CLICKING) -->
+    <div id="mega-menu-wrapper" class="absolute top-full left-0 w-full z-50 pointer-events-none transition-all duration-200 opacity-0 -translate-y-2">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 pt-2">
+        <div id="mega-menu-card" class="bg-[#0b0f19] border border-gray-800 rounded-2xl shadow-2xl p-6 sm:p-8 pointer-events-auto text-white backdrop-blur-xl">
+          <!-- Injected via megamenu.js -->
+        </div>
+      </div>
+    </div>
+    <div id="mega-menu-backdrop" class="fixed inset-0 top-[64px] bg-black/60 backdrop-blur-xs z-30 hidden transition-opacity duration-200 opacity-0"></div>
   </header>
 
   <!-- =========================================================================
@@ -1314,6 +1345,7 @@
   <script src="assets/js/ctf.js"></script>
   <script src="assets/js/certificate.js"></script>
   <script src="assets/js/tools.js"></script>
+  <script src="assets/js/megamenu.js"></script>
   <script src="assets/js/app.js"></script>
 
 </body>

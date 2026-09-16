@@ -8,6 +8,10 @@ const BZT_TRANSLATIONS = {
     // Header & Brand
     brand_sub: "Sıfırdan İleri Seviyeye Etik Hacker Akademisi",
     nav_curriculum: "Müfredat",
+    nav_platform: "Platform & Müfredat",
+    nav_hats: "Hacker Şapkaları",
+    nav_careers: "Kariyer Yolları",
+    nav_labs_menu: "Laboratuvar & CTF",
     nav_terminal: "BZT-Shell",
     nav_labs: "Laboratuvar",
     nav_ctf: "CTF Arena",
@@ -140,6 +144,10 @@ const BZT_TRANSLATIONS = {
     // Header & Brand
     brand_sub: "Zero-to-Hero Ethical Hacking Academy",
     nav_curriculum: "Curriculum",
+    nav_platform: "Platform & Curriculum",
+    nav_hats: "Hacker Personas",
+    nav_careers: "Career Tracks",
+    nav_labs_menu: "Labs & CTF",
     nav_terminal: "BZT-Shell",
     nav_labs: "Labs",
     nav_ctf: "CTF Arena",

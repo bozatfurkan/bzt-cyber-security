@@ -110,6 +110,9 @@ const BZTApp = {
     });
 
     this.closeDrawer();
+    if (window.BZTMegaMenu && typeof window.BZTMegaMenu.closeMenu === "function") {
+      window.BZTMegaMenu.closeMenu();
+    }
 
     if (targetTab === "terminal" && window.bztTerminalInstance) {
       setTimeout(() => {

@@ -338,5 +338,6 @@ const BZTSlides = {
   }
 };
 
+BZTSlides.open = BZTSlides.start;
 BZTSlides.init();
 window.BZTSlides = BZTSlides;
