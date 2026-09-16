@@ -117,6 +117,18 @@ const BZT_TRANSLATIONS = {
     career_btn_open: "🎯 Kariyer Seçici",
     hat_btn_open: "🎩 Şapkanı Seç",
 
+    // Hamburger Menu & Hub Drawer
+    menu_btn: "Menü",
+    drawer_title: "BZT CYBER HUB",
+    drawer_desc: "Akademi, Araçlar ve Kariyer Merkezi",
+    drawer_nav_header: "Platform Bölümleri",
+    drawer_roles_header: "Kariyer & Personalar",
+    drawer_settings_header: "Sistem & Ayarlar",
+    btn_reset_progress: "İlerlemeyi Sıfırla",
+    reset_confirm: "Tüm tamamlanan dersleriniz ve kazandığınız XP puanı sıfırlanacak. Onaylıyor musunuz?",
+    nav_careers_sub: "10+ Uzmanlık Alanı",
+    nav_hats_sub: "7 Hacker Şapkası",
+
     // Footer
     footer_platform: "BZT Cyber Security Platformu",
     footer_dev: "Geliştirici:",
@@ -220,23 +232,6 @@ const BZT_TRANSLATIONS = {
     cert_btn_download: "📥 Download Certificate (PNG)",
 
     // Games & Careers
-    nav_games: "Oyunlar",
-    nav_careers: "Kariyerler",
-    nav_hats: "Şapka",
-    games_title: "Siber Güvenlik Mini Oyunları",
-    games_desc: "Reflekslerinizi ve siber bilginizi eğlenceli simülasyonlarla test edin, XP kazanın.",
-    game1_title: "Güvenlik Duvarı Savunucusu (Firewall Defender)",
-    game1_desc: "Ağınıza gelen veri paketlerini derinlemesine inceleyin (DPI). Zararlı saldırı paketlerini Engelleyin (DROP), meşru trafiğe İzin Verin (ALLOW).",
-    game1_btn_allow: "İzin Ver (ALLOW) 🟢",
-    game1_btn_drop: "Engelle (DROP) 🔴",
-    game2_title: "Terminal Hız Testi (Command Rush)",
-    game2_desc: "Zamana karşı yarışın! Verilen siber güvenlik senaryosu için en doğru komutu 15 saniye içinde seçip çalıştırın.",
-    career_drawer_title: "Siber Güvenlik Kariyer Yolları (10+ Meslek)",
-    career_drawer_desc: "Hedeflediğiniz uzmanlığı seçin; platform sizin için en uygun dersleri ve araçları otomatik filtrelesin.",
-    career_btn_open: "🎯 Kariyer Seçici",
-    hat_btn_open: "🎩 Şapkanı Seç",
-
-    // Games & Careers
     nav_games: "Games",
     nav_careers: "Careers",
     nav_hats: "Hats",
@@ -252,6 +247,18 @@ const BZT_TRANSLATIONS = {
     career_drawer_desc: "Select your target career to automatically filter custom roadmaps, tools, and certifications.",
     career_btn_open: "🎯 Career Tracks",
     hat_btn_open: "🎩 Choose Hat",
+
+    // Hamburger Menu & Hub Drawer
+    menu_btn: "Menu",
+    drawer_title: "BZT CYBER HUB",
+    drawer_desc: "Academy, Arsenal & Career Nexus",
+    drawer_nav_header: "Platform Sections",
+    drawer_roles_header: "Careers & Personas",
+    drawer_settings_header: "System & Preferences",
+    btn_reset_progress: "Reset Progress",
+    reset_confirm: "All your completed modules and earned XP will be reset. Are you sure?",
+    nav_careers_sub: "10+ Specializations",
+    nav_hats_sub: "7 Hacker Personas",
 
     // Footer
     footer_platform: "BZT Cyber Security Platform",

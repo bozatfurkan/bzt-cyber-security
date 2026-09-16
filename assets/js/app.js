@@ -33,6 +33,80 @@ const BZTApp = {
     };
   },
 
+  openDrawer() {
+    const drawer = document.getElementById("cyber-nav-drawer");
+    const backdrop = document.getElementById("drawer-backdrop");
+    if (drawer) drawer.classList.remove("translate-x-full");
+    if (backdrop) backdrop.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+  },
+
+  closeDrawer() {
+    const drawer = document.getElementById("cyber-nav-drawer");
+    const backdrop = document.getElementById("drawer-backdrop");
+    if (drawer) drawer.classList.add("translate-x-full");
+    if (backdrop) backdrop.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+  },
+
+  toggleDrawer() {
+    const drawer = document.getElementById("cyber-nav-drawer");
+    if (drawer && drawer.classList.contains("translate-x-full")) {
+      this.openDrawer();
+    } else {
+      this.closeDrawer();
+    }
+  },
+
+  switchTab(targetTab) {
+    if (!targetTab) return;
+    const tabButtons = document.querySelectorAll(".nav-tab");
+    const tabPanes = document.querySelectorAll(".tab-pane");
+
+    tabButtons.forEach(b => {
+      const bTab = b.getAttribute("data-tab");
+      if (bTab === targetTab) {
+        b.classList.add("active", "border-cyan-500", "text-cyan-400");
+        b.classList.remove("text-gray-400");
+      } else {
+        b.classList.remove("active", "border-cyan-500", "text-cyan-400");
+        b.classList.add("text-gray-400");
+      }
+    });
+
+    tabPanes.forEach(pane => {
+      if (pane.id === `tab-${targetTab}`) {
+        pane.classList.remove("hidden");
+      } else {
+        pane.classList.add("hidden");
+      }
+    });
+
+    this.closeDrawer();
+
+    if (targetTab === "terminal" && window.bztTerminalInstance) {
+      setTimeout(() => {
+        document.getElementById("terminal-input")?.focus();
+      }, 100);
+    } else if (targetTab === "ctf" && window.BZT_CTF) {
+      BZT_CTF.renderChallenges("ctf-challenges-container");
+    } else if (targetTab === "certificate" && window.BZTCertificate) {
+      if (typeof window.updateCertPreview === "function") window.updateCertPreview();
+    }
+  },
+
+  resetProgress() {
+    const msg = window.BZTI18n ? window.BZTI18n.get("reset_confirm") : "Tüm ilerlemeniz sıfırlanacak. Emin misiniz?";
+    if (confirm(msg)) {
+      localStorage.removeItem("bzt_user_xp");
+      localStorage.removeItem("bzt_completed_lessons");
+      localStorage.removeItem("bzt_ctf_score");
+      localStorage.removeItem("bzt_ctf_solved");
+      this.updateUserStats();
+      location.reload();
+    }
+  },
+
   updateUserStats() {
     const xp = this.getXp();
     const rank = this.getRank(xp);
@@ -55,6 +129,11 @@ const BZTApp = {
     const progText = document.getElementById("global-progress-text");
     if (progBar) progBar.style.width = `${pct}%`;
     if (progText) progText.innerText = `%${pct}`;
+
+    const drawerProgBar = document.getElementById("drawer-progress-bar");
+    const drawerProgText = document.getElementById("drawer-progress-text");
+    if (drawerProgBar) drawerProgBar.style.width = `${pct}%`;
+    if (drawerProgText) drawerProgText.innerText = `%${pct}`;
   }
 };
 
@@ -65,6 +144,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("terminal-output")) {
     window.bztTerminalInstance = new BZTerminal("terminal-output", "terminal-input", "terminal-prompt");
   }
+
+  // Hamburger Drawer & System Events
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const closeDrawerBtn = document.getElementById("close-drawer-btn");
+  const drawerBackdrop = document.getElementById("drawer-backdrop");
+  const drawerResetBtn = document.getElementById("drawer-reset-btn");
+
+  if (hamburgerBtn) hamburgerBtn.addEventListener("click", () => BZTApp.toggleDrawer());
+  if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", () => BZTApp.closeDrawer());
+  if (drawerBackdrop) drawerBackdrop.addEventListener("click", () => BZTApp.closeDrawer());
+  if (drawerResetBtn) drawerResetBtn.addEventListener("click", () => BZTApp.resetProgress());
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      BZTApp.closeDrawer();
+    }
+  });
 
   // State
   let currentFilterPhase = "all";
@@ -101,27 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
   tabButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const targetTab = btn.getAttribute("data-tab");
-      
-      tabButtons.forEach(b => b.classList.remove("active", "border-cyan-500", "text-cyan-400", "bg-cyan-950/20"));
-      btn.classList.add("active", "border-cyan-500", "text-cyan-400", "bg-cyan-950/20");
-
-      tabPanes.forEach(pane => {
-        if (pane.id === `tab-${targetTab}`) {
-          pane.classList.remove("hidden");
-        } else {
-          pane.classList.add("hidden");
-        }
-      });
-
-      if (targetTab === "terminal" && window.bztTerminalInstance) {
-        setTimeout(() => {
-          document.getElementById("terminal-input")?.focus();
-        }, 100);
-      } else if (targetTab === "ctf" && window.BZT_CTF) {
-        BZT_CTF.renderChallenges("ctf-challenges-container");
-      } else if (targetTab === "certificate" && window.BZTCertificate) {
-        window.updateCertPreview();
-      }
+      BZTApp.switchTab(targetTab);
     });
   });
 
@@ -381,14 +457,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     modal.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
   }
 
-  if (closeModalBtn && modal) {
-    closeModalBtn.addEventListener("click", () => modal.classList.add("hidden"));
+  function closeLessonModal() {
+    if (modal) {
+      modal.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
+  }
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", closeLessonModal);
+  }
+  if (modal) {
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) modal.classList.add("hidden");
+      if (e.target === modal) closeLessonModal();
     });
   }
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (modal && !modal.classList.contains("hidden")) {
+        closeLessonModal();
+      }
+    }
+  });
 
   // 5. PHASE FILTER & SEARCH
   phaseFilters.forEach(btn => {

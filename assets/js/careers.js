@@ -228,6 +228,11 @@ const BZTCareers = {
       }
     }
 
+    const topBadge = document.getElementById("top-active-role-text");
+    if (topBadge) {
+      topBadge.innerText = career ? (career.title[lang] || career.title.tr) : (lang === 'tr' ? 'Kariyerler' : 'Careers');
+    }
+
     this.renderDrawer();
     if (typeof window.renderCurriculum === "function") {
       window.renderCurriculum();
@@ -236,8 +241,11 @@ const BZTCareers = {
 
   clearFilter() {
     this.activeCareerId = null;
+    const lang = (window.BZTI18n && window.BZTI18n.currentLang) || "tr";
     const indicator = document.getElementById("active-career-indicator");
     if (indicator) indicator.classList.add("hidden");
+    const topBadge = document.getElementById("top-active-role-text");
+    if (topBadge) topBadge.innerText = lang === 'tr' ? 'Kariyerler' : 'Careers';
     this.renderDrawer();
     if (typeof window.renderCurriculum === "function") {
       window.renderCurriculum();
