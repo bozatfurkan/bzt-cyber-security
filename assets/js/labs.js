@@ -45,7 +45,7 @@ const BZTLabs = {
       resultBox.innerHTML = `
         <div class="p-3 bg-red-950/60 border border-red-500/50 rounded-lg text-red-200 text-sm animate-fade-in">
           <div class="font-bold text-base flex items-center gap-2 mb-1 text-red-400">
-            <span>🚨</span> TEBRİKLER! Kimlik Doğrulama Atlatıldı (Auth Bypass)
+            <span class="font-mono font-bold">[BAŞARILI]</span> Kimlik Doğrulama Atlatıldı (Auth Bypass)
           </div>
           <p class="mb-2">Admin şifre kontrolü SQL yorum satırı (<code class="bg-black/50 px-1 text-yellow-300 font-mono">--</code>) ile etkisiz kılındı. Sisteme Admin olarak sızıldı!</p>
           <div class="bg-black/70 p-2.5 rounded font-mono text-xs text-emerald-400 space-y-1">
@@ -59,7 +59,7 @@ const BZTLabs = {
       resultBox.innerHTML = `
         <div class="p-3 bg-amber-950/60 border border-amber-500/50 rounded-lg text-amber-200 text-sm animate-fade-in">
           <div class="font-bold text-base flex items-center gap-2 mb-1 text-yellow-400">
-            <span>⚠️</span> TÜM VERİTABANI SIZDIRILDI (Tautology / 1=1 Injection)
+            <span class="font-mono font-bold">[UYARI]</span> TÜM VERİTABANI SIZDIRILDI (Tautology / 1=1 Injection)
           </div>
           <p class="mb-2"><code class="bg-black/50 px-1 text-yellow-300 font-mono">' OR 1=1 --</code> koşulu her zaman DOĞRU (True) döndüğü için tüm kayıtlar listelendi:</p>
           <div class="overflow-x-auto">
@@ -123,11 +123,11 @@ const BZTLabs = {
       status.innerHTML = `
         <div class="p-3 bg-red-950/70 border border-red-500/60 rounded-lg text-red-200 text-sm animate-fade-in">
           <div class="font-bold text-red-400 flex items-center gap-2 mb-1">
-            <span>🔥</span> XSS BAŞARIYLA TETİKLENDİ! (${firedType})
+            <span class="font-mono font-bold">[TETİKLENDİ]</span> XSS BAŞARIYLA TETİKLENDİ! (${firedType})
           </div>
           <p class="text-xs text-gray-300 mb-2">Tarayıcı payload'ı çalıştırdı. Sahte oturum çerezi çalındı:</p>
           <div class="p-2 bg-yellow-500/20 border border-yellow-500 rounded text-yellow-300 font-mono text-xs flex items-center justify-between">
-            <span>🔔 [Simulated Alert]: document.cookie = "BZT_SESSION_PWNED_2026; flag=BZT{xss_reflected_waf_bypass}"</span>
+            <span>[Simüle Bildirim]: document.cookie = "BZT_SESSION_PWNED_2026; flag=BZT{xss_reflected_waf_bypass}"</span>
             <span class="text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded font-bold">PWNED</span>
           </div>
         </div>`;
@@ -135,7 +135,7 @@ const BZTLabs = {
     } else {
       status.innerHTML = `
         <div class="p-3 bg-emerald-950/60 border border-emerald-500/50 rounded-lg text-emerald-300 text-sm">
-          <span class="font-bold">🛡️ Güvenli:</span> Girdi başarıyla filtrelendi veya çalıştırılabilir JS bulunamadı.
+          <span class="font-bold">Güvenli:</span> Girdi başarıyla filtrelendi veya çalıştırılabilir JS bulunamadı.
         </div>`;
     }
 
@@ -193,7 +193,7 @@ const BZTLabs = {
       resultBox.innerHTML = `
         <div class="p-3 bg-red-950/60 border border-red-500/50 rounded-lg text-xs font-mono space-y-2 animate-fade-in">
           <div class="text-red-400 font-bold flex items-center gap-2">
-            <span>🚨</span> Dizin Atlama (Path Traversal) Başarılı! /etc/passwd Sızdırıldı:
+            <span class="font-mono font-bold">[BAŞARILI]</span> Dizin Atlama (Path Traversal) Başarılı! /etc/passwd Sızdırıldı:
           </div>
           <pre class="bg-black/80 p-3 rounded text-emerald-400 overflow-x-auto whitespace-pre-wrap">${this.escapeHtml(this.mockFiles["../../../../etc/passwd"])}</pre>
         </div>
@@ -204,7 +204,7 @@ const BZTLabs = {
       resultBox.innerHTML = `
         <div class="p-3 bg-amber-950/60 border border-amber-500/50 rounded-lg text-xs font-mono space-y-2 animate-fade-in">
           <div class="text-yellow-400 font-bold flex items-center gap-2">
-            <span>🔑</span> PHP Wrapper Bypass: Kaynak Kod Base64 Olarak Çekildi!
+            <span class="font-mono font-bold">[BAŞARILI]</span> PHP Wrapper Bypass: Kaynak Kod Base64 Olarak Çekildi!
           </div>
           <div class="text-gray-300">Base64 Çıktı: <code class="bg-black/60 p-1 text-cyan-300 rounded">${b64}</code></div>
           <div class="text-emerald-400 font-bold mt-1">Çözülmüş PHP Kaynak Kodu:</div>
@@ -275,7 +275,7 @@ const BZTLabs = {
               <pre class="text-gray-300">${JSON.stringify(payload, null, 2)}</pre>
             </div>
           </div>
-          ${isPrivEsc ? '<div class="p-2 bg-emerald-950/80 border border-emerald-500 rounded text-emerald-300 font-bold">🎉 Bayrak Açıldı: BZT{jwt_none_algorithm_privilege_escalation} (+50 XP)</div>' : ''}
+          ${isPrivEsc ? '<div class="p-2 bg-emerald-950/80 border border-emerald-500 rounded text-emerald-300 font-bold">Bayrak Açıldı: BZT{jwt_none_algorithm_privilege_escalation} (+50 XP)</div>' : ''}
         </div>
       `;
 

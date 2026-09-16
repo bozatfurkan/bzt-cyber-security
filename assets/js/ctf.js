@@ -125,7 +125,7 @@ const BZT_CTF = {
                 </div>
 
                 <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
-                  <span>${isSolved ? '🚩' : '🎯'}</span>
+                  <span class='font-mono text-xs font-bold text-cyan-400'>${isSolved ? '[TAMAMLANDI]' : '[HEDEF]'}</span>
                   ${getT(ch.title)}
                 </h4>
 
@@ -134,14 +134,14 @@ const BZT_CTF = {
                 </p>
 
                 <div class="p-2.5 bg-black/50 border border-gray-800 rounded-lg text-xs text-cyan-300/80 mb-4">
-                  <b>💡 ${lang === 'tr' ? 'İpucu:' : 'Hint:'}</b> ${getT(ch.hint)}
+                  <b>${lang === 'tr' ? 'İpucu:' : 'Hint:'}</b> ${getT(ch.hint)}
                 </div>
               </div>
 
               <div>
                 ${isSolved ? `
                   <div class="p-2.5 bg-emerald-950/80 border border-emerald-500/60 rounded-lg text-xs font-mono text-emerald-300 font-bold flex items-center justify-between">
-                    <span>✓ ${lang === 'tr' ? 'ÇÖZÜLDÜ (SOLVED)' : 'SOLVED'}</span>
+                    <span>${lang === 'tr' ? 'ÇÖZÜLDÜ (SOLVED)' : 'SOLVED'}</span>
                     <span>+${ch.points} XP</span>
                   </div>
                 ` : `
@@ -178,7 +178,7 @@ const BZT_CTF = {
     const submitted = input.value.trim();
 
     if (submitted === ch.flag) {
-      feedback.innerHTML = `<span class="text-emerald-400 font-bold">🎉 ${lang === 'tr' ? 'Doğru Bayrak!' : 'Correct Flag!'} +${ch.points} XP!</span>`;
+      feedback.innerHTML = `<span class="text-emerald-400 font-bold">${lang === 'tr' ? 'Doğru Bayrak!' : 'Correct Flag!'} +${ch.points} XP!</span>`;
       const solved = this.getSolvedFlags();
       if (!solved.includes(chId)) {
         solved.push(chId);
@@ -191,7 +191,7 @@ const BZT_CTF = {
         this.renderChallenges("ctf-challenges-container");
       }, 800);
     } else {
-      feedback.innerHTML = `<span class="text-red-400">❌ ${lang === 'tr' ? 'Yanlış bayrak değeri. İpucunu kontrol edin.' : 'Incorrect flag. Check the hint.'}</span>`;
+      feedback.innerHTML = `<span class="text-red-400">${lang === 'tr' ? 'Yanlış bayrak değeri. İpucunu kontrol edin.' : 'Incorrect flag. Check the hint.'}</span>`;
     }
   }
 };

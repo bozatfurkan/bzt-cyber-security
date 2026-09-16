@@ -7,8 +7,8 @@ const BZT_HACKER_HATS = [
   {
     id: "white-hat",
     name: { tr: "Beyaz Şapkalı Hacker (White Hat)", en: "White Hat Hacker (Ethical Defender)" },
-    badge: "⚪ Beyaz Şapka",
-    icon: "🛡️",
+    badge: "White Hat",
+    icon: "[WH]",
     themeClass: "border-cyan-500 text-cyan-400 bg-cyan-950/40",
     tagline: { tr: "Yasal, etik ve sistemleri koruma odaklı güvenlik kahramanı.", en: "Authorized, lawful, and dedicated to defending systems from exploitation." },
     description: {
@@ -20,8 +20,8 @@ const BZT_HACKER_HATS = [
   {
     id: "black-hat",
     name: { tr: "Siyah Şapkalı Hacker (Black Hat - Analiz)", en: "Black Hat Adversary (Threat Analysis)" },
-    badge: "⚫ Siyah Şapka",
-    icon: "🥷",
+    badge: "Black Hat",
+    icon: "[BH]",
     themeClass: "border-red-500 text-red-400 bg-red-950/40",
     tagline: { tr: "Yasa dışı siber saldırganların motivasyonlarını savunma amacıyla analiz edin.", en: "Deconstruct malicious adversary tactics, ransomware, and crime architectures for defense." },
     description: {
@@ -33,8 +33,8 @@ const BZT_HACKER_HATS = [
   {
     id: "grey-hat",
     name: { tr: "Gri Şapkalı Hacker (Grey Hat)", en: "Grey Hat Hacker (Independent Researcher)" },
-    badge: "🔘 Gri Şapka",
-    icon: "⚖️",
+    badge: "Grey Hat",
+    icon: "[GH]",
     themeClass: "border-gray-500 text-gray-300 bg-gray-900/60",
     tagline: { tr: "Kötü niyeti olmayan ancak izinsiz araştırma yapabilen bağımsız uzman.", en: "Independent researcher finding flaws without malicious intent or prior clearance." },
     description: {
@@ -46,8 +46,8 @@ const BZT_HACKER_HATS = [
   {
     id: "red-hat",
     name: { tr: "Kırmızı Şapkalı Hacker (Red Hat - Vigilante)", en: "Red Hat Hacker (Aggressive Counter-Attacker)" },
-    badge: "🔴 Kırmızı Şapka",
-    icon: "⚡",
+    badge: "Red Hat",
+    icon: "[RH]",
     themeClass: "border-amber-500 text-amber-400 bg-amber-950/40",
     tagline: { tr: "Siyah şapkalı saldırganları doğrudan hedef alan agresif siber adalet sağlayıcı.", en: "Vigilante defenders who launch proactive counter-strikes against black hats." },
     description: {
@@ -59,8 +59,8 @@ const BZT_HACKER_HATS = [
   {
     id: "blue-hat",
     name: { tr: "Mavi Şapkalı Hacker (Blue Hat)", en: "Blue Hat Security (Corporate Auditor)" },
-    badge: "🔵 Mavi Şapka",
-    icon: "🏛️",
+    badge: "Blue Hat",
+    icon: "[BL]",
     themeClass: "border-blue-500 text-blue-400 bg-blue-950/40",
     tagline: { tr: "Yazılımlar piyasaya çıkmadan önce güvenlik açıklarını avlayan kurumsal uzman.", en: "External or specialized corporate auditors invited to battle-test products pre-release." },
     description: {
@@ -72,8 +72,8 @@ const BZT_HACKER_HATS = [
   {
     id: "green-hat",
     name: { tr: "Yeşil Şapkalı Hacker (Green Hat - Çırak)", en: "Green Hat Hacker (Security Apprentice)" },
-    badge: "🟢 Yeşil Şapka",
-    icon: "🌱",
+    badge: "Green Hat",
+    icon: "[GR]",
     themeClass: "border-emerald-500 text-emerald-400 bg-emerald-950/40",
     tagline: { tr: "Siber güvenlik yolculuğunun başında, öğrenme azmiyle dolu hacker çırağı.", en: "Eager student beginning the cyber journey with deep curiosity and drive to master the craft." },
     description: {
@@ -85,8 +85,8 @@ const BZT_HACKER_HATS = [
   {
     id: "purple-team",
     name: { tr: "Mor Şapkalı / Mor Takım (Purple Team)", en: "Purple Team (Offensive + Defensive Synergy)" },
-    badge: "🟣 Mor Şapka",
-    icon: "🔮",
+    badge: "Purple Team",
+    icon: "[PT]",
     themeClass: "border-purple-500 text-purple-400 bg-purple-950/40",
     tagline: { tr: "Kırmızı (Saldırı) ve Mavi (Savunma) ekiplerini tek vücut yapan modern siber strateji.", en: "Fusing offensive Red Team and defensive Blue Team into a unified, lethal synergy." },
     description: {
@@ -150,7 +150,7 @@ const BZTHats = {
                 </div>
               </div>
               <span class="text-xs px-2 py-0.5 rounded font-mono font-bold ${isSelected ? 'bg-white text-black' : 'bg-gray-800 text-gray-400'}">
-                ${isSelected ? (lang === 'tr' ? '✓ Aktif' : '✓ Active') : (lang === 'tr' ? 'Seç' : 'Select')}
+                ${isSelected ? (lang === 'tr' ? 'Aktif' : 'Active') : (lang === 'tr' ? 'Seç' : 'Select')}
               </span>
             </div>
             <p class="text-xs text-gray-300 leading-relaxed mb-2">${getT(h.description)}</p>

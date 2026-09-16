@@ -109,18 +109,18 @@ const BZTCertificate = {
     ctx.fillStyle = "#cbd5e1";
     ctx.font = "19px 'Plus Jakarta Sans', sans-serif";
     const specsTr = [
-      "✓ Ağ Keşfi & Nmap Derinlemesine Zafiyet Analizi",
-      "✓ OWASP Top 10 Web Penetration Testing (SQLi, XSS, RCE, SSRF)",
-      "✓ Linux & Windows Privilege Escalation (SUID, Sudoers, Kernel Exploits)",
-      "✓ Active Directory Dominasyonu & Kerberoasting İstismarı",
-      "✓ AV/EDR Atlatma (Evasion) & C2 Mimari Temelleri"
+      "• Ağ Keşfi & Nmap Derinlemesine Zafiyet Analizi",
+      "• OWASP Top 10 Web Penetration Testing (SQLi, XSS, RCE, SSRF)",
+      "• Linux & Windows Privilege Escalation (SUID, Sudoers, Kernel Exploits)",
+      "• Active Directory Dominasyonu & Kerberoasting İstismarı",
+      "• AV/EDR Atlatma (Evasion) & C2 Mimari Temelleri"
     ];
     const specsEn = [
-      "✓ Network Reconnaissance & In-Depth Nmap Vulnerability Assessment",
-      "✓ OWASP Top 10 Web Penetration Testing (SQLi, XSS, RCE, SSRF, LFI)",
-      "✓ Linux & Windows Privilege Escalation (SUID, Sudoers, Kernel Exploits)",
-      "✓ Active Directory Penetration Testing & Kerberoasting Exploitation",
-      "✓ AV/EDR Evasion & Command & Control (C2) Architecture Foundations"
+      "• Network Reconnaissance & In-Depth Nmap Vulnerability Assessment",
+      "• OWASP Top 10 Web Penetration Testing (SQLi, XSS, RCE, SSRF, LFI)",
+      "• Linux & Windows Privilege Escalation (SUID, Sudoers, Kernel Exploits)",
+      "• Active Directory Penetration Testing & Kerberoasting Exploitation",
+      "• AV/EDR Evasion & Command & Control (C2) Architecture Foundations"
     ];
     const specs = lang === "tr" ? specsTr : specsEn;
 

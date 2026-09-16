@@ -7,7 +7,7 @@ const BZT_CAREERS = [
   // 1. HACKER (PENTESTER)
   {
     id: "pentester",
-    icon: "⚔️",
+    icon: "[01]",
     title: { tr: "1. Etik Hacker & Sızma Testi Uzmanı", en: "1. Ethical Hacker & Penetration Tester" },
     tagline: { tr: "Web, ağ ve sistemlerdeki açıkları saldırganlardan önce keşfedin ve sömürün.", en: "Discover and exploit vulnerabilities in web, networks, and systems before malicious actors." },
     level: { tr: "Orta - İleri", en: "Intermediate - Advanced" },
@@ -25,7 +25,7 @@ const BZT_CAREERS = [
   // 2. SQL & VERİTABANI GÜVENLİĞİ UZMANI
   {
     id: "db-sec-expert",
-    icon: "🗄️",
+    icon: "[02]",
     title: { tr: "2. Veritabanı Güvenliği & SQL Uzmanı", en: "2. Database Security & SQL Specialist" },
     tagline: { tr: "Kurumsal veritabanlarını SQL enjeksiyonlarına, veri sızıntılarına ve yetkisiz erişime karşı koruyun.", en: "Defend enterprise databases against SQL injections, data leakage, and privilege abuse." },
     level: { tr: "Orta - Uzman", en: "Intermediate - Expert" },
@@ -43,7 +43,7 @@ const BZT_CAREERS = [
   // 3. BULUT GÜVENLİĞİ UZMANI (CLOUD SECURITY)
   {
     id: "cloud-sec-expert",
-    icon: "☁️",
+    icon: "[03]",
     title: { tr: "3. Bulut Güvenliği Uzmanı (Cloud Security)", en: "3. Cloud Security Specialist (AWS/Azure/GCP)" },
     tagline: { tr: "AWS, Azure ve GCP bulut altyapılarını, Kubernetes ve konteyner ortamlarını koruyun.", en: "Protect AWS, Azure, GCP cloud infrastructure, Kubernetes, and container clusters." },
     level: { tr: "İleri - Uzman", en: "Advanced - Expert" },
@@ -61,7 +61,7 @@ const BZT_CAREERS = [
   // 4. SOC ANALİSTİ & TEHDİT AVCISI
   {
     id: "soc-analyst",
-    icon: "🛡️",
+    icon: "[04]",
     title: { tr: "4. SOC Analisti & Tehdit Avcısı", en: "4. SOC Analyst & Threat Hunter" },
     tagline: { tr: "Ağ trafiğini, güvenlik loglarını izleyin ve siber saldırıları gerçek zamanlı engelleyin.", en: "Monitor network traffic, security logs, and neutralize cyber attacks in real-time." },
     level: { tr: "Başlangıç - Orta", en: "Beginner - Intermediate" },
@@ -79,7 +79,7 @@ const BZT_CAREERS = [
   // 5. ZARARLI YAZILIM ANALİSTİ & TERSİNE MÜHENDİS
   {
     id: "malware-analyst",
-    icon: "🔬",
+    icon: "[05]",
     title: { tr: "5. Zararlı Yazılım Analisti & Tersine Mühendis", en: "5. Malware Analyst & Reverse Engineer" },
     tagline: { tr: "Tersine mühendislik ile fidye yazılımları, trojanlar ve APT casus kodlarını parçalarına ayırın.", en: "Dissect ransomware, trojans, and APT nation-state malware through reverse engineering." },
     level: { tr: "Uzman", en: "Expert" },
@@ -97,7 +97,7 @@ const BZT_CAREERS = [
   // 6. UYGULAMA GÜVENLİĞİ & DEVSECOPS
   {
     id: "appsec-devsecops",
-    icon: "🚀",
+    icon: "[06]",
     title: { tr: "6. Uygulama Güvenliği & DevSecOps", en: "6. Application Security & DevSecOps Engineer" },
     tagline: { tr: "Yazılım geliştirme döngüsüne (CI/CD) güvenliği entegre edin, güvenli kod mimarisi kurun.", en: "Embed security into CI/CD pipelines and design secure software architectures from line 1." },
     level: { tr: "Orta - İleri", en: "Intermediate - Advanced" },
@@ -115,7 +115,7 @@ const BZT_CAREERS = [
   // 7. ADLİ BİLİŞİM & OLAY MÜDAHALE (DFIR)
   {
     id: "dfir-expert",
-    icon: "🔍",
+    icon: "[07]",
     title: { tr: "7. Adli Bilişim & Olay Müdahale (DFIR)", en: "7. Digital Forensics & Incident Response (DFIR)" },
     tagline: { tr: "Siber suç mahallerini inceleyin, RAM bellek dökümlerinden saldırganın parmak izlerini bulun.", en: "Investigate digital crime scenes, uncover intruder artifacts from volatile RAM and disk images." },
     level: { tr: "İleri", en: "Advanced" },
@@ -133,7 +133,7 @@ const BZT_CAREERS = [
   // 8. KRİPTOGRAFİ & GÜVENLİK MİMARİSİ
   {
     id: "crypto-architect",
-    icon: "🔐",
+    icon: "[08]",
     title: { tr: "8. Kriptografi & Güvenlik Mimarisi", en: "8. Cryptography & Security Architect" },
     tagline: { tr: "Sıfır Güven (Zero Trust), kuantum sonrası şifreleme ve kurumsal savunma mimarileri tasarlayın.", en: "Architect Zero Trust perimeters, post-quantum crypto schemes, and resilient enterprise defenses." },
     level: { tr: "Uzman", en: "Expert" },
@@ -151,7 +151,7 @@ const BZT_CAREERS = [
   // 9. SOSYAL MÜHENDİSLİK & OSINT İSTİHBARATÇISI
   {
     id: "osint-soceng",
-    icon: "🕵️",
+    icon: "[09]",
     title: { tr: "9. Sosyal Mühendislik & OSINT İstihbaratçısı", en: "9. OSINT & Social Engineering Specialist" },
     tagline: { tr: "İnsan faktörünü, açık kaynak istihbaratını (OSINT) ve hedef profilleme tekniklerini ustalıkla kullanın.", en: "Master the human operating system, advanced OSINT profiling, and deception operations." },
     level: { tr: "Başlangıç - İleri", en: "Beginner - Advanced" },
@@ -169,7 +169,7 @@ const BZT_CAREERS = [
   // 10. IOT, DONANIM & ENDÜSTRİYEL SİBER GÜVENLİK (OT/SCADA)
   {
     id: "iot-scada-expert",
-    icon: "⚡",
+    icon: "[10]",
     title: { tr: "10. IoT & Endüstriyel Siber Güvenlik (OT/SCADA)", en: "10. IoT & Industrial Cyber Security (OT/SCADA)" },
     tagline: { tr: "Akıllı cihazlar, enerji santralleri, fabrikalar ve SCADA altyapılarını siber sabotajdan koruyun.", en: "Defend smart devices, power grids, robotics, and industrial SCADA networks from sabotage." },
     level: { tr: "Uzman", en: "Expert" },
@@ -235,7 +235,7 @@ const BZTCareers = {
               </div>
             </div>
             <button class="text-xs px-2.5 py-1 rounded font-mono font-bold transition-all ${isSelected ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}">
-              ${isSelected ? (lang === 'tr' ? '✓ Seçildi' : '✓ Active') : (lang === 'tr' ? 'Seç' : 'Select')}
+              ${isSelected ? (lang === 'tr' ? 'Seçildi' : 'Active') : (lang === 'tr' ? 'Seç' : 'Select')}
             </button>
           </div>
 

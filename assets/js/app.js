@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (filtered.length === 0) {
       curriculumGrid.innerHTML = `
         <div class="col-span-full text-center py-12 text-gray-400">
-          <div class="text-3xl mb-2">🔍</div>
+          <div class="text-xs font-mono text-gray-500 mb-2">[SONUÇ BULUNAMADI]</div>
           <div class="font-bold text-lg text-gray-200">
             ${lang === 'tr' ? 'Aramanıza uygun ders veya modül bulunamadı.' : 'No lessons or modules found matching your query.'}
           </div>
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (item.difficulty.includes("Uzman") || item.difficulty.includes("Expert")) badgeColor = "bg-red-950/80 text-red-400 border-red-800";
 
       const startText = lang === 'tr' ? 'Eğitimi Başlat' : 'Start Lesson';
-      const doneText = isDone ? (lang === 'tr' ? '✓ Tamamlandı' : '✓ Completed') : (lang === 'tr' ? '○ Bitir' : '○ Mark Done');
+      const doneText = isDone ? (lang === 'tr' ? 'Tamamlandı' : 'Completed') : (lang === 'tr' ? '○ Bitir' : '○ Mark Done');
 
       card.innerHTML = `
         <div>
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </span>
             <div class="flex items-center gap-2 text-xs font-mono">
               <span class="text-yellow-400 font-bold">+${item.xp} XP</span>
-              <span class="text-gray-400">⏱️ ${item.duration}</span>
+              <span class="text-gray-400">Süre: ${item.duration}</span>
             </div>
           </div>
 
@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span>→</span>
               </button>
               <button class="open-slide-btn text-xs font-bold bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-black border border-purple-500/40 px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1" data-id="${item.id}" title="${lang === 'tr' ? 'Ders Slaytını Aç' : 'Open Slide Deck'}">
-                <span>📊</span>
+                
                 <span>${lang === 'tr' ? 'Slayt' : 'Slide'}</span>
               </button>
             </div>
@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <span>${lesson.phaseTitle}</span> • <span>${lesson.difficulty}</span> • <span>${lesson.duration}</span> • <span class="text-yellow-400 font-bold">+${lesson.xp} XP</span>
           </div>
           <button onclick="BZTSlides.start('${lesson.id}')" class="px-3 py-1.5 bg-gradient-to-r from-purple-600/40 to-pink-600/40 hover:from-purple-600 hover:to-pink-600 text-purple-200 hover:text-white border border-purple-500/50 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-sm glow-purple">
-            <span>📊</span> <span>${lang === 'tr' ? 'Slayt Modu (Slide Deck)' : 'Slide Presentation'}</span>
+             <span>${lang === 'tr' ? 'Slayt Modu (Slide Deck)' : 'Slide Presentation'}</span>
           </button>
         </div>
         <h2 class="text-2xl font-bold text-white mb-2">${lesson.title}</h2>
@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="flex justify-between items-center text-gray-500 pb-2 mb-2 border-b border-gray-800/60 text-[11px]">
                   <span>${lang === 'tr' ? 'KOD ÖRNEĞİ / EXPLOIT' : 'CODE SNIPPET / EXPLOIT'}</span>
                   <button class="copy-code-btn hover:text-cyan-400 transition-colors" data-code="${encodeURIComponent(sec.codeSnippet)}">
-                    📋 ${lang === 'tr' ? 'Kopyala' : 'Copy'}
+                    ${lang === 'tr' ? 'Kopyala' : 'Copy'}
                   </button>
                 </div>
                 <pre>${escapeHtml(sec.codeSnippet)}</pre>
@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             ${sec.tip ? `
               <div class="p-3 bg-cyan-950/40 border-l-4 border-cyan-500 rounded-r-lg text-xs text-cyan-200">
-                <b>💡 ${lang === 'tr' ? 'Hacker Notu & İpucu:' : 'Hacker Note & Tip:'}</b> ${sec.tip}
+                <b>${lang === 'tr' ? 'Hacker Notu & İpucu:' : 'Hacker Note & Tip:'}</b> ${sec.tip}
               </div>
             ` : ""}
 
@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="flex items-center justify-between p-2.5 bg-black/60 border border-gray-800 rounded-lg text-xs font-mono">
                 <span class="text-gray-400">$ <span class="text-yellow-300">${sec.terminalCommand}</span></span>
                 <button class="run-in-term-btn bg-cyan-500/20 hover:bg-cyan-500 text-cyan-400 hover:text-black px-2 py-1 rounded transition-colors text-[11px]" data-cmd="${sec.terminalCommand}">
-                  ${lang === 'tr' ? "BZT-Shell'de Çalıştır ⚡" : 'Run in BZT-Shell ⚡'}
+                  ${lang === 'tr' ? "BZT-Shell'de Çalıştır" : 'Run in BZT-Shell'}
                 </button>
               </div>
             ` : ""}
@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${lesson.quiz ? `
           <div class="mt-8 p-5 bg-gray-900/90 border border-gray-800 rounded-xl space-y-4">
             <div class="text-sm font-bold text-yellow-400 flex items-center gap-2">
-              <span>🧠</span> ${lang === 'tr' ? 'Modül Pekiştirme Sorusu (+50 XP)' : 'Module Knowledge Check (+50 XP)'}
+              <span class="text-cyan-400 font-mono">[TEST]</span> ${lang === 'tr' ? 'Modül Pekiştirme Sorusu (+50 XP)' : 'Module Knowledge Check (+50 XP)'}
             </div>
             <div class="text-sm font-medium text-gray-200">${lesson.quiz.question}</div>
             <div class="space-y-2">
@@ -430,8 +430,8 @@ document.addEventListener("DOMContentLoaded", () => {
       b.addEventListener("click", () => {
         const code = decodeURIComponent(b.getAttribute("data-code"));
         navigator.clipboard.writeText(code);
-        b.innerText = lang === 'tr' ? "✓ Kopyalandı!" : "✓ Copied!";
-        setTimeout(() => b.innerText = lang === 'tr' ? "📋 Kopyala" : "📋 Copy", 1500);
+        b.innerText = lang === 'tr' ? "Kopyalandı" : "Copied";
+        setTimeout(() => b.innerText = lang === 'tr' ? "Kopyala" : "Copy", 1500);
       });
     });
 
@@ -462,11 +462,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (selected === correct) {
           feedback.classList.add("bg-emerald-950/70", "border", "border-emerald-500", "text-emerald-300");
-          feedback.innerHTML = `<b>🎉 ${lang === 'tr' ? 'Doğru Cevap!' : 'Correct Answer!'}</b> (+50 XP) ${lesson.quiz.explanation}`;
+          feedback.innerHTML = `<b>[+] ${lang === 'tr' ? 'Doğru Cevap!' : 'Correct Answer!'}</b> (+50 XP) ${lesson.quiz.explanation}`;
           BZTApp.addXp(50);
         } else {
           feedback.classList.add("bg-red-950/70", "border", "border-red-500", "text-red-300");
-          feedback.innerHTML = `<b>❌ ${lang === 'tr' ? 'Yanlış Seçenek.' : 'Incorrect Choice.'}</b> ${lang === 'tr' ? 'Doğru cevap:' : 'Correct:'} <b>${String.fromCharCode(65 + correct)}</b>. ${lesson.quiz.explanation}`;
+          feedback.innerHTML = `<b>[-] ${lang === 'tr' ? 'Yanlış Seçenek.' : 'Incorrect Choice.'}</b> ${lang === 'tr' ? 'Doğru cevap:' : 'Correct:'} <b>${String.fromCharCode(65 + correct)}</b>. ${lesson.quiz.explanation}`;
         }
       });
     });
@@ -607,7 +607,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="flex justify-between items-center text-xs">
           <span class="font-bold text-cyan-400">${s.name}</span>
           <button class="copy-shell-btn text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-300 px-2 py-0.5 rounded transition-colors" data-shell="${encodeURIComponent(s.code)}">
-            📋 ${lang === 'tr' ? 'Kopyala' : 'Copy'}
+            ${lang === 'tr' ? 'Kopyala' : 'Copy'}
           </button>
         </div>
         <div class="text-[11px] text-gray-400">${s.desc}</div>
@@ -619,8 +619,8 @@ document.addEventListener("DOMContentLoaded", () => {
       b.addEventListener("click", () => {
         const code = decodeURIComponent(b.getAttribute("data-shell"));
         navigator.clipboard.writeText(code);
-        b.innerText = lang === 'tr' ? "✓ Kopyalandı!" : "✓ Copied!";
-        setTimeout(() => b.innerText = lang === 'tr' ? "📋 Kopyala" : "📋 Copy", 1500);
+        b.innerText = lang === 'tr' ? "Kopyalandı" : "Copied";
+        setTimeout(() => b.innerText = lang === 'tr' ? "Kopyala" : "Copy", 1500);
       });
     });
   }
@@ -708,7 +708,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!badge) {
         badge = document.createElement("span");
         badge.className = "copy-feedback-badge ml-2 text-[10px] text-emerald-400 font-mono font-bold animate-fade-in";
-        badge.innerText = "✓ Kopyalandı!";
+        badge.innerText = "Kopyalandı";
         parent.appendChild(badge);
         setTimeout(() => badge.remove(), 1600);
       }

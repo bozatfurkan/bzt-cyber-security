@@ -159,7 +159,7 @@ const BZTSlides = {
 
           ${slide.tip ? `
             <div class="p-4 bg-cyan-950/70 border-l-4 border-cyan-400 rounded-r-xl text-xs sm:text-sm text-cyan-100">
-              <b>💡 ${lang === 'tr' ? 'Hacker Notu:' : 'Pro Hacker Tip:'}</b> ${slide.tip}
+              <b>${lang === 'tr' ? 'Hacker Notu:' : 'Pro Hacker Tip:'}</b> ${slide.tip}
             </div>
           ` : ""}
         </div>
@@ -168,7 +168,7 @@ const BZTSlides = {
       container.innerHTML = `
         <div class="max-w-3xl mx-auto space-y-6 animate-fade-in py-6 px-6 bg-[#0a0f1d] border border-yellow-500/30 rounded-2xl shadow-2xl">
           <div class="text-center">
-            <span class="text-3xl">🧠</span>
+            <span class="text-xs font-mono font-bold text-cyan-400">[KONTROL TESTİ]</span>
             <h2 class="text-2xl sm:text-3xl font-bold text-yellow-400 mt-2">
               ${lang === 'tr' ? 'Bölüm Bilgi Sınavı' : 'Knowledge Checkpoint'}
             </h2>
@@ -202,11 +202,11 @@ const BZTSlides = {
 
     if (selected === correct) {
       feedback.classList.add("bg-emerald-950", "border", "border-emerald-500", "text-emerald-300");
-      feedback.innerHTML = `<b>🎉 ${lang === 'tr' ? 'Doğru!' : 'Correct!'} (+50 XP)</b> ${slide.explanation}`;
+      feedback.innerHTML = `<b>[+] ${lang === 'tr' ? 'Doğru!' : 'Correct!'} (+50 XP)</b> ${slide.explanation}`;
       if (window.BZTApp) window.BZTApp.addXp(50);
     } else {
       feedback.classList.add("bg-red-950", "border", "border-red-500", "text-red-300");
-      feedback.innerHTML = `<b>❌ ${lang === 'tr' ? 'Yanlış.' : 'Incorrect.'}</b> ${lang === 'tr' ? 'Doğru cevap:' : 'Correct:'} <b>${String.fromCharCode(65 + correct)}</b>. ${slide.explanation}`;
+      feedback.innerHTML = `<b>[-] ${lang === 'tr' ? 'Yanlış.' : 'Incorrect.'}</b> ${lang === 'tr' ? 'Doğru cevap:' : 'Correct:'} <b>${String.fromCharCode(65 + correct)}</b>. ${slide.explanation}`;
     }
   },
 

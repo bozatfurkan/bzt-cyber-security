@@ -65,7 +65,7 @@ class BZTerminal {
 
   printWelcome() {
     this.writeLine(`<span class="text-cyan-400 font-bold">┌──(root@bzt-security)-[~]</span>`);
-    this.writeLine(`<span class="text-gray-300">⚡ BZT-Shell v3.5 PRO - Kali Linux Siber Simülatörü Başlatıldı.</span>`);
+    this.writeLine(`<span class="text-gray-300">BZT-Shell v3.5 PRO - Kali Linux Siber Simülatörü Başlatıldı.</span>`);
     this.writeLine(`<span class="text-gray-500">Mevcut komutları listelemek için <span class="text-emerald-400 font-bold font-mono">'help'</span> yazın.</span>`);
     this.writeLine(``);
   }
@@ -116,7 +116,7 @@ class BZTerminal {
       case "?":
         this.writeLine(`
 <div class="text-gray-300 py-1 space-y-1">
-  <div class="text-emerald-400 font-bold mb-1">🛠️ Kullanılabilir BZT-Shell Komutları:</div>
+  <div class="text-emerald-400 font-bold mb-1">Kullanılabilir BZT-Shell Komutları:</div>
   <div><span class="text-cyan-300 font-mono w-32 inline-block font-bold">nmap &lt;target&gt;</span> : Akıllı ağ ve port taraması simülasyonu</div>
   <div><span class="text-cyan-300 font-mono w-32 inline-block font-bold">sqlmap -u &lt;url&gt;</span> : Veritabanı enjeksiyon ve döküm simülasyonu</div>
   <div><span class="text-cyan-300 font-mono w-32 inline-block font-bold">gobuster / ffuf</span> : Web dizin ve vhost fuzzing motoru</div>
@@ -203,7 +203,7 @@ class BZTerminal {
 <span class="text-cyan-400">Service Info:</span> OS: Linux; CPE: cpe:/o:linux:linux_kernel
 <span class="text-yellow-400">Nmap done: 1 IP address (1 host up) scanned in 1.42 seconds</span>
 </div>`);
-          this.writeLine(`<span class="text-emerald-400">💡 İpucu: Port 21'deki vsftpd 2.3.4 sürümü bilinen arka kapı (CVE-2011-2523) zafiyetine sahiptir!</span>`);
+          this.writeLine(`<span class="text-emerald-400">[NOT] İpucu: Port 21'deki vsftpd 2.3.4 sürümü bilinen arka kapı (CVE-2011-2523) zafiyetine sahiptir!</span>`);
         }, 300);
         break;
 
@@ -249,7 +249,7 @@ Dictionary cache hit: /usr/share/wordlists/rockyou.txt (14,344,392 words)
 <span class="text-emerald-400 font-bold">${this.escapeHtml(hash)}:password</span>
 Session Status: <span class="text-emerald-400 font-bold">Cracked (Parola: password)</span>
 </div>`);
-          this.writeLine(`<span class="text-yellow-400">🚩 CTF İpucu: Level 5 Bayrağı: BZT{password}</span>`);
+          this.writeLine(`<span class="text-yellow-400">[BAYRAK] CTF İpucu: Level 5 Bayrağı: BZT{password}</span>`);
         }, 300);
         break;
 

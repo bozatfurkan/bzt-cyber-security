@@ -79,14 +79,14 @@ const BZTGames = {
         if (window.BZTApp) window.BZTApp.addXp(points);
 
         if (feedback) {
-          feedback.innerHTML = `<span class="text-emerald-400 font-bold">✓ DOĞRU KARAR! (+${points} XP) Kombo x${this.streak}</span>`;
+          feedback.innerHTML = `<span class="text-emerald-400 font-bold">[+] DOĞRU KARAR! (+${points} XP) Kombo x${this.streak}</span>`;
         }
       } else {
         // Wrong decision!
         this.streak = 0;
         this.lives--;
         if (feedback) {
-          feedback.innerHTML = `<span class="text-red-400 font-bold">❌ HATALI KARAR! ${shouldDrop ? 'Zararlı paket ağa sızdı!' : 'Meşru kullanıcı trafiği engellendi!'} (-1 Can)</span>`;
+          feedback.innerHTML = `<span class="text-red-400 font-bold">[-] HATALI KARAR! ${shouldDrop ? 'Zararlı paket ağa sızdı!' : 'Meşru kullanıcı trafiği engellendi!'} (-1 Can)</span>`;
         }
 
         if (this.lives <= 0) {
@@ -105,7 +105,7 @@ const BZTGames = {
       const streakEl = document.getElementById("fw-streak");
 
       if (scoreEl) scoreEl.innerText = this.score;
-      if (livesEl) livesEl.innerText = "❤️".repeat(Math.max(0, this.lives));
+      if (livesEl) livesEl.innerText = `${this.lives} / 3`;
       if (streakEl) streakEl.innerText = `x${this.streak}`;
     },
 
@@ -115,11 +115,11 @@ const BZTGames = {
       if (display) {
         display.className = "p-6 rounded-2xl border border-red-500/50 bg-red-950/40 text-center space-y-3";
         display.innerHTML = `
-          <div class="text-3xl">💀</div>
+          <div class="text-sm font-mono font-bold text-red-500">[SİSTEM ÇÖKTÜ - OYUN BİTTİ]</div>
           <h3 class="text-xl font-bold text-red-400">GÜVENLİK DUVARI ÇÖKTÜ!</h3>
           <p class="text-xs text-gray-300">Toplam Puan: <b>${this.score}</b></p>
           <button onclick="BZTGames.fwGame.start()" class="px-5 py-2 rounded-xl bg-cyan-500 text-black font-bold font-mono text-xs">
-            Tekrar Oyna 🔄
+            Tekrar Oyna
           </button>
         `;
       }
@@ -253,7 +253,7 @@ const BZTGames = {
         if (window.BZTApp) window.BZTApp.addXp(total);
         if (feedback) feedback.innerHTML = `<span class="text-emerald-400 font-bold">✓ HARİKA! (+${total} XP)</span>`;
       } else {
-        if (feedback) feedback.innerHTML = `<span class="text-red-400 font-bold">❌ Yanlış Komut! Doğrusu: ${ch.correct}</span>`;
+        if (feedback) feedback.innerHTML = `<span class="text-red-400 font-bold">[-] Yanlış Komut! Doğrusu: ${ch.correct}</span>`;
       }
 
       this.currentIndex++;
@@ -267,11 +267,11 @@ const BZTGames = {
       if (card) {
         card.innerHTML = `
           <div class="p-6 text-center space-y-3 animate-fade-in">
-            <div class="text-3xl">🏆</div>
+            <div class="text-sm font-mono font-bold text-yellow-400">[TEBRİKLER - GÖREV TAMAMLANDI]</div>
             <h3 class="text-xl font-bold text-emerald-400">COMMAND RUSH TAMAMLANDI!</h3>
             <p class="text-xs text-gray-300 font-mono">Toplam Skor: <b class="text-yellow-400">${this.score} XP</b></p>
             <button onclick="BZTGames.cmdGame.start()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 text-black font-bold font-mono text-xs">
-              Tekrar Oyna 🔄
+              Tekrar Oyna
             </button>
           </div>
         `;
