@@ -113,41 +113,41 @@ const BZT_CTF = {
           if (isSolved) totalScore += ch.points;
 
           return `
-            <div class="clean-card p-6 flex flex-col justify-between transition-all ${isSolved ? 'border-emerald-500 bg-emerald-50/50 shadow-md' : 'border-slate-200 bg-white'}">
+            <div class="clean-card p-6 flex flex-col justify-between transition-all ${isSolved ? 'border-emerald-500/50 bg-emerald-950/20 shadow-md' : 'border-gray-800 bg-[#0b0f19]'}">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono px-2.5 py-1 rounded-lg border ${isSolved ? 'bg-emerald-100 border-emerald-300 text-emerald-800 font-bold' : 'bg-slate-100 border-slate-200 text-slate-700 font-medium'}">
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-lg border ${isSolved ? 'bg-emerald-950/80 border-emerald-800 text-emerald-300 font-bold' : 'bg-black/60 border-gray-800 text-gray-300 font-medium'}">
                     ${getT(ch.category)}
                   </span>
-                  <span class="text-xs font-mono font-bold ${isSolved ? 'text-emerald-600' : 'text-[#f37021]'}">
+                  <span class="text-xs font-mono font-bold ${isSolved ? 'text-emerald-400' : 'text-[#f37021]'}">
                     +${ch.points} XP
                   </span>
                 </div>
 
-                <h4 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
-                  <span class='font-mono text-xs font-bold ${isSolved ? 'text-emerald-600' : 'text-[#f37021]'}'>${isSolved ? '[TAMAMLANDI]' : '[HEDEF]'}</span>
+                <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                  <span class='font-mono text-xs font-bold ${isSolved ? 'text-emerald-400' : 'text-[#f37021]'}'>${isSolved ? '[TAMAMLANDI]' : '[HEDEF]'}</span>
                   ${getT(ch.title)}
                 </h4>
 
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
                   ${getT(ch.description)}
                 </p>
 
-                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 mb-4 font-mono">
+                <div class="p-3 bg-black/60 border border-gray-800 rounded-xl text-xs text-gray-300 mb-4 font-mono">
                   <b class="text-[#f37021]">${lang === 'tr' ? 'İpucu:' : 'Hint:'}</b> ${getT(ch.hint)}
                 </div>
               </div>
 
               <div>
                 ${isSolved ? `
-                  <div class="p-3 bg-emerald-100/80 border border-emerald-300 rounded-xl text-xs font-mono text-emerald-800 font-bold flex items-center justify-between">
+                  <div class="p-3 bg-emerald-950/80 border border-emerald-700/60 rounded-xl text-xs font-mono text-emerald-300 font-bold flex items-center justify-between">
                     <span>${lang === 'tr' ? 'ÇÖZÜLDÜ (SOLVED)' : 'SOLVED'}</span>
                     <span>+${ch.points} XP</span>
                   </div>
                 ` : `
                   <div class="space-y-2">
                     <div class="flex gap-2">
-                      <input type="text" id="flag-input-${ch.id}" onkeydown="if(event.key==='Enter') BZT_CTF.submitFlag('${ch.id}')" placeholder="${lang === 'tr' ? 'BZT{...} bayrağını girin' : 'Enter BZT{...} flag'}" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-mono text-slate-800 focus:outline-none focus:border-[#f37021]">
+                      <input type="text" id="flag-input-${ch.id}" onkeydown="if(event.key==='Enter') BZT_CTF.submitFlag('${ch.id}')" placeholder="${lang === 'tr' ? 'BZT{...} bayrağını girin' : 'Enter BZT{...} flag'}" class="flex-1 bg-black/80 border border-gray-800 rounded-xl px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#f37021]">
                       <button onclick="BZT_CTF.submitFlag('${ch.id}')" class="bg-[#f37021] hover:bg-[#e05d0e] text-white font-bold font-mono text-xs px-4 py-2 rounded-xl transition-all shadow-xs">
                         ${lang === 'tr' ? 'Gönder' : 'Submit'}
                       </button>

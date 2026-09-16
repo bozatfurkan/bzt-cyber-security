@@ -139,24 +139,24 @@ const BZTHats = {
       const firstLesson = (hat.recommendedLessons && hat.recommendedLessons.length > 0) ? hat.recommendedLessons[0] : null;
       indicator.innerHTML = `
         <div class="flex items-center gap-3">
-          <span class="text-xs font-mono font-bold px-2.5 py-1.5 rounded-xl bg-white border border-orange-200 text-[#f37021] shadow-xs">${hat.icon}</span>
+          <span class="text-xs font-mono font-bold px-2.5 py-1.5 rounded-xl bg-black/60 border border-orange-800 text-orange-400 shadow-md">${hat.icon}</span>
           <div>
-            <div class="text-slate-900 font-bold font-mono text-sm">
+            <div class="text-white font-bold font-mono text-sm">
               ${lang === 'tr' ? 'Aktif Hacker Şapkası & Eğitim Programı:' : 'Active Hacker Persona & Curriculum:'} <span class="text-[#f37021]">${getT(hat.name)}</span>
             </div>
-            <div class="text-xs text-slate-600 font-mono mt-0.5">
+            <div class="text-xs text-gray-400 font-mono mt-0.5">
               ${lang === 'tr' ? `Bu hacker profili için özel ${hat.recommendedLessons.length} eğitim modülü açıldı.` : `${hat.recommendedLessons.length} curated training modules opened for this persona.`}
             </div>
           </div>
         </div>
         <div class="flex items-center gap-2">
           ${firstLesson ? `
-            <button onclick="window.openLessonModal('${firstLesson}')" class="px-3.5 py-2 rounded-xl bg-[#f37021] hover:bg-[#e05d0e] text-white text-xs font-mono font-bold transition-all shadow-xs flex items-center gap-1">
+            <button onclick="window.openLessonModal('${firstLesson}')" class="px-3.5 py-2 rounded-xl bg-[#f37021] hover:bg-[#e05d0e] text-white text-xs font-mono font-bold transition-all shadow-md flex items-center gap-1">
               <span>${lang === 'tr' ? 'İlk Eğitime Başla' : 'Start First Lesson'}</span>
               <span>→</span>
             </button>
           ` : ''}
-          <button onclick="BZTHats.clearFilter()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 hover:text-slate-900 text-xs font-mono transition-all">
+          <button onclick="BZTHats.clearFilter()" class="px-3.5 py-2 rounded-xl bg-black/60 hover:bg-gray-900 border border-gray-700 text-gray-300 hover:text-white text-xs font-mono transition-all">
             [X] ${lang === 'tr' ? 'Tümünü Göster' : 'Show All'}
           </button>
         </div>
