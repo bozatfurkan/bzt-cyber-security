@@ -92,11 +92,6 @@
           <span class="text-yellow-400 font-bold user-xp-display">0 XP</span>
         </div>
 
-        <!-- Active Hacker Hat Badge in Nav -->
-        <div id="active-hat-nav-badge" onclick="BZTHats.openModal()" class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-gray-900 border border-gray-800 hover:border-cyan-500/50 rounded-xl font-mono text-xs cursor-pointer text-gray-300 transition-all" title="Hacker Şapkanızı Değiştirin">
-          <span class="text-cyan-400 font-mono font-bold">[ROL]</span> <span>White Hat</span>
-        </div>
-
         <!-- Language Switcher Toggle -->
         <div class="flex items-center bg-black/60 border border-gray-800 rounded-xl p-0.5 text-xs font-mono">
           <button id="lang-btn-tr" onclick="BZTI18n.setLanguage('tr')" class="px-2 py-1 rounded-lg font-bold bg-cyan-500 text-black transition-all">TR</button>
@@ -842,23 +837,6 @@
 
     <div id="career-tracks-list" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
       <!-- Injected via careers.js -->
-    </div>
-  </div>
-
-  <!-- =========================================================================
-       HACKER HATS MODAL
-       ========================================================================= -->
-  <div id="hat-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-cyber-900 border border-purple-500/40 w-full max-w-3xl max-h-[85vh] rounded-2xl flex flex-col shadow-2xl glow-purple overflow-hidden animate-fade-in">
-      <div class="p-4 border-b border-gray-800 flex items-center justify-between bg-black/40">
-        <div class="flex items-center gap-2 text-xs font-mono text-purple-400 font-bold">
-          <span>HACKER ŞAPKALARI & PERSONA SEÇİCİ</span>
-        </div>
-        <button onclick="BZTHats.closeModal()" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors text-lg">✕</button>
-      </div>
-      <div id="hat-selector-list" class="p-4 overflow-y-auto space-y-3 custom-scrollbar flex-1">
-        <!-- Injected via hats.js -->
-      </div>
     </div>
   </div>
 
